@@ -1,17 +1,17 @@
 {
-  "name": "nodecg-vue-ts-template",
+  "name": "gtav-tourney-layouts",
   "version": "1.0.0",
-  "description": "Template for NodeCG bundles that use Vue.js and TypeScript.",
-  "homepage": "https://github.com/zoton2/nodecg-vue-ts-template#readme",
+  "description": "Layouts used for the Summer 2022 GTA V Tourney.",
+  "homepage": "https://github.com/hoXyy/gtav-tourney-layouts#readme",
   "bugs": {
-    "url": "https://github.com/zoton2/nodecg-vue-ts-template/issues"
+    "url": "https://github.com/hoXyy/gtav-tourney-layouts/issues"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/zoton2/nodecg-vue-ts-template.git"
+    "url": "git+https://github.com/hoXyy/gtav-tourney-layouts.git"
   },
   "license": "MIT",
-  "author": "zoton2",
+  "author": "hoXyy",
   "scripts": {
     "autofix": "run-s autofix:*",
     "autofix:browser": "eslint --fix --ext .ts,.vue src/dashboard && eslint --fix --ext .ts,.vue src/graphics && eslint --fix --ext .ts,.vue src/browser_shared",
@@ -27,6 +27,9 @@
     "watch:extension": "tsc -b tsconfig.extension.json -w"
   },
   "dependencies": {
+    "fitty": "^2.3.6",
+    "livesplit-core": "^0.10.2",
+    "lodash": "^4.17.21",
     "module-alias": "^2.2.2"
   },
   "devDependencies": {
@@ -84,14 +87,32 @@
     "compatibleRange": "^1.8.1",
     "dashboardPanels": [
       {
-        "name": "example",
-        "title": "Example",
-        "file": "example.html"
+        "name": "timer",
+        "title": "Timer",
+        "file": "timer.html",
+        "width": 3
+      },
+      {
+        "name": "matchinfo",
+        "title": "Match Info",
+        "file": "matchinfo.html",
+        "width": 4
+      },
+      {
+        "name": "commentators",
+        "title": "Commentators",
+        "file": "commentators.html",
+        "width": 3
       }
     ],
     "graphics": [
       {
-        "file": "example.html",
+        "file": "main.html",
+        "width": 1920,
+        "height": 1080
+      },
+      {
+        "file": "matchup.html",
         "width": 1920,
         "height": 1080
       }

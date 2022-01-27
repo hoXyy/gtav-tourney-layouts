@@ -5,6 +5,8 @@
  * and run json-schema-to-typescript to regenerate this file.
  */
 
-export interface ExampleReplicant {
-	exampleProperty: string;
+export interface Matchinfo {
+	segment: string;
+	stage?: string;
+	[k: string]: unknown;
 }

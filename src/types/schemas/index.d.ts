@@ -1,2 +1,4 @@
 export * from './configschema';
-export * from './exampleReplicant';
+export * from './commentators';
+export * from './matchinfo';
+export * from './timer';

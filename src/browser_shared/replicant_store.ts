@@ -1,4 +1,4 @@
-import type { ExampleReplicant } from '@nodecg-vue-ts-template/types/schemas';
+import type { Timer, Matchinfo, Commentators } from '@layouts/types/schemas';
 import clone from 'clone';
 import type { ReplicantBrowser } from 'nodecg/types/browser';
 import Vue from 'vue';
@@ -8,15 +8,21 @@ import { getModule, Module, Mutation, VuexModule } from 'vuex-module-decorators'
 
 // Declaring replicants.
 export const reps: {
-  exampleReplicant: ReplicantBrowser<ExampleReplicant>;
+  timerRep: ReplicantBrowser<Timer>;
+  matchinfoRep: ReplicantBrowser<Matchinfo>;
+  commentatorsRep: ReplicantBrowser<Commentators>;
   [k: string]: ReplicantBrowser<unknown>;
 } = {
-  exampleReplicant: nodecg.Replicant('exampleReplicant'),
+  timerRep: nodecg.Replicant('timer'),
+  matchinfoRep: nodecg.Replicant('matchinfo'),
+  commentatorsRep: nodecg.Replicant('commentators')
 };
 
 // All the replicant types.
 export interface ReplicantTypes {
-  exampleReplicant: ExampleReplicant;
+  timerRep: Timer;
+  matchinfoRep: Matchinfo;
+  commentatorsRep: Commentators;
 }
 
 @Module({ name: 'ReplicantModule', namespaced: true })

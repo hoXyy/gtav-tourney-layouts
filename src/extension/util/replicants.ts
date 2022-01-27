@@ -1,6 +1,7 @@
 /* eslint-disable max-len */
 
-import type { ExampleReplicant } from '@nodecg-vue-ts-template/types/schemas';
+import { Matchinfo, Timer } from '@layouts/types/schemas';
+import { Commentators } from '@layouts/types/schemas/commentators';
 import { get as nodecg } from './nodecg';
 
 /**
@@ -8,6 +9,6 @@ import { get as nodecg } from './nodecg';
  * and to make sure they have any correct settings on startup.
  */
 
-// YOU CAN REMOVE THIS RULE WHEN YOU GET MULTIPLE REPLICANTS!
-// eslint-disable-next-line import/prefer-default-export
-export const exampleReplicant = nodecg().Replicant<ExampleReplicant>('exampleReplicant');
+export const timerRep = nodecg().Replicant<Timer>('timer');
+export const matchinfoRep = nodecg().Replicant<Matchinfo>('matchinfo');
+export const commentatorsRep = nodecg().Replicant<Commentators>('commentators');

@@ -1,0 +1,14 @@
+@import url('./fonts/fonts.css');
+
+body,
+html {
+    margin: 0;
+    padding: 0;
+    width: 1920px;
+    height: 1080px;
+    font-family: "Myriad Pro Regular";
+}
+
+html {
+    display: block;
+}

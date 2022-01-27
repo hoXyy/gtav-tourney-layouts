@@ -1,0 +1,8 @@
+@font-face {
+  font-family: "ChaletComprime-CologneSixty";
+  src: url("ChaletComprime-CologneSixty.woff2") format("woff2"),
+    url("ChaletComprime-CologneSixty.woff") format("woff");
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
