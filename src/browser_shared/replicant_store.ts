@@ -1,4 +1,4 @@
-import type { Timer, Matchinfo, Commentators } from '@layouts/types/schemas';
+import type { Timer, Matchinfo, Commentators, Manual, Player1, Player2 } from '@layouts/types/schemas';
 import clone from 'clone';
 import type { ReplicantBrowser } from 'nodecg/types/browser';
 import Vue from 'vue';
@@ -11,11 +11,17 @@ export const reps: {
   timerRep: ReplicantBrowser<Timer>;
   matchinfoRep: ReplicantBrowser<Matchinfo>;
   commentatorsRep: ReplicantBrowser<Commentators>;
+  player1Rep: ReplicantBrowser<Player1>;
+  player2Rep: ReplicantBrowser<Player2>;
+  manualPbRep: ReplicantBrowser<Manual>;
   [k: string]: ReplicantBrowser<unknown>;
 } = {
   timerRep: nodecg.Replicant('timer'),
   matchinfoRep: nodecg.Replicant('matchinfo'),
-  commentatorsRep: nodecg.Replicant('commentators')
+  commentatorsRep: nodecg.Replicant('commentators'),
+  player1Rep: nodecg.Replicant('player1'),
+  player2Rep: nodecg.Replicant('player2'),
+  manualPbRep: nodecg.Replicant('manual'),
 };
 
 // All the replicant types.
@@ -23,6 +29,9 @@ export interface ReplicantTypes {
   timerRep: Timer;
   matchinfoRep: Matchinfo;
   commentatorsRep: Commentators;
+  player1Rep: Player1;
+  player2Rep: Player2;
+  manualPbRep: Manual;
 }
 
 @Module({ name: 'ReplicantModule', namespaced: true })

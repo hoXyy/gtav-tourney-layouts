@@ -1,6 +1,6 @@
 /* eslint-disable max-len */
 
-import { Matchinfo, Timer } from '@layouts/types/schemas';
+import { Matchinfo, Timer, Player1, Player2, Manual } from '@layouts/types/schemas';
 import { Commentators } from '@layouts/types/schemas/commentators';
 import { get as nodecg } from './nodecg';
 
@@ -12,3 +12,6 @@ import { get as nodecg } from './nodecg';
 export const timerRep = nodecg().Replicant<Timer>('timer');
 export const matchinfoRep = nodecg().Replicant<Matchinfo>('matchinfo');
 export const commentatorsRep = nodecg().Replicant<Commentators>('commentators');
+export const player1Rep = nodecg().Replicant<Player1>('player1');
+export const player2Rep = nodecg().Replicant<Player2>('player2');
+export const manualpb = nodecg().Replicant<Manual>('manual');

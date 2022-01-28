@@ -7,7 +7,7 @@ import clone from "clone";
 import Vue from "vue";
 import Vuex, { Store } from "vuex";
 import { Action, getModule, Module, VuexModule } from "vuex-module-decorators";
-import { Matchinfo, Commentators, Timer } from "@layouts/types/schemas";
+import { Matchinfo, Commentators, Timer, Player1 } from "@layouts/types/schemas";
 
 Vue.use(Vuex);
 
@@ -28,6 +28,14 @@ class OurModule extends VuexModule {
 
   get commentators(): Commentators {
     return this.reps.commentatorsRep;
+  }
+
+  get player1(): Player1 {
+    return this.reps.player1Rep;
+  }
+
+  get player2(): Player1 {
+    return this.reps.player2Rep;
   }
 }
 

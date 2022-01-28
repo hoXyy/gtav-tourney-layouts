@@ -10,18 +10,18 @@
         id="player1-name"
         style="font-family: Myriad Pro Bold; font-size: 72px"
       >
-        hossel_
+        {{ player1.name }}
       </p>
-      <p id="player1-pb" style="font-size: 32px">5:45:55 (60th)</p>
+      <p id="player1-pb" style="font-size: 32px">{{ player1.pb || '--:--' }}</p>
     </div>
     <div class="player" id="player2">
       <p
         id="player2-name"
         style="font-family: Myriad Pro Bold; font-size: 72px"
       >
-        TwistedTammer
+        {{ player2.name }}
       </p>
-      <p id="player2-pb" style="font-size: 32px">5:45:55 (60th)</p>
+      <p id="player2-pb" style="font-size: 32px">{{ player2.pb || '--:--' }}</p>
     </div>
     <div id="timer">{{ timer.time }}</div>
     <div id="tourney-stage">
@@ -34,7 +34,7 @@
 import { Vue, Component } from "vue-property-decorator";
 import { Getter } from "vuex-class";
 // import { replicantNS } from '@layouts/browser_shared/replicant_store';
-import type { Timer, Matchinfo, Commentators } from "@layouts/types/schemas";
+import type { Timer, Matchinfo, Commentators, Player1, Player2 } from "@layouts/types/schemas";
 import fitty, { FittyInstance } from "fitty";
 
 @Component
@@ -42,6 +42,9 @@ export default class extends Vue {
   @Getter readonly timer!: Timer; // from store.ts
   @Getter readonly matchInfo!: Matchinfo; // from store.ts
   @Getter readonly commentators!: Commentators;
+  @Getter readonly player1!: Player1;
+  @Getter readonly player2!: Player2;
+
 
   fittyName1: FittyInstance | undefined;
   fittyName2: FittyInstance | undefined;

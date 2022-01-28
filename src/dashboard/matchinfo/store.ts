@@ -3,7 +3,7 @@ import {
   ReplicantModule,
   ReplicantTypes,
 } from "@layouts/browser_shared/replicant_store";
-import { Matchinfo } from "@layouts/types/schemas";
+import { Matchinfo, Player1, Player2, Manual } from "@layouts/types/schemas";
 import clone from "clone";
 import Vue from "vue";
 import Vuex, { Store } from "vuex";
@@ -22,9 +22,36 @@ class OurModule extends VuexModule {
     return this.reps.matchinfoRep;
   }
 
+  get player1Rep(): Player1 {
+    return this.reps.player1Rep;
+  }
+
+  get player2Rep(): Player2 {
+    return this.reps.player2Rep;
+  }
+
+  get manualPbRep(): Manual {
+    return this.reps.manualPbRep;
+  }
+
   @Action({ rawError: true })
   updateMatchInfo(val: Matchinfo): void {
     replicantModule.setReplicant<Matchinfo>({ name: "matchinfoRep", val });
+  }
+
+  @Action({ rawError: true })
+  updateManualPb(val: Manual): void {
+    replicantModule.setReplicant<Manual>({ name: "manualPbRep", val });
+  }
+
+  @Action({ rawError: true })
+  updatePlayer1(val: Player1): void {
+    replicantModule.setReplicant<Player1>({ name: "player1Rep", val });
+  }
+
+  @Action({ rawError: true })
+  updatePlayer2(val: Player2): void {
+    replicantModule.setReplicant<Player2>({ name: "player2Rep", val });
   }
 }
 

@@ -1,0 +1,21 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string",
+      "default": "AlexHonix"
+    },
+    "src": {
+      "type": "string",
+      "default": "AlexHonix"
+    },
+    "pb": {
+      "type": "string"
+    },
+    "avatar": {
+      "type": "string"
+    }
+  },
+  "required": ["name", "src"]
+}

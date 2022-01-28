@@ -27,6 +27,7 @@
     "watch:extension": "tsc -b tsconfig.extension.json -w"
   },
   "dependencies": {
+    "axios": "^0.25.0",
     "fitty": "^2.3.6",
     "livesplit-core": "^0.10.2",
     "lodash": "^4.17.21",
