@@ -129,3 +129,5 @@ dist
 /dashboard/
 /extension/
 /graphics/
+
+.DS_Store

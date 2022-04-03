@@ -1,6 +1,12 @@
 /* eslint-disable max-len */
 
-import { Matchinfo, Timer, Player1, Player2, Manual } from '@layouts/types/schemas';
+import {
+    Matchinfo,
+    Timer,
+    Player1,
+    Player2,
+    Manual,
+} from '@layouts/types/schemas';
 import { Commentators } from '@layouts/types/schemas/commentators';
 import { get as nodecg } from './nodecg';
 

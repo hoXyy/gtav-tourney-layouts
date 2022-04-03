@@ -6,9 +6,9 @@
  */
 
 export interface Timer {
-	time: string;
-	milliseconds: number;
-	timestamp: number;
-	phase: string;
-	[k: string]: unknown;
+    time: string;
+    milliseconds: number;
+    timestamp: number;
+    phase: string;
+    [k: string]: unknown;
 }

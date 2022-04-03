@@ -6,5 +6,5 @@
  */
 
 export interface Configschema {
-	exampleProperty: string;
+    exampleProperty: string;
 }

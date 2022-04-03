@@ -1,6 +1,6 @@
-import _ from "lodash";
-import { get } from "./nodecg";
-import type { ListenForCb } from "nodecg/types/lib/nodecg-instance";
+import _ from 'lodash';
+import { get } from './nodecg';
+import type { ListenForCb } from 'nodecg/types/lib/nodecg-instance';
 
 const nodecg = get();
 
@@ -9,7 +9,7 @@ const nodecg = get();
  * @param num Number which you want to turn into a padded string.
  */
 export function padTimeNumber(num: number): string {
-  return num.toString().padStart(2, "0");
+    return num.toString().padStart(2, '0');
 }
 
 /**
@@ -17,11 +17,11 @@ export function padTimeNumber(num: number): string {
  * @param time Time string you wish to convert.
  */
 export function timeStrToMS(time: string): number {
-  const ts = time.split(":");
-  if (ts.length === 2) {
-    ts.unshift("00"); // Adds 0 hours if they are not specified.
-  }
-  return Date.UTC(1970, 0, 1, Number(ts[0]), Number(ts[1]), Number(ts[2]));
+    const ts = time.split(':');
+    if (ts.length === 2) {
+        ts.unshift('00'); // Adds 0 hours if they are not specified.
+    }
+    return Date.UTC(1970, 0, 1, Number(ts[0]), Number(ts[1]), Number(ts[2]));
 }
 
 /**
@@ -29,15 +29,15 @@ export function timeStrToMS(time: string): number {
  * @param ms Milliseconds you wish to convert.
  */
 export function msToTimeStr(ms: number): string {
-  let string = "";
-  const seconds = Math.floor((ms / 1000) % 60);
-  const minutes = Math.floor((ms / (1000 * 60)) % 60);
-  const hours = Math.floor(ms / (1000 * 60 * 60));
-  if (hours > 0) {
-    string += `${hours}:`;
-  }
-  string += `${padTimeNumber(minutes)}:${padTimeNumber(seconds)}`;
-  return string;
+    let string = '';
+    const seconds = Math.floor((ms / 1000) % 60);
+    const minutes = Math.floor((ms / (1000 * 60)) % 60);
+    const hours = Math.floor(ms / (1000 * 60 * 60));
+    if (hours > 0) {
+        string += `${hours}:`;
+    }
+    string += `${padTimeNumber(minutes)}:${padTimeNumber(seconds)}`;
+    return string;
 }
 
 /**
@@ -45,9 +45,9 @@ export function msToTimeStr(ms: number): string {
  * @param ms Milliseconds to sleep for.
  */
 export function sleep(ms: number): Promise<void> {
-  return new Promise((resolve) => {
-    setTimeout(resolve, ms);
-  });
+    return new Promise((resolve) => {
+        setTimeout(resolve, ms);
+    });
 }
 
 /**
@@ -57,11 +57,11 @@ export function sleep(ms: number): Promise<void> {
  * @param data Anything else you want to send alongside.
  */
 export function processAck<T>(
-  ack: ListenForCb | undefined,
-  err: Error | null,
-  data?: T
+    ack: ListenForCb | undefined,
+    err: Error | null,
+    data?: T
 ): void {
-  if (ack && !ack.handled) {
-    ack(err, data);
-  }
+    if (ack && !ack.handled) {
+        ack(err, data);
+    }
 }

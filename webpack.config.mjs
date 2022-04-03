@@ -42,6 +42,7 @@ const config = (name) => {
       ),
       new ForkTsCheckerWebpackPlugin({
         typescript: {
+          memoryLimit: 4096,
           extensions: {
             vue: true,
           },

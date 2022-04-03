@@ -1,3 +1,3 @@
 export interface ExampleType {
-  exampleProperty: string;
+    exampleProperty: string;
 }
