@@ -8,6 +8,9 @@ import { msToTimeStr } from './util/helpers';
 import axios from 'axios';
 import { get } from './util/nodecg';
 
+let pb1_string = null;
+let pb2_string = null;
+
 const nodecg = get();
 
 const segmentIDs: { [key: string]: string } = {
@@ -21,84 +24,168 @@ const segmentIDs: { [key: string]: string } = {
     'The Third Way': '21gyooo1',
 };
 
-player1Rep.on('change', async (newVal) => {
+player1Rep.on('change', (newVal, oldVal) => {
     if (!manualpb.value.player1) {
-        let res = await axios.get(
-            `https://www.speedrun.com/api/v1/users?lookup=${encodeURIComponent(
-                newVal.src
-            )}`
-        );
-        if (res.data.length > 0) {
-            try {
-                let pb_data = await axios.get(
-                    `https://www.speedrun.com/api/v1/users/${res.data[0].id}/personal-bests`
-                );
-                player1Rep.value.pb = getPlayerPB(pb_data.data);
-            } catch (err) {
-                nodecg.log.error(err);
-                player1Rep.value.pb = '--:--';
-            }
-        } else {
-            player1Rep.value.pb = '--:--';
-        }
-    }
-});
-
-player2Rep.on('change', async (newVal) => {
-    if (!manualpb.value.player2) {
-        let res = await axios.get(
-            `https://www.speedrun.com/api/v1/users?lookup=${encodeURIComponent(
-                newVal.src
-            )}`
-        );
-        if (res.data.length > 0) {
-            let pb_data = await axios.get(
-                `https://www.speedrun.com/api/v1/users/${res.data[0].id}/personal-bests`
-            );
-            player2Rep.value.pb = getPlayerPB(pb_data.data);
-        } else {
-            player2Rep.value.pb = '--:--';
-        }
-    }
-});
-
-/**
- * Gets player PB from speedrun.com for currently selected segment
- * @param data Player's PB data from speedrun.com
- */
-function getPlayerPB(data: any): string {
-    let pb_string = '';
-    console.log(data);
-    if (data) {
-        let nopb = true;
-        for (let i = 0; i < data.length; i++) {
-            console.log(data[i].run.category);
-            if (
-                data[i].run.category === '7kjvmgk3' &&
-                data[i].run.values.jlzwo90l ==
-                    segmentIDs[matchinfoRep.value.segment]
-            ) {
-                const time = msToTimeStr(data[i].run.times.realtime_t * 1000);
-                console.log('pb found');
-                nopb = false;
-                if (data[i].place % 10 === 1) {
-                    pb_string = time + ` (` + data[i].place + `st)`;
-                } else if (data[i].place % 10 === 2) {
-                    pb_string = time + ` (` + data[i].place + `nd)`;
-                } else if (data[i].place % 10 === 3) {
-                    pb_string = time + ` (` + data[i].place + `rd)`;
-                } else {
-                    pb_string = time + ` (` + data[i].place + `th)`;
+        axios
+            .get(
+                `https://www.speedrun.com/api/v1/users?lookup=${encodeURIComponent(
+                    newVal.src
+                )}`
+            )
+            .then((res) => {
+                let parsed = res.data;
+                if (parsed.data.length > 0) {
+                    axios
+                        .get(
+                            `https://www.speedrun.com/api/v1/users/` +
+                                parsed.data[0].id +
+                                `/personal-bests`
+                        )
+                        .then((res) => {
+                            parsed = res.data;
+                            let x = null;
+                            let nopb = false;
+                            for (let i = 0; i < parsed.data.length; i++) {
+                                x += parsed.data[i];
+                                if (
+                                    parsed.data[i].run.category ===
+                                        '7kjvmgk3' &&
+                                    parsed.data[i].run.values.jlzwo90l ==
+                                        segmentIDs[matchinfoRep.value.segment]
+                                ) {
+                                    console.log;
+                                    var time = msToTimeStr(
+                                        parsed.data[i].run.times.realtime_t *
+                                            1000
+                                    );
+                                    nopb = false;
+                                    if (parsed.data[i].place % 10 === 1) {
+                                        pb1_string =
+                                            time +
+                                            ` (` +
+                                            parsed.data[i].place +
+                                            `st)`;
+                                    } else if (
+                                        parsed.data[i].place % 10 ===
+                                        2
+                                    ) {
+                                        pb1_string =
+                                            time +
+                                            ` (` +
+                                            parsed.data[i].place +
+                                            `nd)`;
+                                    } else if (
+                                        parsed.data[i].place % 10 ===
+                                        3
+                                    ) {
+                                        pb1_string =
+                                            time +
+                                            ` (` +
+                                            parsed.data[i].place +
+                                            `rd)`;
+                                    } else {
+                                        pb1_string =
+                                            time +
+                                            ` (` +
+                                            parsed.data[i].place +
+                                            `th)`;
+                                    }
+                                    player1Rep.value.pb = pb1_string;
+                                } else if (nopb) {
+                                    player1Rep.value.pb = '--:--';
+                                }
+                            }
+                        })
+                        .catch((err) => {
+                            nodecg.log.error(err);
+                        });
                 }
-            } else if (nopb) {
-                pb_string = '--:--';
-            } else {
-                pb_string = '--:--';
-            }
-        }
-        pb_string = '--:--';
-    } else {
-        pb_string = '--:--';
+            })
+            .catch((err) => {
+                nodecg.log.error(err);
+            });
     }
-    return pb_string;
-}
+});
+
+player2Rep.on('change', (newVal, oldVal) => {
+    if (!manualpb.value.player2) {
+        axios
+            .get(
+                `https://www.speedrun.com/api/v1/users?lookup=${encodeURIComponent(
+                    newVal.src
+                )}`
+            )
+            .then((res) => {
+                let parsed = res.data;
+                if (parsed.data.length > 0) {
+                    axios
+                        .get(
+                            `https://www.speedrun.com/api/v1/users/` +
+                                parsed.data[0].id +
+                                `/personal-bests`
+                        )
+                        .then((res) => {
+                            parsed = res.data;
+                            let x = null;
+                            let nopb = false;
+                            for (let i = 0; i < parsed.data.length; i++) {
+                                x += parsed.data[i];
+                                if (
+                                    parsed.data[i].run.category ===
+                                        '7kjvmgk3' &&
+                                    parsed.data[i].run.values.jlzwo90l ==
+                                        segmentIDs[matchinfoRep.value.segment]
+                                ) {
+                                    console.log;
+                                    var time = msToTimeStr(
+                                        parsed.data[i].run.times.realtime_t *
+                                            1000
+                                    );
+                                    nopb = false;
+                                    if (parsed.data[i].place % 10 === 1) {
+                                        pb2_string =
+                                            time +
+                                            ` (` +
+                                            parsed.data[i].place +
+                                            `st)`;
+                                    } else if (
+                                        parsed.data[i].place % 10 ===
+                                        2
+                                    ) {
+                                        pb2_string =
+                                            time +
+                                            ` (` +
+                                            parsed.data[i].place +
+                                            `nd)`;
+                                    } else if (
+                                        parsed.data[i].place % 10 ===
+                                        3
+                                    ) {
+                                        pb2_string =
+                                            time +
+                                            ` (` +
+                                            parsed.data[i].place +
+                                            `rd)`;
+                                    } else {
+                                        pb2_string =
+                                            time +
+                                            ` (` +
+                                            parsed.data[i].place +
+                                            `th)`;
+                                    }
+                                    player2Rep.value.pb = pb2_string;
+                                } else if (nopb) {
+                                    player2Rep.value.pb = '--:--';
+                                }
+                            }
+                        })
+                        .catch((err) => {
+                            nodecg.log.error(err);
+                        });
+                }
+            })
+            .catch((err) => {
+                nodecg.log.error(err);
+            });
+    }
+});
