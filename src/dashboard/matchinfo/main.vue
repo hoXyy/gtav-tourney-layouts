@@ -78,15 +78,9 @@
         Manual,
     } from '@layouts/types/schemas';
     import { storeModule } from './store';
-    // import { replicantNS } from '@layouts/browser_shared/replicant_store';
 
     @Component
     export default class extends Vue {
-        // If you want to just read a replicant without assigning a getter anywhere, you can do this too.
-        /* @replicantNS.State(
-    (s) => s.reps.exampleReplicant,
-  ) readonly exampleReplicant!: ExampleReplicant; */
-
         @Getter readonly matchInfo!: Matchinfo;
         @Getter readonly manualPbRep!: Manual;
         @Getter readonly player1Rep!: Player1;

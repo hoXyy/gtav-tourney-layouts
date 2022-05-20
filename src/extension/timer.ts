@@ -4,10 +4,11 @@ import clone from 'clone';
 import livesplitCore from 'livesplit-core';
 import { msToTimeStr, processAck, timeStrToMS } from './util/helpers';
 import { get } from './util/nodecg';
-import { timerRep } from './util/replicants';
+import { timerRep, player1Rep, player2Rep } from './util/replicants';
 
 const nodecg = get();
 let timer: livesplitCore.Timer;
+let runnersFinished: boolean = false;
 
 // Cross references for LiveSplit's TimerPhases.
 const LS_TIMER_PHASE = {
@@ -128,9 +129,37 @@ export async function resetTimer(force?: boolean): Promise<void> {
 
         timer.reset(false);
         resetTimerRepToDefault();
+        player1Rep.value.finishTime = undefined;
+        player2Rep.value.finishTime = undefined;
+        runnersFinished = false;
         nodecg.log.debug('[Timer] Reset');
     } catch (err) {
         nodecg.log.debug('[Timer] Cannot reset timer:', err);
+        throw err;
+    }
+}
+
+/**
+ * Stop/finish the timer.
+ * @param id Team's ID you wish to have finish (if there is an active run).
+ * @param forfeit Specify this if the team has forfeit.
+ */
+async function stopTimer(): Promise<void> {
+    try {
+        // Error if timer is not running.
+        if (!['running', 'paused'].includes(timerRep.value.phase)) {
+            throw new Error('Timer is not running/paused');
+        }
+
+        // Stop the timer if all the teams have finished (or no teams exist).
+        if (timerRep.value.state === 'paused') {
+            timer.resume();
+        }
+        timer.split();
+        timerRep.value.phase = 'finished';
+        nodecg.log.debug('[Timer] Finished');
+    } catch (err) {
+        nodecg.log.debug('[Timer] Cannot stop timer:', err);
         throw err;
     }
 }
@@ -186,6 +215,31 @@ nodecg.listenFor('timerReset', (force, ack) => {
     resetTimer(force)
         .then(() => processAck(ack, null))
         .catch((err) => processAck(ack, err));
+});
+nodecg.listenFor('timerFinish', (data, ack) => {
+    stopTimer()
+        .then(() => processAck(ack, null))
+        .catch((err) => processAck(ack, err));
+});
+
+nodecg.listenFor('finishPlayer1', () => {
+    player1Rep.value.finishTime = timerRep.value.time;
+});
+
+nodecg.listenFor('finishPlayer2', () => {
+    player2Rep.value.finishTime = timerRep.value.time;
+});
+
+// Stop timer when both runners finished
+timerRep.on('change', () => {
+    if (
+        player1Rep.value.finishTime &&
+        player2Rep.value.finishTime &&
+        !runnersFinished
+    ) {
+        runnersFinished = true;
+        nodecg.sendMessage('timerFinish');
+    }
 });
 
 setInterval(tick, 100);

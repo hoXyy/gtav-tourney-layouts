@@ -6,7 +6,7 @@
  */
 
 export interface Matchinfo {
-    segment: string;
-    stage?: string;
-    [k: string]: unknown;
+	segment: string;
+	stage?: string;
+	[k: string]: unknown;
 }

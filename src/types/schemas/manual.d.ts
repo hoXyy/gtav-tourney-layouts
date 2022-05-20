@@ -6,7 +6,7 @@
  */
 
 export interface Manual {
-    player1: boolean;
-    player2: boolean;
-    [k: string]: unknown;
+	player1: boolean;
+	player2: boolean;
+	[k: string]: unknown;
 }

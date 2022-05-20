@@ -26,6 +26,8 @@ export const reps: {
     player1Rep: ReplicantBrowser<Player1>;
     player2Rep: ReplicantBrowser<Player2>;
     manualPbRep: ReplicantBrowser<Manual>;
+    segmentPickRep: ReplicantBrowser<string[]>;
+    segmentBanRep: ReplicantBrowser<string[]>;
     [k: string]: ReplicantBrowser<unknown>;
 } = {
     timerRep: nodecg.Replicant('timer'),
@@ -34,6 +36,8 @@ export const reps: {
     player1Rep: nodecg.Replicant('player1'),
     player2Rep: nodecg.Replicant('player2'),
     manualPbRep: nodecg.Replicant('manual'),
+    segmentPickRep: nodecg.Replicant('segmentPick'),
+    segmentBanRep: nodecg.Replicant('segmentBan'),
 };
 
 // All the replicant types.
@@ -44,6 +48,8 @@ export interface ReplicantTypes {
     player1Rep: Player1;
     player2Rep: Player2;
     manualPbRep: Manual;
+    segmentPickRep: string[];
+    segmentBanRep: string[];
 }
 
 @Module({ name: 'ReplicantModule', namespaced: true })

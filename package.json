@@ -106,6 +106,12 @@
         "title": "Commentators",
         "file": "commentators.html",
         "width": 3
+      },
+      {
+        "name": "selection",
+        "title": "Segment Pick/Ban",
+        "file": "selection.html",
+        "width": 3
       }
     ],
     "graphics": [
@@ -116,6 +122,11 @@
       },
       {
         "file": "matchup.html",
+        "width": 1920,
+        "height": 1080
+      },
+      {
+        "file": "selection.html",
         "width": 1920,
         "height": 1080
       }

@@ -15,6 +15,9 @@
     },
     "avatar": {
       "type": "string"
+    },
+    "finishTime": {
+      "type": "string"
     }
   },
   "required": ["name", "src"]

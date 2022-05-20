@@ -13,7 +13,10 @@
                 {{ player1.name }}
             </p>
             <p id="player1-pb" style="font-size: 32px">
-                {{ player1.pb || '--:--' }}
+                PB: {{ player1.pb || '--:--' }}
+                <template v-if="player1.finishTime">
+                    | Finish Time: {{ player1.finishTime }}</template
+                >
             </p>
         </div>
         <div class="player" id="player2">
@@ -24,7 +27,10 @@
                 {{ player2.name }}
             </p>
             <p id="player2-pb" style="font-size: 32px">
-                {{ player2.pb || '--:--' }}
+                <template v-if="player2.finishTime">
+                    Finish Time: {{ player2.finishTime }} |
+                </template>
+                PB: {{ player2.pb || '--:--' }}
             </p>
         </div>
         <div id="timer">{{ timer.time }}</div>
@@ -39,7 +45,6 @@
 <script lang="ts">
     import { Vue, Component } from 'vue-property-decorator';
     import { Getter } from 'vuex-class';
-    // import { replicantNS } from '@layouts/browser_shared/replicant_store';
     import type {
         Timer,
         Matchinfo,

@@ -6,9 +6,10 @@
  */
 
 export interface Player1 {
-    name: string;
-    src: string;
-    pb?: string;
-    avatar?: string;
-    [k: string]: unknown;
+	name: string;
+	src: string;
+	pb?: string;
+	avatar?: string;
+	finishTime?: string;
+	[k: string]: unknown;
 }
