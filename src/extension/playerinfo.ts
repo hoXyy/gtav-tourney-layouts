@@ -24,12 +24,12 @@ const segmentIDs: { [key: string]: string } = {
     'The Third Way': '21gyooo1',
 };
 
-player1Rep.on('change', (newVal, oldVal) => {
+function updatePlayer1PB(): void {
     if (!manualpb.value.player1) {
         axios
             .get(
                 `https://www.speedrun.com/api/v1/users?lookup=${encodeURIComponent(
-                    newVal.src
+                    player1Rep.value.src
                 )}`
             )
             .then((res) => {
@@ -105,14 +105,14 @@ player1Rep.on('change', (newVal, oldVal) => {
                 nodecg.log.error(err);
             });
     }
-});
+}
 
-player2Rep.on('change', (newVal, oldVal) => {
+function updatePlayer2PB(): void {
     if (!manualpb.value.player2) {
         axios
             .get(
                 `https://www.speedrun.com/api/v1/users?lookup=${encodeURIComponent(
-                    newVal.src
+                    player2Rep.value.src
                 )}`
             )
             .then((res) => {
@@ -188,4 +188,19 @@ player2Rep.on('change', (newVal, oldVal) => {
                 nodecg.log.error(err);
             });
     }
+}
+
+player1Rep.on('change', () => {
+    updatePlayer1PB();
+});
+
+player2Rep.on('change', () => {
+    updatePlayer2PB();
+});
+
+matchinfoRep.on('change', () => {
+    updatePlayer1PB();
+    setTimeout(() => {
+        updatePlayer2PB();
+    }, 500);
 });

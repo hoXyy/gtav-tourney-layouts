@@ -1,30 +1,36 @@
 <template>
     <div>
         <img id="background" src="./img/matchup.png" />
-        <div class="player" id="player1" v-if="player1">
-            <p
-                id="player1-name"
-                :style="{ fontFamily: 'Myriad Pro Bold', fontSize: '95px' }"
-                v-if="player1.name"
-            >
-                {{ player1.name }}
-            </p>
-            <p id="player1-pb" :style="{ fontSize: '48px' }" v-if="player1.pb">
-                {{ player1.pb }}
-            </p>
-        </div>
-        <div class="player" id="player2" v-if="player2">
-            <p
-                id="player2-name"
-                :style="{ fontFamily: 'Myriad Pro Bold', fontSize: '95px' }"
-                v-if="player2.name"
-            >
-                {{ player2.name }}
-            </p>
-            <p id="player2-pb" :style="{ fontSize: '48px' }" v-if="player2.pb">
-                {{ player2.pb }}
-            </p>
-        </div>
+        <transition name="fade" mode="out-in">
+            <div class="player" id="player1" v-if="player1" :key="player1.name">
+                <p
+                    id="player1-name"
+                    :style="{ fontFamily: 'Myriad Pro Bold', fontSize: '95px' }"
+                    v-if="player1.name"
+                    :key="player1.name"
+                >
+                    {{ player1.name }}
+                </p>
+                <p id="player1-pb" :style="{ fontSize: '48px' }">
+                    PB: {{ player1.pb || '--:--' }}
+                </p>
+            </div>
+        </transition>
+        <transition name="fade" mode="out-in">
+            <div class="player" id="player2" v-if="player2" :key="player2.name">
+                <p
+                    id="player2-name"
+                    :style="{ fontFamily: 'Myriad Pro Bold', fontSize: '95px' }"
+                    v-if="player2.name"
+                    :key="player2.name"
+                >
+                    {{ player2.name }}
+                </p>
+                <p id="player2-pb" :style="{ fontSize: '48px' }">
+                    PB: {{ player2.pb || '--:--' }}
+                </p>
+            </div>
+        </transition>
         <div id="on-deck">
             <p :style="{ fontSize: '52px' }">Commentators</p>
             <p>{{ commentators }}</p>
@@ -38,7 +44,7 @@
 </template>
 
 <script lang="ts">
-    import { Vue, Component } from 'vue-property-decorator';
+    import { Vue, Component, Watch } from 'vue-property-decorator';
     import { Getter } from 'vuex-class';
     // import { replicantNS } from '@layouts/browser_shared/replicant_store';
     import { storeModule } from './store';
@@ -61,15 +67,21 @@
         fittyName2: FittyInstance | undefined;
         fittyStage: FittyInstance | undefined;
 
-        fit(): void {
+        fitPlayer1(): void {
             [this.fittyName1] = fitty('#player1-name', {
                 minSize: 1,
                 maxSize: 95,
             });
-            [this.fittyName2] = fitty('#player1-name', {
+        }
+
+        fitPlayer2(): void {
+            [this.fittyName2] = fitty('#player2-name', {
                 minSize: 1,
                 maxSize: 95,
             });
+        }
+
+        fitStage(): void {
             [this.fittyStage] = fitty('#tourney-stage-name', {
                 minSize: 1,
                 maxSize: 60,
@@ -77,7 +89,32 @@
         }
 
         mounted() {
-            this.fit();
+            setTimeout(() => {
+                this.fitPlayer1();
+                this.fitPlayer2();
+                this.fitStage();
+            }, 500);
+        }
+
+        @Watch('player1')
+        onPlayer1Change() {
+            setTimeout(() => {
+                this.fitPlayer1();
+            }, 500);
+        }
+
+        @Watch('player2')
+        onPlayer2Change() {
+            setTimeout(() => {
+                this.fitPlayer2();
+            }, 500);
+        }
+
+        @Watch('matchInfo')
+        onInfoChange() {
+            setTimeout(() => {
+                this.fitStage();
+            }, 500);
         }
     }
 </script>

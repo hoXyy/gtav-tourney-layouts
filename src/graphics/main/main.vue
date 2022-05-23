@@ -43,7 +43,7 @@
 </template>
 
 <script lang="ts">
-    import { Vue, Component } from 'vue-property-decorator';
+    import { Vue, Component, Watch } from 'vue-property-decorator';
     import { Getter } from 'vuex-class';
     import type {
         Timer,
@@ -62,27 +62,50 @@
         @Getter readonly player1!: Player1;
         @Getter readonly player2!: Player2;
 
-        fittyName1: FittyInstance | undefined;
-        fittyName2: FittyInstance | undefined;
-        fittyStage: FittyInstance | undefined;
+        fittyName1: FittyInstance[] | undefined;
+        fittyName2: FittyInstance[] | undefined;
+        fittyStage: FittyInstance[] | undefined;
 
         fit(): void {
-            [this.fittyName1] = fitty('#player1-name', {
+            this.fittyName1 = fitty('#player1-name', {
                 minSize: 1,
                 maxSize: 72,
             });
-            [this.fittyName2] = fitty('#player1-name', {
+            this.fittyName2 = fitty('#player2-name', {
                 minSize: 1,
                 maxSize: 72,
             });
-            [this.fittyStage] = fitty('#tourney-stage-name', {
+            this.fittyStage = fitty('#tourney-stage-name', {
                 minSize: 1,
                 maxSize: 60,
             });
         }
 
         mounted() {
-            this.fit();
+            setTimeout(() => {
+                this.fit();
+            }, 500);
+        }
+
+        @Watch('player1')
+        onPlayer1Change() {
+            setTimeout(() => {
+                this.fit();
+            }, 500);
+        }
+
+        @Watch('player2')
+        onPlayer2Change() {
+            setTimeout(() => {
+                this.fit();
+            }, 500);
+        }
+
+        @Watch('matchInfo')
+        onInfoChange() {
+            setTimeout(() => {
+                this.fit();
+            }, 500);
         }
     }
 </script>
