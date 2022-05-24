@@ -36,8 +36,8 @@ export const reps: {
     player1Rep: nodecg.Replicant('player1'),
     player2Rep: nodecg.Replicant('player2'),
     manualPbRep: nodecg.Replicant('manual'),
-    segmentPickRep: nodecg.Replicant('segmentPick'),
-    segmentBanRep: nodecg.Replicant('segmentBan'),
+    segmentPickRep: nodecg.Replicant('segmentPick', { defaultValue: [] }),
+    segmentBanRep: nodecg.Replicant('segmentBan', { defaultValue: [] }),
 };
 
 // All the replicant types.
