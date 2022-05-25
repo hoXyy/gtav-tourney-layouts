@@ -2,5 +2,33 @@
   "$schema": "http://json-schema.org/draft-07/schema",
   "type": "object",
   "additionalProperties": false,
-  "properties": {}
+  "properties": {
+    "obs": {
+      "type": "object",
+      "properties": {
+        "enabled": {
+          "type": "boolean",
+          "default": true
+        },
+        "address": {
+          "type": "string",
+          "default": "localhost:4444"
+        },
+        "password": {
+          "type": "string",
+          "default": ""
+        },
+        "feed1": {
+          "type": "string",
+          "default": "Player 1 Feed"
+        },
+        "feed2": {
+          "type": "string",
+          "default": "Player 2 Feed"
+        }
+      },
+      "required": ["enabled", "address", "password", "feed1", "feed2"]
+    }
+  },
+  "required": ["obs"]
 }

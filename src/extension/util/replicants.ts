@@ -21,3 +21,4 @@ export const commentatorsRep = nodecg().Replicant<Commentators>('commentators');
 export const player1Rep = nodecg().Replicant<Player1>('player1');
 export const player2Rep = nodecg().Replicant<Player2>('player2');
 export const manualpb = nodecg().Replicant<Manual>('manual');
+export const connectedToOBS = nodecg().Replicant<boolean>('connectedToOBS', { defaultValue: false });

@@ -19,4 +19,5 @@ export = (nodecg: NodeCG): void => {
     set(nodecg);
     require('./timer');
     require('./playerinfo');
+    require('./obs')
 };

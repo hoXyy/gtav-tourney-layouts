@@ -32,7 +32,8 @@
     "fitty": "^2.3.6",
     "livesplit-core": "^0.10.2",
     "lodash": "^4.17.21",
-    "module-alias": "^2.2.2"
+    "module-alias": "^2.2.2",
+    "obs-websocket-js": "^4.0.3"
   },
   "devDependencies": {
     "@fontsource/roboto": "^4.5.1",
@@ -111,6 +112,12 @@
         "name": "selection",
         "title": "Segment Pick/Ban",
         "file": "selection.html",
+        "width": 3
+      },
+      {
+        "name": "streamAssign",
+        "title": "Stream Assign",
+        "file": "streamAssign.html",
         "width": 3
       }
     ],

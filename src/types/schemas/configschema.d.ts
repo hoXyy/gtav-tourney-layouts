@@ -5,4 +5,13 @@
  * and run json-schema-to-typescript to regenerate this file.
  */
 
-export interface Configschema {}
+export interface Configschema {
+	obs: {
+		enabled: boolean;
+		address: string;
+		password: string;
+		feed1: string;
+		feed2: string;
+		[k: string]: unknown;
+	};
+}
