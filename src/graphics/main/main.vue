@@ -9,11 +9,11 @@
             <div
                 id="avatar"
                 :style="{
-                    width: '98px',
-                    height: '98px',
+                    width: '92px',
+                    height: '92px',
                     position: 'absolute',
-                    left: '-84px',
-                    bottom: '8px',
+                    left: '-81px',
+                    bottom: '11px',
                 }"
             >
                 <img
@@ -52,11 +52,11 @@
             <div
                 id="avatar"
                 :style="{
-                    width: '98px',
-                    height: '98px',
+                    width: '92px',
+                    height: '92px',
                     position: 'absolute',
-                    right: '-81px',
-                    bottom: '8px',
+                    right: '-78px',
+                    bottom: '11px',
                 }"
             >
                 <img

@@ -6,11 +6,11 @@
                 <div
                     id="avatar"
                     :style="{
-                        width: '292px',
-                        height: '292px',
+                        width: '276px',
+                        height: '276px',
                         position: 'absolute',
-                        left: '278px',
-                        bottom: '190px',
+                        left: '286px',
+                        bottom: '198px',
                     }"
                 >
                     <img
@@ -49,11 +49,11 @@
                 <div
                     id="avatar"
                     :style="{
-                        width: '291px',
-                        height: '292px',
+                        width: '276px',
+                        height: '276px',
                         position: 'absolute',
-                        right: '278px',
-                        bottom: '190px',
+                        right: '287px',
+                        bottom: '198px',
                     }"
                 >
                     <img
@@ -206,7 +206,7 @@
 
     #player1 {
         bottom: 259px;
-        left: 50px;
+        left: 51px;
     }
 
     #player2 {
