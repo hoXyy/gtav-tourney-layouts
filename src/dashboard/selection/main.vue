@@ -5,22 +5,15 @@
                 <div :key="segment">
                     <span>{{ segment }}</span
                     >&nbsp;
-                    <v-btn
-                        @click="pickSegment(segment)"
-                        :disabled="
-                            segmentPick.includes(segment) ||
-                            segmentBan.includes(segment)
-                        "
-                        >Pick</v-btn
-                    >
-                    <v-btn
-                        @click="banSegment(segment)"
-                        :disabled="
-                            segmentBan.includes(segment) ||
-                            segmentPick.includes(segment)
-                        "
-                        >Ban</v-btn
-                    >
+                    <template v-if="!hasSegmentBeenBannedOrPicked(segment)">
+                        <v-btn @click="pickSegment(segment)">Pick</v-btn>
+                        <v-btn @click="banSegment(segment)">Ban</v-btn>
+                    </template>
+                    <template v-else>
+                        <v-btn @click="undoPickBan(segment)"
+                            >Undo Pick or Ban</v-btn
+                        >
+                    </template>
                 </div>
             </template>
             <br />
@@ -52,6 +45,16 @@
             'The Third Way',
         ];
 
+        hasSegmentBeenBannedOrPicked(segment: string): boolean {
+            if (this.segmentPick.includes(segment)) {
+                return true;
+            } else if (this.segmentBan.includes(segment)) {
+                return true;
+            } else {
+                return false;
+            }
+        }
+
         pickSegment(segment: string): void {
             storeModule.pickSegment(segment);
         }
@@ -62,6 +65,14 @@
 
         resetPickBans(): void {
             storeModule.resetPickBans();
+        }
+
+        undoPickBan(segment: string): void {
+            if (this.segmentPick.includes(segment)) {
+                storeModule.undoPick(segment);
+            } else if (this.segmentBan.includes(segment)) {
+                storeModule.undoBan(segment);
+            }
         }
     }
 </script>

@@ -62,6 +62,26 @@ class OurModule extends VuexModule {
             val: [],
         });
     }
+
+    @Action({ rawError: true })
+    undoBan(segment: string): void {
+        const currentBans = clone(this.segmentBan);
+        const newBans = currentBans.filter((val) => val != segment);
+        replicantModule.setReplicant<string[]>({
+            name: 'segmentBanRep',
+            val: newBans,
+        });
+    }
+
+    @Action({ rawError: true })
+    undoPick(segment: string): void {
+        const currentPicks = clone(this.segmentPick);
+        const newPicks = currentPicks.filter((val) => val != segment);
+        replicantModule.setReplicant<string[]>({
+            name: 'segmentPickRep',
+            val: newPicks,
+        });
+    }
 }
 
 const store = new Store({
