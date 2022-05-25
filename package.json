@@ -30,17 +30,22 @@
   "dependencies": {
     "axios": "^0.25.0",
     "fitty": "^2.3.6",
+    "image-to-base64": "^2.2.0",
     "livesplit-core": "^0.10.2",
     "lodash": "^4.17.21",
     "module-alias": "^2.2.2",
-    "obs-websocket-js": "^4.0.3"
+    "node-fetch": "^2.6.7",
+    "obs-websocket-js": "^4.0.3",
+    "stream-mime-type": "^1.0.2"
   },
   "devDependencies": {
     "@fontsource/roboto": "^4.5.1",
     "@mdi/font": "^6.5.95",
     "@types/clone": "^2.1.1",
+    "@types/image-to-base64": "^2.1.0",
     "@types/module-alias": "^2.0.1",
     "@types/node": "^16.11.19",
+    "@types/node-fetch": "^2.6.1",
     "@types/webpack-env": "^1.16.3",
     "@typescript-eslint/eslint-plugin": "^5.9.1",
     "@typescript-eslint/parser": "^5.9.1",

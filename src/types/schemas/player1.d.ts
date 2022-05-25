@@ -9,6 +9,7 @@ export interface Player1 {
 	name: string;
 	src: string;
 	pb?: string;
+	hasAvatar?: boolean;
 	avatar?: string;
 	finishTime?: string;
 	[k: string]: unknown;

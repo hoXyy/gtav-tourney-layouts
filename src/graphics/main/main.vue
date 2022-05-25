@@ -6,6 +6,35 @@
             <p>{{ commentators }}</p>
         </div>
         <div class="player" id="player1">
+            <div
+                id="avatar"
+                :style="{
+                    width: '98px',
+                    height: '98px',
+                    position: 'absolute',
+                    left: '-84px',
+                    bottom: '8px',
+                }"
+            >
+                <img
+                    v-if="player1.hasAvatar"
+                    :src="player1.avatar"
+                    :style="{
+                        width: '100%',
+                        height: '100%',
+                        objectFit: 'cover',
+                    }"
+                />
+                <img
+                    v-else
+                    src="../img/nopic.png"
+                    :style="{
+                        width: '100%',
+                        height: '100%',
+                        objectFit: 'cover',
+                    }"
+                />
+            </div>
             <p
                 id="player1-name"
                 style="font-family: Myriad Pro Bold; font-size: 72px"
@@ -20,6 +49,35 @@
             </p>
         </div>
         <div class="player" id="player2">
+            <div
+                id="avatar"
+                :style="{
+                    width: '98px',
+                    height: '98px',
+                    position: 'absolute',
+                    right: '-81px',
+                    bottom: '8px',
+                }"
+            >
+                <img
+                    v-if="player2.hasAvatar"
+                    :src="player2.avatar"
+                    :style="{
+                        width: '100%',
+                        height: '100%',
+                        objectFit: 'cover',
+                    }"
+                />
+                <img
+                    v-else
+                    src="../img/nopic.png"
+                    :style="{
+                        width: '100%',
+                        height: '100%',
+                        objectFit: 'cover',
+                    }"
+                />
+            </div>
             <p
                 id="player2-name"
                 style="font-family: Myriad Pro Bold; font-size: 72px"

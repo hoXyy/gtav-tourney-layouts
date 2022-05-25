@@ -7,6 +7,9 @@ import {
 import { msToTimeStr } from './util/helpers';
 import axios from 'axios';
 import { get } from './util/nodecg';
+import imageToBase64 from 'image-to-base64';
+import fetch from 'node-fetch';
+import { getMimeType } from 'stream-mime-type';
 
 let pb1_string = null;
 let pb2_string = null;
@@ -53,7 +56,6 @@ function updatePlayer1PB(): void {
                                     parsed.data[i].run.values.jlzwo90l ==
                                         segmentIDs[matchinfoRep.value.segment]
                                 ) {
-                                    console.log;
                                     var time = msToTimeStr(
                                         parsed.data[i].run.times.realtime_t *
                                             1000
@@ -136,7 +138,6 @@ function updatePlayer2PB(): void {
                                     parsed.data[i].run.values.jlzwo90l ==
                                         segmentIDs[matchinfoRep.value.segment]
                                 ) {
-                                    console.log;
                                     var time = msToTimeStr(
                                         parsed.data[i].run.times.realtime_t *
                                             1000
@@ -190,17 +191,97 @@ function updatePlayer2PB(): void {
     }
 }
 
+function getPlayer1Avatar(): void {
+    if (player1Rep.value.src) {
+        axios
+            .get(
+                `https://www.speedrun.com/api/v1/users?lookup=${encodeURIComponent(
+                    player1Rep.value.src
+                )}`
+            )
+            .then((res) => {
+                let data = res.data;
+                if (data.data.length > 0) {
+                    axios
+                        .get(
+                            `https://www.speedrun.com/api/v1/users/${data.data[0].id}`
+                        )
+                        .then(async (res) => {
+                            data = res.data;
+                            if (data.data.assets.image.uri != null) {
+                                player1Rep.value.hasAvatar = true;
+                                const avatarBase64 = await imageToBase64(
+                                    data.data.assets.image.uri
+                                );
+                                const mimeType = await getFileType(
+                                    data.data.assets.image.uri
+                                );
+                                let fullAvatar = `data:${mimeType};base64,${avatarBase64}`;
+                                player1Rep.value.avatar = fullAvatar;
+                            } else {
+                                player1Rep.value.hasAvatar = false;
+                                player1Rep.value.avatar = '';
+                            }
+                        });
+                }
+            });
+    }
+}
+
+function getPlayer2Avatar(): void {
+    if (player2Rep.value.src) {
+        axios
+            .get(
+                `https://www.speedrun.com/api/v1/users?lookup=${encodeURIComponent(
+                    player2Rep.value.src
+                )}`
+            )
+            .then((res) => {
+                let data = res.data;
+                if (data.data.length > 0) {
+                    axios
+                        .get(
+                            `https://www.speedrun.com/api/v1/users/${data.data[0].id}`
+                        )
+                        .then(async (res) => {
+                            data = res.data;
+                            if (data.data.assets.image.uri != null) {
+                                player2Rep.value.hasAvatar = true;
+                                const avatarBase64 = await imageToBase64(
+                                    data.data.assets.image.uri
+                                );
+                                const mimeType = await getFileType(
+                                    data.data.assets.image.uri
+                                );
+                                let fullAvatar = `data:${mimeType};base64,${avatarBase64}`;
+                                player2Rep.value.avatar = fullAvatar;
+                            } else {
+                                player2Rep.value.hasAvatar = false;
+                                player2Rep.value.avatar = '';
+                            }
+                        });
+                }
+            });
+    }
+}
+
+async function getFileType(url: string): Promise<string> {
+    const response = await fetch(url);
+    const { stream, mime } = await getMimeType(response.body);
+    return mime;
+}
+
 player1Rep.on('change', () => {
     updatePlayer1PB();
+    getPlayer1Avatar();
 });
 
 player2Rep.on('change', () => {
     updatePlayer2PB();
+    getPlayer2Avatar();
 });
 
 matchinfoRep.on('change', () => {
     updatePlayer1PB();
-    setTimeout(() => {
-        updatePlayer2PB();
-    }, 500);
+    updatePlayer2PB();
 });

@@ -3,6 +3,34 @@
         <img id="background" src="./img/matchup.png" />
         <transition name="fade" mode="out-in">
             <div class="player" id="player1" v-if="player1" :key="player1.name">
+                <div
+                    id="avatar"
+                    :style="{
+                        width: '292px',
+                        height: '292px',
+                        position: 'absolute',
+                        left: '278px',
+                        bottom: '190px',
+                    }"
+                >
+                    <img
+                        v-if="player1.hasAvatar"
+                        :src="player1.avatar"
+                        :style="{
+                            width: '100%',
+                            height: '100%',
+                            objectFit: 'cover',
+                        }"
+                    />
+                    <img
+                        v-else
+                        src="../img/nopic.png"
+                        :style="{
+                            width: '100%',
+                            objectFit: 'cover',
+                        }"
+                    />
+                </div>
                 <p
                     id="player1-name"
                     :style="{ fontFamily: 'Myriad Pro Bold', fontSize: '95px' }"
@@ -18,6 +46,35 @@
         </transition>
         <transition name="fade" mode="out-in">
             <div class="player" id="player2" v-if="player2" :key="player2.name">
+                <div
+                    id="avatar"
+                    :style="{
+                        width: '291px',
+                        height: '292px',
+                        position: 'absolute',
+                        right: '278px',
+                        bottom: '190px',
+                    }"
+                >
+                    <img
+                        v-if="player2.hasAvatar"
+                        :src="player2.avatar"
+                        :style="{
+                            width: '100%',
+                            height: '100%',
+                            objectFit: 'cover',
+                        }"
+                    />
+                    <img
+                        v-else
+                        src="../img/nopic.png"
+                        :style="{
+                            width: '100%',
+                            objectFit: 'cover',
+                        }"
+                    />
+                </div>
+
                 <p
                     id="player2-name"
                     :style="{ fontFamily: 'Myriad Pro Bold', fontSize: '95px' }"

@@ -13,6 +13,9 @@
     "pb": {
       "type": "string"
     },
+    "hasAvatar": {
+      "type": "boolean"
+    },
     "avatar": {
       "type": "string"
     },
