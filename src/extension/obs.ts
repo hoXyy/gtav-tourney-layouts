@@ -36,7 +36,7 @@ function reconnectToOBS() {
 
 function updateBrowserSourceUrl(source: string, twitch: string) {
     if (source && twitch) {
-        const url = `https://player.twitch.tv/?channel=${twitch}&enableExtensions=false&muted=false&player=popout&volume=1&parent=twitch.tv`;
+        const url = `https://player.twitch.tv/?channel=${twitch.toLowerCase()}&enableExtensions=false&muted=false&player=popout&volume=1&parent=twitch.tv`;
         obs.send('SetSourceSettings', {
             sourceName: source,
             sourceType: 'browser_source',

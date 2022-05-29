@@ -94,6 +94,18 @@
   },
   "nodecg": {
     "compatibleRange": "^1.8.1",
+    "soundCues": [
+      {
+        "name": "segment-pick",
+        "defaultVolume": 60,
+        "defaultFile": "sound/cues/pick.mp3"
+      },
+      {
+        "name": "segment-ban",
+        "defaultVolume": 60,
+        "defaultFile": "sound/cues/ban.mp3"
+      }
+    ],
     "dashboardPanels": [
       {
         "name": "timer",

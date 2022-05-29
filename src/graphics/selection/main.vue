@@ -98,7 +98,7 @@
 </template>
 
 <script lang="ts">
-    import { Vue, Component } from 'vue-property-decorator';
+    import { Vue, Component, Watch } from 'vue-property-decorator';
     import { Getter } from 'vuex-class';
     import type { Matchinfo } from '@layouts/types/schemas';
     import fitty, { FittyInstance } from 'fitty';
@@ -120,6 +120,22 @@
 
         mounted() {
             this.fit();
+        }
+
+        @Watch('segmentPick')
+        onSegmentPick(newVal: string[], oldVal: string[]): void {
+            // only play if something actually got picked
+            if (newVal.length > oldVal.length) {
+                nodecg.playSound('segment-pick', { updateVolume: true });
+            }
+        }
+
+        @Watch('segmentBan')
+        onSegmentBan(newVal: string[], oldVal: string[]): void {
+            // only play if something actually got banned
+            if (newVal.length > oldVal.length) {
+                nodecg.playSound('segment-ban', { updateVolume: true });
+            }
         }
     }
 </script>
