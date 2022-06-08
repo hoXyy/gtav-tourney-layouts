@@ -2,8 +2,8 @@
     <div>
         <img id="background" src="./img/main.png" />
         <div id="on-deck">
-            <p style="font-size: 52px">Commentators</p>
-            <p>{{ commentators }}</p>
+            <commentators />
+            <prize-pool />
         </div>
         <div class="player" id="player1">
             <div
@@ -106,17 +106,22 @@
     import type {
         Timer,
         Matchinfo,
-        Commentators,
         Player1,
         Player2,
     } from '@layouts/types/schemas';
     import fitty, { FittyInstance } from 'fitty';
+    import Commentators from '../components/Commentators.vue';
+    import PrizePool from '../components/PrizePool.vue';
 
-    @Component
+    @Component({
+        components: {
+            Commentators,
+            PrizePool,
+        },
+    })
     export default class extends Vue {
         @Getter readonly timer!: Timer;
         @Getter readonly matchInfo!: Matchinfo;
-        @Getter readonly commentators!: Commentators;
         @Getter readonly player1!: Player1;
         @Getter readonly player2!: Player2;
 
@@ -165,6 +170,13 @@
                 this.fit();
             }, 500);
         }
+
+        @Watch('timer')
+        onTimerChange(newVal: Timer) {
+            if (newVal.phase === 'finished') {
+                nodecg.playSound('timer-done', { updateVolume: true });
+            }
+        }
     }
 </script>
 
@@ -179,6 +191,9 @@
         left: 45px;
         font-size: 72px;
         line-height: 1px;
+        width: calc(100% - 90px);
+        display: flex;
+        justify-content: space-between;
     }
 
     #background {

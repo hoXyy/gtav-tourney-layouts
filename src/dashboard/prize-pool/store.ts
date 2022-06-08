@@ -3,16 +3,9 @@ import {
     ReplicantModule,
     ReplicantTypes,
 } from '@layouts/browser_shared/replicant_store';
-import clone from 'clone';
 import Vue from 'vue';
 import Vuex, { Store } from 'vuex';
 import { Action, getModule, Module, VuexModule } from 'vuex-module-decorators';
-import {
-    Matchinfo,
-    Commentators,
-    Timer,
-    Player1,
-} from '@layouts/types/schemas';
 
 Vue.use(Vuex);
 
@@ -23,28 +16,17 @@ class OurModule extends VuexModule {
         return this.context.rootState.ReplicantModule.reps;
     }
 
-    get timer(): Timer {
-        return this.reps.timerRep;
-    }
-
-    get matchInfo(): Matchinfo {
-        return this.reps.matchinfoRep;
-    }
-
-    get commentators(): Commentators {
-        return this.reps.commentatorsRep;
-    }
-
-    get player1(): Player1 {
-        return this.reps.player1Rep;
-    }
-
-    get player2(): Player1 {
-        return this.reps.player2Rep;
-    }
-
-    get prizePool(): number {
+    // Helper getter to return a specific replicant.
+    get prizePoolAmount(): number {
         return this.reps.prizePool;
+    }
+
+    @Action({ rawError: true })
+    updatePrizePool(val: number): void {
+        replicantModule.setReplicant<number>({
+            name: 'prizePool',
+            val,
+        });
     }
 }
 

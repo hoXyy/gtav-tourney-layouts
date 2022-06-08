@@ -33,6 +33,10 @@ class OurModule extends VuexModule {
     get player2(): Player1 {
         return this.reps.player2Rep;
     }
+
+    get prizePool(): number {
+        return this.reps.prizePool;
+    }
 }
 
 const store = new Store({

@@ -28,6 +28,7 @@ export const reps: {
     manualPbRep: ReplicantBrowser<Manual>;
     segmentPickRep: ReplicantBrowser<string[]>;
     segmentBanRep: ReplicantBrowser<string[]>;
+    prizePool: ReplicantBrowser<number>;
     [k: string]: ReplicantBrowser<unknown>;
 } = {
     timerRep: nodecg.Replicant('timer'),
@@ -38,6 +39,7 @@ export const reps: {
     manualPbRep: nodecg.Replicant('manual'),
     segmentPickRep: nodecg.Replicant('segmentPick', { defaultValue: [] }),
     segmentBanRep: nodecg.Replicant('segmentBan', { defaultValue: [] }),
+    prizePool: nodecg.Replicant('prizePool', { defaultValue: 0 }),
 };
 
 // All the replicant types.
@@ -50,6 +52,7 @@ export interface ReplicantTypes {
     manualPbRep: Manual;
     segmentPickRep: string[];
     segmentBanRep: string[];
+    prizePool: number;
 }
 
 @Module({ name: 'ReplicantModule', namespaced: true })

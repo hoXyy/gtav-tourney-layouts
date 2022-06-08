@@ -89,8 +89,8 @@
             </div>
         </transition>
         <div id="on-deck">
-            <p :style="{ fontSize: '52px' }">Commentators</p>
-            <p>{{ commentators }}</p>
+            <commentators />
+            <prize-pool />
         </div>
         <div id="tourney-stage">
             <p id="tourney-stage-name">
@@ -103,20 +103,19 @@
 <script lang="ts">
     import { Vue, Component, Watch } from 'vue-property-decorator';
     import { Getter } from 'vuex-class';
-    // import { replicantNS } from '@layouts/browser_shared/replicant_store';
-    import { storeModule } from './store';
-    import type {
-        Matchinfo,
-        Commentators,
-        Player1,
-        Player2,
-    } from '@layouts/types/schemas';
+    import type { Matchinfo, Player1, Player2 } from '@layouts/types/schemas';
     import fitty, { FittyInstance } from 'fitty';
+    import Commentators from '../components/Commentators.vue';
+    import PrizePool from '../components/PrizePool.vue';
 
-    @Component
+    @Component({
+        components: {
+            Commentators,
+            PrizePool,
+        },
+    })
     export default class extends Vue {
         @Getter readonly matchInfo!: Matchinfo; // from store.ts
-        @Getter readonly commentators!: Commentators;
         @Getter readonly player1!: Player1;
         @Getter readonly player2!: Player2;
 
@@ -187,6 +186,9 @@
         left: 45px;
         font-size: 72px;
         line-height: 1px;
+        width: calc(100% - 90px);
+        display: flex;
+        justify-content: space-between;
     }
 
     .player {
