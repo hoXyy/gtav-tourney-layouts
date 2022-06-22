@@ -91,10 +91,22 @@
                 PB: {{ player2.pb || '--:--' }}
             </p>
         </div>
-        <div id="timer">{{ timer.time }}</div>
+        <div id="timer">
+            {{ timer.time }} <br />
+            <p style="font-size: 72px">
+                {{ score.player1 }} - {{ score.player2 }}
+            </p>
+        </div>
         <div id="tourney-stage">
             <p id="tourney-stage-name">
-                <b>{{ matchInfo.stage }}</b>
+                <transition name="fade" mode="out-in">
+                    <b :key="timestamp" v-if="textCycle === 0">{{
+                        matchInfo.stage
+                    }}</b>
+                    <b :key="timestamp" v-if="textCycle === 1">{{
+                        matchInfo.segment
+                    }}</b>
+                </transition>
             </p>
         </div>
     </div>
@@ -108,6 +120,7 @@
         Matchinfo,
         Player1,
         Player2,
+        Score,
     } from '@layouts/types/schemas';
     import fitty, { FittyInstance } from 'fitty';
     import Commentators from '../components/Commentators.vue';
@@ -124,10 +137,14 @@
         @Getter readonly matchInfo!: Matchinfo;
         @Getter readonly player1!: Player1;
         @Getter readonly player2!: Player2;
+        @Getter readonly score!: Score;
 
         fittyName1: FittyInstance[] | undefined;
         fittyName2: FittyInstance[] | undefined;
         fittyStage: FittyInstance[] | undefined;
+
+        textCycle: number = 0;
+        timestamp = Date.now();
 
         fit(): void {
             this.fittyName1 = fitty('#player1-name', {
@@ -148,17 +165,34 @@
             setTimeout(() => {
                 this.fit();
             }, 500);
+
+            setInterval(() => {
+                this.timestamp = Date.now();
+                if (!this.textCycle) {
+                    this.textCycle = 1;
+                } else {
+                    this.textCycle = 0;
+                }
+            }, 30 * 1000);
         }
 
         @Watch('player1')
-        onPlayer1Change() {
+        onPlayer1Change(newVal: Player1) {
+            if (newVal.finishTime && !this.player2.finishTime) {
+                nodecg.playSound('timer-done', { updateVolume: true });
+            }
+            
             setTimeout(() => {
                 this.fit();
             }, 500);
         }
 
         @Watch('player2')
-        onPlayer2Change() {
+        onPlayer2Change(newVal: Player2) {
+            if (newVal.finishTime && !this.player1.finishTime) {
+                nodecg.playSound('timer-done', { updateVolume: true });
+            }
+
             setTimeout(() => {
                 this.fit();
             }, 500);
@@ -170,18 +204,20 @@
                 this.fit();
             }, 500);
         }
-
-        @Watch('timer')
-        onTimerChange(newVal: Timer) {
-            if (newVal.phase === 'finished') {
-                nodecg.playSound('timer-done', { updateVolume: true });
-            }
-        }
     }
 </script>
 
 <style>
     @import url('../css/base.css');
+
+    .fade-enter-active,
+    .fade-leave-active {
+        transition: opacity 0.7s;
+    }
+    .fade-enter,
+    .fade-leave-to {
+        opacity: 0;
+    }
 
     #on-deck {
         font-family: 'signpainter_housescriptRg';
@@ -224,7 +260,8 @@
         width: 100%;
         text-align: center;
         position: absolute;
-        bottom: 200px;
+        bottom: 110px;
+        line-height: 15px;
     }
 
     .player {

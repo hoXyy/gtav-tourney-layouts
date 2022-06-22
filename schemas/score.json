@@ -1,0 +1,16 @@
+{
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "type": "object",
+    "properties": {
+      "player1": {
+        "type": "number",
+        "default": 0
+      },
+      "player2": {
+        "type": "number",
+        "default": 0
+      }
+    },
+    "required": ["player1", "player2"]
+  }
+  

@@ -3,7 +3,7 @@ import {
     ReplicantModule,
     ReplicantTypes,
 } from '@layouts/browser_shared/replicant_store';
-import { Timer, Player1, Player2 } from '@layouts/types/schemas';
+import { Timer, Player1, Player2, Score } from '@layouts/types/schemas';
 import clone from 'clone';
 import Vue from 'vue';
 import Vuex, { Store } from 'vuex';
@@ -29,6 +29,73 @@ class OurModule extends VuexModule {
 
     get player2(): Player2 {
         return this.reps.player2Rep;
+    }
+
+    get score(): Score {
+        return this.reps.scoreRep;
+    }
+
+    @Action({ rawError: true })
+    increasePlayer1Score() {
+        let currentScore = clone(this.score);
+        let newScore = {
+            player1: ++currentScore.player1,
+            player2: currentScore.player2,
+        };
+
+        replicantModule.setReplicant<Score>({
+            name: 'scoreRep',
+            val: newScore,
+        });
+    }
+    @Action({ rawError: true })
+    decreasePlayer1Score() {
+        let currentScore = clone(this.score);
+        let newScore = {
+            player1: --currentScore.player1,
+            player2: currentScore.player2,
+        };
+
+        replicantModule.setReplicant<Score>({
+            name: 'scoreRep',
+            val: newScore,
+        });
+    }
+    @Action({ rawError: true })
+    increasePlayer2Score() {
+        let currentScore = clone(this.score);
+        let newScore = {
+            player1: currentScore.player1,
+            player2: ++currentScore.player2,
+        };
+
+        replicantModule.setReplicant<Score>({
+            name: 'scoreRep',
+            val: newScore,
+        });
+    }
+    @Action({ rawError: true })
+    decreasePlayer2Score() {
+        let currentScore = clone(this.score);
+        let newScore = {
+            player1: currentScore.player1,
+            player2: --currentScore.player2,
+        };
+
+        replicantModule.setReplicant<Score>({
+            name: 'scoreRep',
+            val: newScore,
+        });
+    }
+
+    @Action({ rawError: true })
+    resetScore() {
+        let score = { player1: 0, player2: 0 };
+
+        replicantModule.setReplicant<Score>({
+            name: 'scoreRep',
+            val: score,
+        });
     }
 }
 

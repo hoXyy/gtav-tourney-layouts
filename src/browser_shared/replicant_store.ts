@@ -5,6 +5,7 @@ import type {
     Manual,
     Player1,
     Player2,
+    Score
 } from '@layouts/types/schemas';
 import clone from 'clone';
 import type { ReplicantBrowser } from 'nodecg/types/browser';
@@ -29,6 +30,7 @@ export const reps: {
     segmentPickRep: ReplicantBrowser<string[]>;
     segmentBanRep: ReplicantBrowser<string[]>;
     prizePool: ReplicantBrowser<number>;
+    scoreRep: ReplicantBrowser<Score>;
     [k: string]: ReplicantBrowser<unknown>;
 } = {
     timerRep: nodecg.Replicant('timer'),
@@ -40,6 +42,7 @@ export const reps: {
     segmentPickRep: nodecg.Replicant('segmentPick', { defaultValue: [] }),
     segmentBanRep: nodecg.Replicant('segmentBan', { defaultValue: [] }),
     prizePool: nodecg.Replicant('prizePool', { defaultValue: 0 }),
+    scoreRep: nodecg.Replicant('score')
 };
 
 // All the replicant types.
@@ -53,6 +56,7 @@ export interface ReplicantTypes {
     segmentPickRep: string[];
     segmentBanRep: string[];
     prizePool: number;
+    scoreRep: Score;
 }
 
 @Module({ name: 'ReplicantModule', namespaced: true })

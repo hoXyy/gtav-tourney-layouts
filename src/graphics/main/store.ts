@@ -12,6 +12,7 @@ import {
     Commentators,
     Timer,
     Player1,
+    Score,
 } from '@layouts/types/schemas';
 
 Vue.use(Vuex);
@@ -45,6 +46,10 @@ class OurModule extends VuexModule {
 
     get prizePool(): number {
         return this.reps.prizePool;
+    }
+
+    get score(): Score {
+        return this.reps.scoreRep;
     }
 }
 
