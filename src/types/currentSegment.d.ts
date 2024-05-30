@@ -5,4 +5,16 @@
  * and run json-schema-to-typescript to regenerate this file.
  */
 
-export type Commentators = string;
+export interface CurrentSegment {
+	name:
+		| 'Trevor%'
+		| 'Countryside'
+		| 'Blitz Play'
+		| 'Deep Inside'
+		| 'Fresh Meat'
+		| 'The Third Way'
+		| 'All Stunt Jumps'
+		| 'All Races'
+		| 'Epsilon Program';
+	pickedBy: string;
+}

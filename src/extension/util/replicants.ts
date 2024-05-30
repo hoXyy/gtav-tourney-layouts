@@ -1,13 +1,14 @@
 /* eslint-disable max-len */
 
+import { Commentators, Timer } from '@layouts/types/schemas';
 import {
-    Matchinfo,
-    Timer,
-    Player1,
-    Player2,
-    Manual,
-} from '@layouts/types/schemas';
-import { Commentators } from '@layouts/types/schemas/commentators';
+    CurrentMatch,
+    CurrentSegment,
+    FinishTimes,
+    Matches,
+    PlayerPbs,
+    Score,
+} from '@layouts/types';
 import { get as nodecg } from './nodecg';
 
 /**
@@ -15,10 +16,18 @@ import { get as nodecg } from './nodecg';
  * and to make sure they have any correct settings on startup.
  */
 
-export const timerRep = nodecg().Replicant<Timer>('timer');
-export const matchinfoRep = nodecg().Replicant<Matchinfo>('matchinfo');
-export const commentatorsRep = nodecg().Replicant<Commentators>('commentators');
-export const player1Rep = nodecg().Replicant<Player1>('player1');
-export const player2Rep = nodecg().Replicant<Player2>('player2');
-export const manualpb = nodecg().Replicant<Manual>('manual');
-export const connectedToOBS = nodecg().Replicant<boolean>('connectedToOBS', { defaultValue: false });
+export const connectedToOBS = nodecg().Replicant<boolean>('connectedToOBS', {
+    defaultValue: false,
+});
+export const matches = nodecg().Replicant<Matches>('matches', {
+    defaultValue: [],
+});
+export const currentMatch = nodecg().Replicant<CurrentMatch>('currentMatch');
+export const currentSegment =
+    nodecg().Replicant<CurrentSegment>('currentSegment');
+export const commentators = nodecg().Replicant<Commentators>('commentators');
+export const playerPBs = nodecg().Replicant<PlayerPbs>('playerPbs');
+export const timer = nodecg().Replicant<Timer>('timer');
+export const finishTimes = nodecg().Replicant<FinishTimes>('finishTimes');
+export const score = nodecg().Replicant<Score>('score');
+export const prizePool = nodecg().Replicant<number>('prizePool');

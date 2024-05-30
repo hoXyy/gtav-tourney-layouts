@@ -4,7 +4,7 @@ import clone from 'clone';
 import livesplitCore from 'livesplit-core';
 import { msToTimeStr, processAck, timeStrToMS } from './util/helpers';
 import { get } from './util/nodecg';
-import { timerRep, player1Rep, player2Rep } from './util/replicants';
+import { timer as timerRep, finishTimes } from './util/replicants';
 
 const nodecg = get();
 let timer: livesplitCore.Timer;
@@ -129,8 +129,8 @@ export async function resetTimer(force?: boolean): Promise<void> {
 
         timer.reset(false);
         resetTimerRepToDefault();
-        player1Rep.value.finishTime = undefined;
-        player2Rep.value.finishTime = undefined;
+        finishTimes.value.player1 = '';
+        finishTimes.value.player2 = '';
         runnersFinished = false;
         nodecg.log.debug('[Timer] Reset');
     } catch (err) {
@@ -223,18 +223,18 @@ nodecg.listenFor('timerFinish', (data, ack) => {
 });
 
 nodecg.listenFor('finishPlayer1', () => {
-    player1Rep.value.finishTime = timerRep.value.time;
+    finishTimes.value.player1 = timerRep.value.time;
 });
 
 nodecg.listenFor('finishPlayer2', () => {
-    player2Rep.value.finishTime = timerRep.value.time;
+    finishTimes.value.player2 = timerRep.value.time;
 });
 
 // Stop timer when both runners finished
 timerRep.on('change', () => {
     if (
-        player1Rep.value.finishTime &&
-        player2Rep.value.finishTime &&
+        finishTimes.value.player1.length > 0 &&
+        finishTimes.value.player2.length > 0 &&
         !runnersFinished
     ) {
         runnersFinished = true;

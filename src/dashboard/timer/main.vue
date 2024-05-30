@@ -1,147 +1,206 @@
 <template>
-    <v-app>
-        <v-container fluid class="text-center">
-            <h1 style="font-size: 48px">{{ timer.time }}</h1>
-        </v-container>
-        <v-container fluid class="text-center">
-            <h2>
-                <span style="font-size: 12px">{{ player1.name }}</span>
-                {{ score.player1 }} - {{ score.player2 }}
-                <span style="font-size: 12px">{{ player2.name }}</span>
-            </h2>
-            <v-btn @click="increasePlayer1Score()">+</v-btn
-            ><v-btn @click="decreasePlayer1Score()">-</v-btn>
-            <v-btn @click="increasePlayer2Score()">+</v-btn
-            ><v-btn @click="decreasePlayer2Score()">-</v-btn>
-            <br />
-            <v-btn @click="resetScore()">Reset Score</v-btn>
-        </v-container>
-        <v-container
-            fluid
-            class="d-flex text-center"
-            style="justify-content: space-between"
+    <div v-if="timer && timer.data">
+        <div style="width: 100%; text-align: center">
+            <h1 style="font-size: 48px">
+                <b>{{ timer.data.time }}</b>
+            </h1>
+        </div>
+        <div
+            style="display: flex; text-align: center; width: 100%"
+            v-if="
+                currentMatch &&
+                currentMatch.data &&
+                currentMatch.data.type != 'bo1' &&
+                score &&
+                score.data
+            "
         >
-            <v-btn
+            <h2>
+                <span style="font-size: 12px">{{ player1Name }}</span>
+                {{ score.data.player1 }} - {{ score.data.player2 }}
+                <span style="font-size: 12px">{{ player2Name }}</span>
+            </h2>
+            <QBtn color="black" @click="increasePlayer1Score()">+</QBtn
+            ><QBtn color="black" @click="decreasePlayer1Score()">-</QBtn>
+            <QBtn color="black" @click="increasePlayer2Score()">+</QBtn
+            ><QBtn color="black" @click="decreasePlayer2Score()">-</QBtn>
+            <br />
+            <QBtn color="black" @click="resetScore()">Reset Score</QBtn>
+        </div>
+        <div
+            style="
+                display: flex;
+                text-align: center;
+                justify-content: space-between;
+                width: 100%;
+            "
+        >
+            <QBtn
                 width="45%"
+                color="black"
                 @click="startTimer"
-                :disabled="phase === 'finished'"
-                >{{
-                    phase === 'running' ? 'Pause Timer' : 'Start Timer'
-                }}</v-btn
+                :disable="phase === 'finished'"
+                >{{ phase === 'running' ? 'Pause Timer' : 'Start Timer' }}</QBtn
             >
-            <v-btn
+            <QBtn
                 width="45%"
+                color="black"
                 @click="resetTimer"
-                :disabled="phase === 'stopped'"
-                >Reset Timer</v-btn
+                :disable="phase === 'stopped'"
+                >Reset Timer</QBtn
             >
-        </v-container>
-        <div style="width: 100%; display: flex; flex-direction: column">
-            <v-btn
+        </div>
+        <div
+            style="width: 100%; display: flex; flex-direction: column"
+            v-if="
+                currentMatch &&
+                currentMatch.data &&
+                finishTimes &&
+                finishTimes.data
+            "
+        >
+            <QBtn
                 width="100%"
+                color="black"
                 @click="finishPlayer1"
                 :disabled="
                     phase === 'stopped' ||
                     phase === 'finished' ||
-                    player1.finishTime != undefined
+                    finishTimes.data.player1.length > 0
                 "
                 class="my-2"
                 >Finish Player 1
-                <template v-if="player1.name"
-                    >({{ player1.name }})</template
-                ></v-btn
+                <template v-if="player1Name.length"
+                    >({{ player1Name }})</template
+                ></QBtn
             >
-            <v-btn
+            <QBtn
                 width="100%"
+                color="black"
                 @click="finishPlayer2"
                 :disabled="
                     phase === 'stopped' ||
                     phase === 'finished' ||
-                    player2.finishTime != undefined
+                    finishTimes.data.player2.length > 0
                 "
                 >Finish Player 2
-                <template v-if="player2.name"
-                    >({{ player2.name }})</template
-                ></v-btn
+                <template v-if="player2Name.length"
+                    >({{ player2Name }})</template
+                ></QBtn
             >
         </div>
-    </v-app>
+    </div>
 </template>
 
-<script lang="ts">
-    import { Vue, Component } from 'vue-property-decorator';
-    import type {
-        Timer,
-        Player1,
-        Player2,
-        Score,
-    } from '@layouts/types/schemas';
-    import { Getter } from 'vuex-class';
-    import { storeModule } from './store';
+<script setup lang="ts">
+    import { Timer } from '@layouts/types/schemas';
+    import { CurrentMatch, Score, FinishTimes } from '@layouts/types';
+    import { useReplicant } from 'nodecg-vue-composable';
+    import { $ref } from 'vue/macros';
+    import { watch } from 'vue';
 
-    @Component
-    export default class extends Vue {
-        @Getter readonly timer!: Timer; // from store.ts
-        @Getter readonly player1!: Player1;
-        @Getter readonly player2!: Player2;
-        @Getter readonly score!: Score;
+    const score = useReplicant<Score>('score', 'gtav-tourney-layouts');
+    const currentMatch = useReplicant<CurrentMatch>(
+        'currentMatch',
+        'gtav-tourney-layouts'
+    );
+    const finishTimes = useReplicant<FinishTimes>(
+        'finishTimes',
+        'gtav-tourney-layouts'
+    );
+    const timer = useReplicant<Timer>('timer', 'gtav-tourney-layouts');
 
-        get phase() {
-            return this.timer.phase;
-        }
+    let phase = $ref('');
+    let player1Name = $ref('');
+    let player2Name = $ref('');
 
-        async startTimer(): Promise<void> {
-            try {
-                if (this.phase === 'stopped' || this.phase === 'paused') {
-                    await nodecg.sendMessage('timerStart');
-                } else if (this.phase === 'running') {
-                    await nodecg.sendMessage('timerPause');
-                }
-            } catch (err) {
-                // catch
+    watch(
+        () => timer?.data,
+        (val) => {
+            if (val) phase = val.phase;
+        },
+        { immediate: true }
+    );
+
+    watch(
+        () => currentMatch?.data,
+        (val) => {
+            if (val) {
+                player1Name = val.players.player1.name;
+                player2Name = val.players.player2.name;
             }
-        }
+        },
+        { immediate: true }
+    );
 
-        async resetTimer(): Promise<void> {
-            try {
-                await nodecg.sendMessage('timerReset', true);
-            } catch (err) {
-                // error
+    async function startTimer() {
+        try {
+            if (phase === 'stopped' || phase === 'paused') {
+                await nodecg.sendMessage('timerStart');
+            } else if (phase === 'running') {
+                await nodecg.sendMessage('timerPause');
             }
+        } catch (err) {
+            // catch
         }
+    }
 
-        async finishPlayer1(): Promise<void> {
-            try {
-                await nodecg.sendMessage('finishPlayer1');
-            } catch (err) {
-                // err
-            }
+    async function resetTimer(): Promise<void> {
+        try {
+            await nodecg.sendMessage('timerReset', true);
+        } catch (err) {
+            // error
         }
+    }
 
-        async finishPlayer2(): Promise<void> {
-            try {
-                await nodecg.sendMessage('finishPlayer2');
-            } catch (err) {
-                // err
-            }
+    async function finishPlayer1(): Promise<void> {
+        try {
+            await nodecg.sendMessage('finishPlayer1', true);
+        } catch (err) {
+            // error
         }
+    }
+    async function finishPlayer2(): Promise<void> {
+        try {
+            await nodecg.sendMessage('finishPlayer2', true);
+        } catch (err) {
+            // error
+        }
+    }
 
-        increasePlayer1Score(): void {
-            storeModule.increasePlayer1Score();
+    function increasePlayer1Score() {
+        if (score && score.data) {
+            score.data.player1++;
+            score.save();
         }
-        increasePlayer2Score(): void {
-            storeModule.increasePlayer2Score();
-        }
+    }
 
-        decreasePlayer1Score(): void {
-            storeModule.decreasePlayer1Score();
+    function increasePlayer2Score() {
+        if (score && score.data) {
+            score.data.player2++;
+            score.save();
         }
-        decreasePlayer2Score(): void {
-            storeModule.decreasePlayer2Score();
-        }
+    }
 
-        resetScore(): void {
-            storeModule.resetScore();
+    function decreasePlayer1Score() {
+        if (score && score.data) {
+            score.data.player1--;
+            score.save();
+        }
+    }
+
+    function decreasePlayer2Score() {
+        if (score && score.data) {
+            score.data.player2--;
+            score.save();
+        }
+    }
+
+    function resetScore() {
+        if (score && score.data) {
+            score.data.player1 = 0;
+            score.data.player2 = 0;
+            score.save();
         }
     }
 </script>

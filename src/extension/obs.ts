@@ -9,23 +9,18 @@ let reconnectTimeout: NodeJS.Timeout;
 
 if (config.enabled) {
     nodecg().log.info('[OBS] Attempting to connect to OBS...');
-    obs.connect({ address: config.address, password: config.password }).catch(
-        (err) => {
-            nodecg().log.error(
-                `[OBS] Failed to connect to OBS! Reason: ${err.error}`
-            );
-        }
-    );
+    obs.connect(config.address, config.password).catch((err) => {
+        nodecg().log.error(
+            `[OBS] Failed to connect to OBS! Reason: ${err.error}`
+        );
+    });
 }
 
 function reconnectToOBS() {
     clearTimeout(reconnectTimeout);
     if (!connectedToOBS.value && config.enabled) {
         nodecg().log.info('[OBS] Attempting to connect to OBS...');
-        obs.connect({
-            address: config.address,
-            password: config.password,
-        }).catch((err) => {
+        obs.connect(config.address, config.password).catch((err) => {
             nodecg().log.error(
                 `[OBS] Failed to connect to OBS! Reason: ${err.error}`
             );
@@ -37,12 +32,11 @@ function reconnectToOBS() {
 function updateBrowserSourceUrl(source: string, twitch: string) {
     if (source && twitch) {
         const url = `https://player.twitch.tv/?channel=${twitch.toLowerCase()}&enableExtensions=false&muted=false&player=popout&volume=1&parent=twitch.tv`;
-        obs.send('SetSourceSettings', {
-            sourceName: source,
-            sourceType: 'browser_source',
-            sourceSettings: { url: url },
-        }).catch((err) => {
-            nodecg().log.warn("[OBS] Couldn't update feed", err)
+        obs.call('SetInputSettings', {
+            inputName: source,
+            inputSettings: { url: url },
+        }).catch((err: any) => {
+            nodecg().log.warn("[OBS] Couldn't update feed", err);
         });
     }
 }
@@ -62,8 +56,8 @@ obs.on('ConnectionClosed', () => {
 
 nodecg().listenFor('updatePlayer1Feed', (twitch: string) => {
     updateBrowserSourceUrl(config.feed1, twitch);
-})
+});
 
 nodecg().listenFor('updatePlayer2Feed', (twitch: string) => {
     updateBrowserSourceUrl(config.feed2, twitch);
-})
+});

@@ -1,6 +1,6 @@
 import _ from 'lodash';
 import { get } from './nodecg';
-import type { ListenForCb } from 'nodecg/types/lib/nodecg-instance';
+import type { ListenForCb } from 'nodecg-types/types/lib/nodecg-instance';
 
 const nodecg = get();
 
