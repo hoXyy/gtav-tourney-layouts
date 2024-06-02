@@ -6,15 +6,15 @@
  */
 
 export interface CurrentSegment {
-	name:
-		| 'Trevor%'
-		| 'Countryside'
-		| 'Blitz Play'
-		| 'Deep Inside'
-		| 'Fresh Meat'
-		| 'The Third Way'
-		| 'All Stunt Jumps'
-		| 'All Races'
-		| 'Epsilon Program';
-	pickedBy: string;
+  name:
+    | 'Trevor%'
+    | 'Countryside'
+    | 'Blitz Play'
+    | 'Deep Inside'
+    | 'Fresh Meat'
+    | 'The Third Way'
+    | 'All Stunt Jumps'
+    | 'All Races'
+    | 'Epsilon Program';
+  pickedBy: string;
 }

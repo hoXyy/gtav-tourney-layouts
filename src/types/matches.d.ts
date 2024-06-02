@@ -6,36 +6,36 @@
  */
 
 export type Matches = {
-	id: string;
-	stage: string;
-	type: 'bo1' | 'bo3' | 'bo5';
-	players: {
-		player1: {
-			name: string;
-			srcUsername?: string;
-			manualPb?: boolean;
-			avatar: string;
-			showAvatar: boolean;
-		};
-		player2: {
-			name: string;
-			srcUsername?: string;
-			manualPb?: boolean;
-			avatar: string;
-			showAvatar: boolean;
-		};
-	};
-	segments: {
-		name:
-			| 'Trevor%'
-			| 'Countryside'
-			| 'Blitz Play'
-			| 'Deep Inside'
-			| 'Fresh Meat'
-			| 'The Third Way'
-			| 'All Stunt Jumps'
-			| 'All Races'
-			| 'Epsilon Program';
-		pickedBy: string;
-	}[];
+  id: string;
+  stage: string;
+  type: 'bo1' | 'bo3' | 'bo5';
+  players: {
+    player1: {
+      name: string;
+      srcUsername?: string;
+      manualPb?: boolean;
+      avatar: string;
+      showAvatar: boolean;
+    };
+    player2: {
+      name: string;
+      srcUsername?: string;
+      manualPb?: boolean;
+      avatar: string;
+      showAvatar: boolean;
+    };
+  };
+  segments: {
+    name:
+      | 'Trevor%'
+      | 'Countryside'
+      | 'Blitz Play'
+      | 'Deep Inside'
+      | 'Fresh Meat'
+      | 'The Third Way'
+      | 'All Stunt Jumps'
+      | 'All Races'
+      | 'Epsilon Program';
+    pickedBy: string;
+  }[];
 }[];

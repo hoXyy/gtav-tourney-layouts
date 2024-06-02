@@ -6,5 +6,6 @@
  */
 
 export interface PlayerPbs {
-	[k: string]: unknown;
+  player1: string;
+  player2: string;
 }

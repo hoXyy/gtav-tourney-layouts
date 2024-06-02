@@ -6,12 +6,12 @@
  */
 
 export interface Configschema {
-	obs: {
-		enabled: boolean;
-		address: string;
-		password: string;
-		feed1: string;
-		feed2: string;
-		[k: string]: unknown;
-	};
+  obs: {
+    enabled: boolean;
+    address: string;
+    password: string;
+    feed1: string;
+    feed2: string;
+    [k: string]: unknown;
+  };
 }
