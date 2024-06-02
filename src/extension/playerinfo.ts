@@ -4,7 +4,7 @@ import fetch from 'node-fetch';
 import { getMimeType } from 'stream-mime-type';
 import { msToTimeStr } from './util/helpers';
 import { get } from './util/nodecg';
-import { currentMatch, currentSegment, matches, playerPBs } from './util/replicants';
+import { currentMatch, currentSegment, manualPb, matches, playerPBs } from './util/replicants';
 
 const nodecg = get();
 
@@ -66,7 +66,7 @@ async function getPlayerPB(srcUsername: string, category: string) {
       }
     }
   } catch (err: any) {
-    console.error(`Error getting PB for ${srcUsername}: `, err);
+    nodecg.log.error(`Error getting PB for ${srcUsername}: `, err);
   }
 
   return pb;
@@ -78,7 +78,6 @@ async function getPlayerAvatar(srcUsername: string) {
     let userData = await axios.get(
       `https://www.speedrun.com/api/v1/users?lookup=${encodeURIComponent(srcUsername)}`
     );
-    console.log(userData.data);
     if (userData.data.data.length > 0) {
       let userId = userData.data.data[0].id;
       const user = (await axios.get(`https://www.speedrun.com/api/v1/users/${userId}`)).data;
@@ -89,7 +88,7 @@ async function getPlayerAvatar(srcUsername: string) {
       }
     }
   } catch (err: any) {
-    console.error(`Error getting avatar for ${srcUsername}: `, err);
+    nodecg.log.error(`Error getting avatar for ${srcUsername}: `, err);
   }
 
   return avatarBase64;
@@ -120,13 +119,18 @@ matches.on('change', async () => {
 currentSegment.on('change', async (val) => {
   if (val && val.name) {
     if (currentMatch.value) {
-      if (currentMatch.value.players.player1.srcUsername) {
-        const pb = await getPlayerPB(currentMatch.value.players.player1.srcUsername, val.name);
-        playerPBs.value.player1 = pb;
+      if (!manualPb.value.player1) {
+        if (currentMatch.value.players.player1.srcUsername) {
+          const pb = await getPlayerPB(currentMatch.value.players.player1.srcUsername, val.name);
+          playerPBs.value.player1 = pb;
+        }
       }
-      if (currentMatch.value.players.player2.srcUsername) {
-        const pb = await getPlayerPB(currentMatch.value.players.player2.srcUsername, val.name);
-        playerPBs.value.player2 = pb;
+
+      if (!manualPb.value.player2) {
+        if (currentMatch.value.players.player2.srcUsername) {
+          const pb = await getPlayerPB(currentMatch.value.players.player2.srcUsername, val.name);
+          playerPBs.value.player2 = pb;
+        }
       }
     }
   } else {

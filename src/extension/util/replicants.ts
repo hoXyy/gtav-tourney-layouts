@@ -5,6 +5,7 @@ import {
   CurrentMatch,
   CurrentSegment,
   FinishTimes,
+  ManualPb,
   Matches,
   PlayerPbs,
   Score,
@@ -35,4 +36,8 @@ export const segmentPicks = nodecg().Replicant<CurrentSegment[]>('segmentPicks',
 });
 export const segmentBans = nodecg().Replicant<CurrentSegment[]>('segmentBans', {
   defaultValue: [],
+});
+
+export const manualPb = nodecg().Replicant<ManualPb>('manualPb', {
+  defaultValue: { player1: false, player2: false },
 });

@@ -92,6 +92,12 @@
         "width": 2
       },
       {
+        "name": "player-pb",
+        "title": "Player PBs",
+        "file": "player-pb.html",
+        "width": 2
+      },
+      {
         "name": "timer",
         "title": "Timer",
         "file": "timer.html",
