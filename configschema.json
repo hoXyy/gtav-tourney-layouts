@@ -25,9 +25,13 @@
         "feed2": {
           "type": "string",
           "default": "Player 2 Feed"
+        },
+        "intermission": {
+          "type": "string",
+          "default": "Intermission"
         }
       },
-      "required": ["enabled", "address", "password", "feed1", "feed2"]
+      "required": ["enabled", "address", "password", "feed1", "feed2", "intermission"]
     }
   },
   "required": ["obs"]

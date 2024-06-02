@@ -1,4 +1,3 @@
-@import url('./myriad/style.css');
-@import url('./signpainter/style.css');
-@import url('./trebuchet/style.css');
-@import url('./chalet/style.css');
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap');
+@import url('./europa/font.css');
+@import url('./slope/font.css');

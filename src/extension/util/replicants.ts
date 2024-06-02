@@ -41,3 +41,4 @@ export const segmentBans = nodecg().Replicant<CurrentSegment[]>('segmentBans', {
 export const manualPb = nodecg().Replicant<ManualPb>('manualPb', {
   defaultValue: { player1: false, player2: false },
 });
+export const currentObsScene = nodecg().Replicant<string>('currentObsScene');

@@ -15,6 +15,12 @@
         emit-value
         style="width: 30%"
         :display-value="matchTypes.find((type) => type.value === editedMatchData.type)?.label" />
+      <QSelect
+        style="width: 15%"
+        outlined
+        v-model="selectedHour"
+        :options="hourOptions"
+        label="Start Hour" />
     </div>
     <QSeparator />
     <div style="display: flex; flex-direction: column; gap: 15px">
@@ -88,6 +94,21 @@
     'Grand Finals',
   ]);
 
+  let hourOptions = $ref([
+    '13:00',
+    '14:00',
+    '15:00',
+    '16:00',
+    '17:00',
+    '18:00',
+    '19:00',
+    '20:00',
+    '21:00',
+    '22:00',
+  ]);
+
+  let selectedHour = $ref('');
+
   let matchTypes = $ref([
     { label: 'Best of 1', value: 'bo1' },
     { label: 'Best of 3', value: 'bo3' },
@@ -97,6 +118,7 @@
   const emptyMatchData: CurrentMatch = {
     id: '',
     stage: '',
+    startTime: new Date(Date.now()).getTime(),
     type: 'bo1',
     players: {
       player1: {
@@ -113,6 +135,19 @@
     segments: [],
   };
 
+  watch(
+    () => selectedHour,
+    (val) => {
+      if (val) {
+        const date = new Date(Date.now());
+        const hour = val.slice(0, 2);
+        date.setHours(parseInt(hour), 0, 0, 0);
+        editedMatchData.startTime = date.getTime();
+      }
+    },
+    { immediate: true }
+  );
+
   // added here for safety to avoid opening a panel to an empty run by accident
   watch(
     () => editedMatchId?.data,
@@ -121,13 +156,16 @@
         const match = matches.data.find((match) => match.id === val);
         if (match) {
           editedMatchData = match;
+          selectedHour = `${new Date(match.startTime).getHours()}:00`;
         } else {
           editedMatchData = emptyMatchData;
           editedMatchData.id = uuid(); // This 99% of the time means it's adding a new run, so create new ID for it
+          selectedHour = '';
         }
       } else {
         editedMatchData = emptyMatchData;
         editedMatchData.id = uuid(); // This 99% of the time means it's adding a new run, so create new ID for it
+        selectedHour = '';
       }
     }
   );
@@ -137,13 +175,16 @@
       const match = matches.data.find((match) => match.id === editedMatchId.data);
       if (match) {
         editedMatchData = match;
+        selectedHour = `${new Date(match.startTime).getHours()}:00`;
       } else {
         editedMatchData = emptyMatchData;
         editedMatchData.id = uuid(); // This 99% of the time means it's adding a new run, so create new ID for it
+        selectedHour = '';
       }
     } else {
       editedMatchData = emptyMatchData;
       editedMatchData.id = uuid(); // This 99% of the time means it's adding a new run, so create new ID for it
+      selectedHour = '';
     }
   });
 

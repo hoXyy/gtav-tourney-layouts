@@ -1,7 +1,7 @@
 import { get as nodecg } from './util/nodecg';
 import { Configschema } from '@layouts/types/schemas';
 import OBSWebSocket from 'obs-websocket-js';
-import { connectedToOBS } from './util/replicants';
+import { connectedToOBS, currentObsScene } from './util/replicants';
 
 const obs = new OBSWebSocket();
 const config = (nodecg().bundleConfig as Configschema).obs;
@@ -48,6 +48,10 @@ obs.on('ConnectionClosed', () => {
   nodecg().log.info('[OBS] Disconnected! Attempting to reconnect in 5 seconds...');
   setTimeout(reconnectToOBS, 5000);
   connectedToOBS.value = false;
+});
+
+obs.on('CurrentProgramSceneChanged', (data) => {
+  currentObsScene.value = data.sceneName;
 });
 
 nodecg().listenFor('updatePlayer1Feed', (twitch: string) => {

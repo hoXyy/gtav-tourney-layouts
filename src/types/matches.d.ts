@@ -8,6 +8,7 @@
 export type Matches = {
   id: string;
   stage: string;
+  startTime: number;
   type: 'bo1' | 'bo3' | 'bo5';
   players: {
     player1: {
