@@ -5,3 +5,4 @@ export * from './matches';
 export * from './playerPbs';
 export * from './score';
 export * from './manualPb';
+export * from './avatars';

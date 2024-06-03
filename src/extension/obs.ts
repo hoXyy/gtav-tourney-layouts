@@ -10,7 +10,7 @@ let reconnectTimeout: NodeJS.Timeout;
 if (config.enabled) {
   nodecg().log.info('[OBS] Attempting to connect to OBS...');
   obs.connect(config.address, config.password).catch((err) => {
-    nodecg().log.error(`[OBS] Failed to connect to OBS! Reason: ${err.error}`);
+    nodecg().log.error(`[OBS] Failed to connect to OBS! Reason: ${err}`);
   });
 }
 
@@ -19,7 +19,7 @@ function reconnectToOBS() {
   if (!connectedToOBS.value && config.enabled) {
     nodecg().log.info('[OBS] Attempting to connect to OBS...');
     obs.connect(config.address, config.password).catch((err) => {
-      nodecg().log.error(`[OBS] Failed to connect to OBS! Reason: ${err.error}`);
+      nodecg().log.error(`[OBS] Failed to connect to OBS! Reason: ${err}`);
       reconnectTimeout = setTimeout(reconnectToOBS, 5000);
     });
   }

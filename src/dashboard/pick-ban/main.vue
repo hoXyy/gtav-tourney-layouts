@@ -28,7 +28,7 @@
           style="width: 30%">
           <QList
             ><QItem
-              @click="pickSegment(segment, currentMatch.data.players.player1.name)"
+              @click="pickSegment(segment, currentMatch!.data!.players.player1.name)"
               clickable
               v-close-popup
               v-if="currentMatch.data.players.player1">
@@ -37,7 +37,7 @@
               >
             </QItem>
             <QItem
-              @click="pickSegment(segment, currentMatch.data.players.player2.name)"
+              @click="pickSegment(segment, currentMatch!.data!.players.player2.name)"
               clickable
               v-close-popup
               v-if="currentMatch.data.players.player2">
@@ -57,7 +57,7 @@
           style="width: 30%"
           ><QList
             ><QItem
-              @click="banSegment(segment, currentMatch.data.players.player1.name)"
+              @click="banSegment(segment, currentMatch!.data!.players.player1.name)"
               clickable
               v-close-popup
               v-if="currentMatch.data.players.player1"
@@ -65,7 +65,7 @@
                 ><QItemLabel>{{ currentMatch.data.players.player1.name }}</QItemLabel></QItemSection
               ></QItem
             ><QItem
-              @click="banSegment(segment, currentMatch.data.players.player2.name)"
+              @click="banSegment(segment, currentMatch!.data!.players.player2.name)"
               clickable
               v-close-popup
               v-if="currentMatch.data.players.player2"

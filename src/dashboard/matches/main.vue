@@ -60,22 +60,10 @@
   }
 
   function removeMatch(matchId: string) {
-    if (matches && matches.data) {
-      const index = matches.data.findIndex((match) => match.id === matchId);
-      if (index > -1) {
-        matches.data.splice(index, 1);
-        matches.save();
-      }
-    }
+    nodecg.sendMessage('removeMatch', matchId);
   }
 
   function setMatchAsActive(matchId: string) {
-    if (matches && matches.data && currentMatch) {
-      const match = matches.data.find((match) => match.id === matchId);
-      if (match) {
-        currentMatch.data = match;
-        currentMatch.save();
-      }
-    }
+    nodecg.sendMessage('setMatchAsActive', matchId);
   }
 </script>

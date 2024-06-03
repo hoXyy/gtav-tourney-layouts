@@ -23,7 +23,7 @@ const LS_TIMER_PHASE = {
  */
 function resetTimerRepToDefault(): void {
   timerRep.value = {
-    time: '00:00',
+    time: '00:00:00',
     milliseconds: 0,
     timestamp: 0,
     phase: 'stopped',

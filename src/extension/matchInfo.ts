@@ -1,3 +1,4 @@
+import { CurrentMatch } from '@layouts/types';
 import { get } from './util/nodecg';
 import { currentMatch, currentSegment, matches, playerPBs } from './util/replicants';
 import { klona as clone } from 'klona/json';
@@ -28,3 +29,40 @@ currentMatch.on('change', (newVal, oldVal) => {
     }
   }
 });
+
+function removeMatch(matchId: string) {
+  if (matches.value) {
+    const index = matches.value.findIndex((match) => match.id === matchId);
+    if (index > -1) {
+      matches.value.splice(index, 1);
+    }
+  }
+}
+
+function setMatchAsActive(matchId: string) {
+  if (matches.value) {
+    const match = matches.value.find((match) => match.id === matchId);
+    if (match) {
+      currentMatch.value = clone(match);
+    }
+  }
+}
+
+function updateMatchData(matchData: CurrentMatch) {
+  if (matches.value) {
+    if (matches.value.length > 0) {
+      const index = matches.value.findIndex((match) => match.id === matchData.id);
+      if (index > -1) {
+        matches.value[index] = matchData;
+      } else {
+        matches.value.push(matchData);
+      }
+    } else {
+      matches.value.push(matchData);
+    }
+  }
+}
+
+nodecg.listenFor('removeMatch', (matchId) => removeMatch(matchId));
+nodecg.listenFor('setMatchAsActive', (matchId) => setMatchAsActive(matchId));
+nodecg.listenFor('updateMatchData', (matchData) => updateMatchData(matchData));

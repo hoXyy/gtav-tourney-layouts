@@ -89,6 +89,7 @@
     'Swiss Stage - Round 3',
     'Swiss Stage - Round 4',
     'Swiss Stage - Round 5',
+    'Round of 16',
     'Quarterfinals',
     'Semifinals',
     'Grand Finals',
@@ -189,20 +190,7 @@
   });
 
   document.addEventListener('dialog-confirmed', () => {
-    if (matches && matches.data) {
-      if (matches.data.length > 0) {
-        const index = matches.data.findIndex((match) => match.id === editedMatchData.id);
-        if (index > -1) {
-          matches.data[index] = editedMatchData;
-        } else {
-          matches.data.push(editedMatchData);
-        }
-        matches.save();
-      } else {
-        matches.data.push(editedMatchData);
-        matches.save();
-      }
-    }
+    nodecg.sendMessage('updateMatchData', editedMatchData);
     editedMatchId!.data = '';
     editedMatchId!.save();
   });

@@ -4,7 +4,14 @@ import fetch from 'node-fetch';
 import { getMimeType } from 'stream-mime-type';
 import { msToTimeStr } from './util/helpers';
 import { get } from './util/nodecg';
-import { currentMatch, currentSegment, manualPb, matches, playerPBs } from './util/replicants';
+import {
+  currentMatch,
+  currentSegment,
+  manualPb,
+  matches,
+  playerPBs,
+  playerAvatars,
+} from './util/replicants';
 
 const nodecg = get();
 
@@ -24,8 +31,7 @@ const categoryIDs: { [key: string]: string } = {
 };
 
 // Reset the PB variables on launch
-playerPBs.value.player1 = '';
-playerPBs.value.player2 = '';
+playerPBs.value = { player1: '', player2: '' };
 
 async function getPlayerPB(srcUsername: string, category: string) {
   let pb = '--:--';
@@ -41,24 +47,34 @@ async function getPlayerPB(srcUsername: string, category: string) {
           `https://www.speedrun.com/api/v1/users/${userList.data[0].id}/personal-bests`
         )
       ).data;
-      let x = null;
       let nopb = false;
       for (let i = 0; i < userData.data.length; i++) {
-        x += userData.data[i];
+        nodecg.log.info(userData.data[i].run.id);
         if (Object.keys(segmentIDs).includes(category)) {
           if (
             userData.data[i].run.category === '7kjvmgk3' &&
-            userData.data[i].run.values.jlzwo90l == segmentIDs[category]
+            userData.data[i].run.values.jlzwo90l == segmentIDs[category] &&
+            userData.data[i].run.values['0nw02xkl'] === 'klrg0emq'
           ) {
             nopb = false;
             pb = msToTimeStr(userData.data[i].run.times.realtime_t * 1000);
+            break;
           } else if (nopb) {
             pb = '--:--';
           }
         } else {
           if (userData.data[i].run.category == categoryIDs[category]) {
-            nopb = false;
-            pb = msToTimeStr(userData.data[i].run.times.realtime_t * 1000);
+            if (userData.data[i].run.category == categoryIDs['Epsilon Program']) {
+              if (userData.data[i].run.values.kn091v7n == 'q65y0r3l') {
+                nopb = false;
+                pb = msToTimeStr(userData.data[i].run.times.realtime_t * 1000);
+                break;
+              }
+            } else {
+              nopb = false;
+              pb = msToTimeStr(userData.data[i].run.times.realtime_t * 1000);
+              break;
+            }
           } else if (nopb) {
             pb = '--:--';
           }
@@ -84,7 +100,9 @@ async function getPlayerAvatar(srcUsername: string) {
       if (user.data.assets.image.uri != null) {
         const base64 = await imageToBase64(user.data.assets.image.uri);
         const mimeType = await getFileType(user.data.assets.image.uri);
-        avatarBase64 = `data:${mimeType};base64,${base64}`;
+        if (!mimeType.includes('gif')) {
+          avatarBase64 = `data:${mimeType};base64,${base64}`;
+        }
       }
     }
   } catch (err: any) {
@@ -104,14 +122,14 @@ matches.on('change', async () => {
   // Do this for every match
   for (let match of matches.value) {
     // Get players' avatar
-    if (!match.players.player1.avatar && match.players.player1.srcUsername) {
+    if (!playerAvatars.value.player1 && match.players.player1.srcUsername) {
       const avatar = await getPlayerAvatar(match.players.player1.srcUsername);
-      match.players.player1.avatar = avatar;
+      playerAvatars.value.player1 = avatar;
     }
 
-    if (!match.players.player2.avatar && match.players.player2.srcUsername) {
+    if (!playerAvatars.value.player2 && match.players.player2.srcUsername) {
       const avatar = await getPlayerAvatar(match.players.player2.srcUsername);
-      match.players.player2.avatar = avatar;
+      playerAvatars.value.player2 = avatar;
     }
   }
 });

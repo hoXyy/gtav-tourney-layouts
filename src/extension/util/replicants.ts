@@ -2,6 +2,7 @@
 
 import { Commentators, Timer } from '@layouts/types/schemas';
 import {
+  Avatars,
   CurrentMatch,
   CurrentSegment,
   FinishTimes,
@@ -42,3 +43,6 @@ export const manualPb = nodecg().Replicant<ManualPb>('manualPb', {
   defaultValue: { player1: false, player2: false },
 });
 export const currentObsScene = nodecg().Replicant<string>('currentObsScene');
+export const playerAvatars = nodecg().Replicant<Avatars>('playerAvatars', {
+  defaultValue: { player1: '', player2: '' },
+});

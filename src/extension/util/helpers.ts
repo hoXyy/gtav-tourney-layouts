@@ -33,9 +33,7 @@ export function msToTimeStr(ms: number): string {
   const seconds = Math.floor((ms / 1000) % 60);
   const minutes = Math.floor((ms / (1000 * 60)) % 60);
   const hours = Math.floor(ms / (1000 * 60 * 60));
-  if (hours > 0) {
-    string += `${hours}:`;
-  }
+  string += `${padTimeNumber(hours)}:`;
   string += `${padTimeNumber(minutes)}:${padTimeNumber(seconds)}`;
   return string;
 }

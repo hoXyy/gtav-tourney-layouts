@@ -1,6 +1,6 @@
 import { createHead } from '@vueuse/head';
 import { createApp } from 'vue';
-import App from './main/main.vue';
+import App from './finish-times/main.vue';
 
 const app = createApp(App);
 const head = createHead();
