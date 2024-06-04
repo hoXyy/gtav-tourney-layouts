@@ -169,7 +169,7 @@
       style="position: absolute; bottom: 150px; width: 100%; text-align: center; font-size: 122px">
       {{ timer.data.time }}
     </p>
-
+    <MatchInfo />
     <Omnibar />
   </div>
 </template>
@@ -178,6 +178,7 @@
   import { CurrentMatch, CurrentSegment, PlayerPbs, Score, Avatars } from '@layouts/types';
   import { useReplicant } from 'nodecg-vue-composable';
   import TopBar from '../components/TopBar.vue';
+  import MatchInfo from '../components/MatchInfo.vue';
   import Omnibar from '../components/Omnibar.vue';
   import { Timer } from '@layouts/types/schemas';
 

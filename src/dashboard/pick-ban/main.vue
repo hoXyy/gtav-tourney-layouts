@@ -107,6 +107,10 @@
   const segmentBans = useReplicant<CurrentSegment[]>('segmentBans', 'gtav-tourney-layouts', {
     defaultValue: [],
   });
+  const currentSegment = useReplicant<CurrentSegment | undefined>(
+    'currentSegment',
+    'gtav-tourney-layouts'
+  );
 
   let currentMatchIndex = -1;
 
@@ -154,11 +158,14 @@
   }
 
   function resetPicks() {
-    if (segmentBans && segmentPicks) {
+    if (segmentBans && segmentPicks && currentSegment) {
       segmentBans.data = [];
       segmentPicks.data = [];
+      currentSegment.data = undefined;
+
       segmentBans.save();
       segmentPicks.save();
+      currentSegment.save();
 
       if (matches && matches.data) {
         matches.data[currentMatchIndex].segments = [];

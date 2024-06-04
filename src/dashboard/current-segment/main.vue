@@ -33,4 +33,14 @@
       }
     }
   );
+
+  watch(
+    () => currentSegment?.data,
+    (newVal) => {
+      if (newVal == undefined) {
+        selectedSegment = '';
+      }
+    },
+    { immediate: true }
+  );
 </script>

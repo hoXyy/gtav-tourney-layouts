@@ -49,7 +49,6 @@ async function getPlayerPB(srcUsername: string, category: string) {
       ).data;
       let nopb = false;
       for (let i = 0; i < userData.data.length; i++) {
-        nodecg.log.info(userData.data[i].run.id);
         if (Object.keys(segmentIDs).includes(category)) {
           if (
             userData.data[i].run.category === '7kjvmgk3' &&
