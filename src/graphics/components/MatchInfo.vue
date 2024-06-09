@@ -8,7 +8,7 @@
       flex-direction: row;
       justify-content: space-between;
       position: absolute;
-      bottom: 71px;
+      bottom: 70px;
       gap: 5px;
     "
     v-if="currentMatch && currentMatch.data">
