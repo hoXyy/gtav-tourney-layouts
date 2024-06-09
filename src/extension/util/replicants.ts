@@ -29,7 +29,9 @@ export const currentSegment = nodecg().Replicant<CurrentSegment | undefined>('cu
 export const commentators = nodecg().Replicant<Commentators>('commentators');
 export const playerPBs = nodecg().Replicant<PlayerPbs>('playerPbs');
 export const timer = nodecg().Replicant<Timer>('timer');
-export const finishTimes = nodecg().Replicant<FinishTimes>('finishTimes');
+export const finishTimes = nodecg().Replicant<FinishTimes>('finishTimes', {
+  defaultValue: { player1: '', player2: '' },
+});
 export const score = nodecg().Replicant<Score>('score');
 export const prizePool = nodecg().Replicant<number>('prizePool');
 export const segmentPicks = nodecg().Replicant<CurrentSegment[]>('segmentPicks', {
