@@ -114,6 +114,7 @@
     { label: 'Best of 1', value: 'bo1' },
     { label: 'Best of 3', value: 'bo3' },
     { label: 'Best of 5', value: 'bo5' },
+    { label: 'Showmatch', value: 'showmatch' },
   ]);
 
   const emptyMatchData: CurrentMatch = {

@@ -22,6 +22,7 @@
 <script setup lang="ts">
   import { FinishTimes } from '@layouts/types';
   import { useReplicant } from 'nodecg-vue-composable';
+  
   const finishTimes = useReplicant<FinishTimes>('finishTimes', 'gtav-tourney-layouts');
 </script>
 

@@ -23,7 +23,12 @@
         margin-right: 5px;
         flex: none;
       ">
-      <span style="font-size: 105px">{{ currentMatch.data.type }}</span>
+      <span style="font-size: 105px"
+        ><template v-if="currentMatch.data.type != 'showmatch'">{{
+          currentMatch.data.type
+        }}</template
+        ><template v-else>SC</template></span
+      >
     </div>
     <div
       style="line-height: 102px; max-width: 100%; flex: 1; overflow: hidden; white-space: nowrap">
