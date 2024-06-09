@@ -71,7 +71,7 @@
   </div>
 
   <div
-    style="position: absolute; bottom: 620px; z-index: 2; width: 102px; height: 102px; left: 31px"
+    style="position: absolute; bottom: 620px; z-index: 2; width: 102px; height: 102px; left: 30px"
     v-if="currentMatch && currentMatch.data">
     <img
       v-if="
