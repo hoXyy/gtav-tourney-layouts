@@ -117,20 +117,20 @@ async function getFileType(url: string): Promise<string> {
   return mime;
 }
 
-matches.on('change', async () => {
-  // Do this for every match
-  for (let match of matches.value) {
+currentMatch.on('change', async (newVal) => {
+  if (newVal) {
     // Get players' avatar
-    if (match.players.player1.srcUsername) {
-      const avatar = await getPlayerAvatar(match.players.player1.srcUsername);
+    if (newVal.players.player1.srcUsername) {
+      const avatar = await getPlayerAvatar(newVal.players.player1.srcUsername);
       playerAvatars.value.player1 = avatar;
     }
 
-    if (match.players.player2.srcUsername) {
-      const avatar = await getPlayerAvatar(match.players.player2.srcUsername);
+    if (newVal.players.player2.srcUsername) {
+      const avatar = await getPlayerAvatar(newVal.players.player2.srcUsername);
       playerAvatars.value.player2 = avatar;
     }
   }
+
 });
 
 currentSegment.on('change', async (val) => {
