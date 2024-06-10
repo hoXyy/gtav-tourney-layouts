@@ -3,6 +3,9 @@
     <TopBar />
         
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> 32362acfed6a3c835696ef7ef97f1dad013d13e6
     <!-- BO1 component -->
     <img 
       v-if="currentSegment && currentSegment.data"
@@ -11,6 +14,7 @@
     />
 
     <!-- BO3 component 
+<<<<<<< HEAD
 =======
     <!-- BO1 component 
     <img style="position: absolute; z-index: 1" src="./img/ttw.png" />
@@ -18,6 +22,8 @@
 
     <!-- BO3 component -->
 >>>>>>> de16863 (feat: wip post-veto screens)
+=======
+>>>>>>> 32362acfed6a3c835696ef7ef97f1dad013d13e6
     <div class="container">
       <img src="./img/bo3lines.png" class="bolines">
       <div class="grid">
@@ -59,11 +65,14 @@
     
     <MatchInfo />
     <Omnibar />
+<<<<<<< HEAD
 =======
 
         <MatchInfo />
         <Omnibar />
 >>>>>>> de16863 (feat: wip post-veto screens)
+=======
+>>>>>>> 32362acfed6a3c835696ef7ef97f1dad013d13e6
     </div>
   </template>
   
@@ -74,6 +83,9 @@
     import MatchInfo from '../components/MatchInfo.vue';
     import Omnibar from '../components/Omnibar.vue';
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> 32362acfed6a3c835696ef7ef97f1dad013d13e6
     import { watch } from 'vue';
     import { $ref } from 'vue/macros';
 
@@ -94,11 +106,14 @@
       }
     }
     );
+<<<<<<< HEAD
 =======
   
     const currentMatch = useReplicant<CurrentMatch>('currentMatch', 'gtav-tourney-layouts');
     const currentSegment = useReplicant<CurrentSegment>('currentSegment', 'gtav-tourney-layouts');
 >>>>>>> de16863 (feat: wip post-veto screens)
+=======
+>>>>>>> 32362acfed6a3c835696ef7ef97f1dad013d13e6
   </script>
   
   <style>
