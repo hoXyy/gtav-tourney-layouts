@@ -2,12 +2,13 @@
   <div>
     <TopBar />
         
-    <!-- BO1 component -->
+    <!-- BO1 component 
     <img 
       v-if="currentSegment && currentSegment.data"
       style="position: absolute; z-index: 1"
       :src= "require('./img/${currentSegment.data.name}.png')"
     />
+    -->
 
     <!-- BO3 component 
     <div class="container">
@@ -31,23 +32,24 @@
       <img src="./img/bo5lines.png" class="bolines">
       <div class="grid-5">
         <div class="category style-five-one">
-          <img src="./img/ttw.png">
+          <img src="./img/asj.png">
         </div>
         <div class="category mask-five-two">
           <img src="./img/ttw.png" class="style-five-two">
         </div>
         <div class="category mask-five-three">
-          <img src="./img/ttw.png" class="style-five-three">
+          <img src="./img/countryside.png" class="style-five-three">
         </div>
         <div class="category mask-five-four">
           <img src="./img/ttw.png" class="style-five-four">
         </div>
         <div class="category mask-five-five">
-          <img src="./img/ttw.png" class="style-five-five">
+          <img src="./img/races.png" class="style-five-five">
         </div>
       </div>
     </div>
     -->
+    
     
     <MatchInfo />
     <Omnibar />
@@ -67,19 +69,6 @@
   
     const currentMatch = useReplicant<CurrentMatch>('currentMatch', 'gtav-tourney-layouts');
     const currentSegment = useReplicant<CurrentSegment>('currentSegment', 'gtav-tourney-layouts');
-
-    watch(
-    () => selectedSegment,
-    (newVal) => {
-      if (currentSegment && currentMatch && currentMatch.data) {
-        const segment = currentMatch.data.segments.find((segment) => segment.name === newVal);
-        if (segment) {
-          currentSegment.data = segment;
-          currentSegment.save();
-        }
-      }
-    }
-    );
   </script>
   
   <style>
