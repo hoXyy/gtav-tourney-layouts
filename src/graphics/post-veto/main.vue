@@ -2,13 +2,12 @@
   <div>
     <TopBar />
         
-    <!-- BO1 component 
+    <!-- BO1 component-->
     <img 
       v-if="currentSegment && currentSegment.data"
       style="position: absolute; z-index: 1"
-      :src= "require('./img/${currentSegment.data.name}.png')"
+      :src= "imageSrc"
     />
-    -->
 
     <!-- BO3 component 
     <div class="container">
@@ -50,7 +49,6 @@
     </div>
     -->
     
-    
     <MatchInfo />
     <Omnibar />
     </div>
@@ -62,13 +60,31 @@
     import TopBar from '../components/TopBar.vue';
     import MatchInfo from '../components/MatchInfo.vue';
     import Omnibar from '../components/Omnibar.vue';
-    import { watch } from 'vue';
+    import { computed, watch } from 'vue';
     import { $ref } from 'vue/macros';
-
-    let selectedSegment = $ref('');
   
-    const currentMatch = useReplicant<CurrentMatch>('currentMatch', 'gtav-tourney-layouts');
+    const shortNames = {
+    'The Third Way': 'TTW',
+    'Deep Inside': 'DI',
+    'Fresh Meat': 'FM',
+    'Trevor%': 'TR',
+    'Countryside': 'CS',
+    'Blitz Play': 'BP',
+    'All Stunt Jumps': 'ASJ',
+    'All Races': 'AR',
+    'Epsilon Program': 'EP',
+  };
+
     const currentSegment = useReplicant<CurrentSegment>('currentSegment', 'gtav-tourney-layouts');
+
+    const imageSrc = computed(() => {
+      if (currentSegment?.data?.name) {
+      const result = new URL(`./img/Categories/${shortNames[currentSegment.data.name]}.png`, import.meta.url).href;
+        return result;
+      }
+      return '';
+    });
+
   </script>
   
   <style>
