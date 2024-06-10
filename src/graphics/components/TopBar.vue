@@ -1,9 +1,9 @@
 <template>
-  <div style="z-index: 1; position: absolute;">
+  <div style="z-index: 3; position: absolute;">
     <p id="prize-pool" v-if="prizePool && prizePool.data">
       Prize Pool: ${{ formatAmount(prizePool.data) }}
     </p>
-    <img style="z-index: 1" src="../img/topbar.png" />
+    <img style="z-index: 3" src="../img/topbar.png" />
   </div>
 </template>
 
@@ -21,7 +21,7 @@
   #prize-pool {
     font-size: 50px;
     color: white;
-    z-index: 2;
+    z-index: 3;
     position: fixed;
     right: 27px;
     top: -39px;
