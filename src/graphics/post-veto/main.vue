@@ -32,12 +32,8 @@
         </div>
       </div>
     </div>
-<<<<<<< HEAD
-    -->
-=======
+  -->
     
->>>>>>> de16863 (feat: wip post-veto screens)
-        
     <!-- BO5 component 
     <div class="container">
       <img src="./img/bo5lines.png" class="bolines">
@@ -60,7 +56,7 @@
       </div>
     </div>
     -->
-<<<<<<< HEAD
+    
     <MatchInfo />
     <Omnibar />
 =======
