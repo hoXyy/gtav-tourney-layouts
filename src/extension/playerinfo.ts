@@ -121,12 +121,12 @@ matches.on('change', async () => {
   // Do this for every match
   for (let match of matches.value) {
     // Get players' avatar
-    if (!playerAvatars.value.player1 && match.players.player1.srcUsername) {
+    if (match.players.player1.srcUsername) {
       const avatar = await getPlayerAvatar(match.players.player1.srcUsername);
       playerAvatars.value.player1 = avatar;
     }
 
-    if (!playerAvatars.value.player2 && match.players.player2.srcUsername) {
+    if (match.players.player2.srcUsername) {
       const avatar = await getPlayerAvatar(match.players.player2.srcUsername);
       playerAvatars.value.player2 = avatar;
     }
