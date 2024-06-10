@@ -24,7 +24,6 @@
         </div>
       </div>
     </div>
-    -->
         
     <!-- BO5 component 
     <div class="container">
@@ -47,7 +46,6 @@
         </div>
       </div>
     </div>
-    -->
     <MatchInfo />
     <Omnibar />
     </div>
