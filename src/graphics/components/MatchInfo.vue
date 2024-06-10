@@ -10,6 +10,7 @@
       position: absolute;
       bottom: 70px;
       gap: 5px;
+      z-index: 3
     "
     v-if="currentMatch && currentMatch.data">
     <div
