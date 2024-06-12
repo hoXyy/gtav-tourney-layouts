@@ -94,16 +94,18 @@
     <img src="./img/ban/banepsilon.png" style="position: absolute" />
   </div>
 
+  <PlayerInfo />
   <MatchInfo />
   <Omnibar />
 </template>
 
 <script setup lang="ts">
-  import MatchInfo from '../components/MatchInfo.vue';
+  import MatchInfo from '../components/MatchInfo.vue'
   import TopBar from '../components/TopBar.vue';
   import Omnibar from '../components/Omnibar.vue';
   import { useReplicant } from 'nodecg-vue-composable';
   import { CurrentSegment } from '@layouts/types';
+  import PlayerInfo  from './components/PlayerInfo.vue'
 
   const segmentPicks = useReplicant<CurrentSegment[]>('segmentPicks', 'gtav-tourney-layouts', {
     defaultValue: [],
