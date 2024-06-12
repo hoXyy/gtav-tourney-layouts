@@ -16,11 +16,11 @@
 
   <!-- Player 1 name backgrounds -->
   <img
-    style="position: absolute; z-index: 1"
+    style="position: absolute; z-index: 1; transform: scaleX(-1)"
     v-if="currentMatch && currentMatch.data && currentMatch.data.players.player1.name.length <= 6"
     src="./img/yellow6.png" />
   <img
-    style="position: absolute; z-index: 1"
+    style="position: absolute; z-index: 1; transform: scaleX(-1)"
     v-if="
       currentMatch &&
       currentMatch.data &&
@@ -29,7 +29,7 @@
     "
     src="./img/yellow9.png" />
   <img
-    style="position: absolute; z-index: 1"
+    style="position: absolute; z-index: 1; transform: scaleX(-1)"
     v-if="currentMatch && currentMatch.data && currentMatch.data.players.player1.name.length > 9"
     src="./img/yellow12.png" />
 
@@ -71,7 +71,16 @@
   </div>
 
   <div
-    style="position: absolute; bottom: 620px; z-index: 2; width: 102px; height: 102px; left: 30px"
+    style="
+      position: absolute;
+      bottom: 620px;
+      z-index: 2;
+      width: 102px;
+      height: 102px;
+      left: 30px;
+      object-fit: contain;
+      overflow: hidden;
+    "
     v-if="currentMatch && currentMatch.data">
     <img
       v-if="
