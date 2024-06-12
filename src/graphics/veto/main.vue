@@ -103,8 +103,29 @@
       segmentPicks.data.find((segment) => segment.name === 'Trevor%') != undefined &&
       isPickedByPlayer1(segmentPicks.data.find((segment) => segment.name === 'Trevor%')!)
     ">
-    <img src="./img/pick/yellow/pickyellowtrevor.png" style="position: absolute" />
-  </div>
+    <div>
+      <img src="./img/pick/yellow/pickyellowtrevor.png" style="position: absolute" />
+    </div>
+    <div
+      style="
+      position: absolute;
+      z-index: 2;
+      top: 540px;
+      left: 925px;
+      height: 150px;
+      line-height: 0px;
+      transform: translate(-738px, -210px);
+      text-align: center;
+      ">
+      <p style="font-family:'Bebas Neue'; font-size: 31px;">
+        PICKED BY
+        <pre style="
+          font-family: 'Bebas Neue'; 
+          font-size: 31px;
+        ">{{ currentMatch?.data?.players.player1.name }}</pre>
+      </p>
+    </div>
+    </div>
 
   <div
     id="countrysideYellowPick"
