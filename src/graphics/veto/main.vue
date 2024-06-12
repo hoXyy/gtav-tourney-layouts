@@ -95,225 +95,653 @@
   </div>
 
   <!-- Player 1 Picks -->
-  <div
-    id="trevisYellowPick"
-    v-if="
-      segmentPicks &&
-      segmentPicks.data &&
-      segmentPicks.data.find((segment) => segment.name === 'Trevor%') != undefined &&
-      isPickedByPlayer1(segmentPicks.data.find((segment) => segment.name === 'Trevor%')!)
-    ">
-    <div>
-      <img src="./img/pick/yellow/pickyellowtrevor.png" style="position: absolute" />
+<div id="trevisYellowPick"
+  v-if="segmentPicks &&
+       segmentPicks.data &&
+       segmentPicks.data.find((segment) => segment.name === 'Trevor%') != undefined &&
+       isPickedByPlayer1(segmentPicks.data.find((segment) => segment.name === 'Trevor%')!)">
+  <div style="position: relative; text-align: center;">
+    <div style="position: absolute;">
+      <img src="./img/pick/yellow/pickyellowtrevor.png" style="position: absolute;" />
     </div>
-    <div
-      style="
-      position: absolute;
-      z-index: 2;
-      top: 540px;
-      left: 925px;
-      height: 150px;
-      line-height: 0px;
-      transform: translate(-738px, -210px);
-      text-align: center;
+    <div style="position: absolute; top: 0; left: 0; width: 100%; text-align: center;">
+      <p style="
+        font-family: 'Bebas Neue'; 
+        font-size: 31px;
+        position: relative; 
+        z-index: 2;
+        top: 540px; 
+        height: 150px;
+        line-height: 0px;
+        text-align: center;
+        transform: translate(-705px, -180px); 
+        margin: 0; 
       ">
-      <p style="font-family:'Bebas Neue'; font-size: 31px;">
         PICKED BY
-        <pre style="
+        <br />
+        <span style="
+        "><pre style="
           font-family: 'Bebas Neue'; 
           font-size: 31px;
-        ">{{ currentMatch?.data?.players.player1.name }}</pre>
+          color: #ffde1b;
+        ">{{ currentMatch?.data?.players.player1.name }}</pre></span>
       </p>
     </div>
-    </div>
+  </div>
+</div>
 
   <div
     id="countrysideYellowPick"
-    v-if="
-      segmentPicks &&
-      segmentPicks.data &&
-      segmentPicks.data.find((segment) => segment.name === 'Countryside') != undefined &&
-      isPickedByPlayer1(segmentPicks.data.find((segment) => segment.name === 'Countryside')!)
-    ">
-    <img src="./img/pick/yellow/pickyellowcountry.png" style="position: absolute" />
+    v-if="segmentPicks &&
+       segmentPicks.data &&
+       segmentPicks.data.find((segment) => segment.name === 'Countryside') != undefined &&
+       isPickedByPlayer1(segmentPicks.data.find((segment) => segment.name === 'Countryside')!)">
+  <div style="position: relative; text-align: center;">
+    <div style="position: absolute;">
+      <img src="./img/pick/yellow/pickyellowcountry.png" style="position: absolute;" />
+    </div>
+    <div style="position: absolute; top: 0; left: 0; width: 100%; text-align: center;">
+      <p style="
+        font-family: 'Bebas Neue'; 
+        font-size: 31px;
+        position: relative; 
+        z-index: 2;
+        top: 540px; 
+        height: 150px;
+        line-height: 0px;
+        text-align: center;
+        transform: translate(-490px, -180px); 
+        margin: 0; 
+      ">
+        PICKED BY
+        <br />
+        <span style="
+        "><pre style="
+          font-family: 'Bebas Neue'; 
+          font-size: 31px;
+          color: #ffde1b;
+        ">{{ currentMatch?.data?.players.player1.name }}</pre></span>
+      </p>
+    </div>
   </div>
+</div>
 
   <div
     id="blitzYellowPick"
-    v-if="
-      segmentPicks &&
-      segmentPicks.data &&
-      segmentPicks.data.find((segment) => segment.name === 'Blitz Play') != undefined &&
-      isPickedByPlayer1(segmentPicks.data.find((segment) => segment.name === 'Blitz Play')!)
-    ">
-    <img src="./img/pick/yellow/pickyellowblitz.png" style="position: absolute" />
+    v-if="segmentPicks &&
+       segmentPicks.data &&
+       segmentPicks.data.find((segment) => segment.name === 'Blitz Play') != undefined &&
+       isPickedByPlayer1(segmentPicks.data.find((segment) => segment.name === 'Blitz Play')!)">
+  <div style="position: relative; text-align: center;">
+    <div style="position: absolute;">
+      <img src="./img/pick/yellow/pickyellowblitz.png" style="position: absolute;" />
+    </div>
+    <div style="position: absolute; top: 0; left: 0; width: 100%; text-align: center;">
+      <p style="
+        font-family: 'Bebas Neue'; 
+        font-size: 31px;
+        position: relative; 
+        z-index: 2;
+        top: 540px; 
+        height: 150px;
+        line-height: 0px;
+        text-align: center;
+        transform: translate(-275px, -180px); 
+        margin: 0; 
+      ">
+        PICKED BY
+        <br />
+        <span style="
+        "><pre style="
+          font-family: 'Bebas Neue'; 
+          font-size: 31px;
+          color: #ffde1b;
+        ">{{ currentMatch?.data?.players.player1.name }}</pre></span>
+      </p>
+    </div>
   </div>
+</div>
 
   <div
     id="deepinsideYellowPick"
-    v-if="
-      segmentPicks &&
-      segmentPicks.data &&
-      segmentPicks.data.find((segment) => segment.name === 'Deep Inside') &&
-      isPickedByPlayer1(segmentPicks.data.find((segment) => segment.name === 'Deep Inside')!)
-    ">
-    <img src="./img/pick/yellow/pickyellowdeep.png" style="position: absolute" />
+    v-if="segmentPicks &&
+       segmentPicks.data &&
+       segmentPicks.data.find((segment) => segment.name === 'Deep Inside') != undefined &&
+       isPickedByPlayer1(segmentPicks.data.find((segment) => segment.name === 'Deep Inside')!)">
+  <div style="position: relative; text-align: center;">
+    <div style="position: absolute;">
+      <img src="./img/pick/yellow/pickyellowdeep.png" style="position: absolute;" />
+    </div>
+    <div style="position: absolute; top: 0; left: 0; width: 100%; text-align: center;">
+      <p style="
+        font-family: 'Bebas Neue'; 
+        font-size: 31px;
+        position: relative; 
+        z-index: 2;
+        top: 540px; 
+        height: 150px;
+        line-height: 0px;
+        text-align: center;
+        transform: translate(-705px, 29px); 
+        margin: 0; 
+      ">
+        PICKED BY
+        <br />
+        <span style="
+        "><pre style="
+          font-family: 'Bebas Neue'; 
+          font-size: 31px;
+          color: #ffde1b;
+        ">{{ currentMatch?.data?.players.player1.name }}</pre></span>
+      </p>
+    </div>
   </div>
+</div>
 
   <div
     id="freshmeatYellowPick"
-    v-if="
-      segmentPicks &&
-      segmentPicks.data &&
-      segmentPicks.data.find((segment) => segment.name === 'Fresh Meat') &&
-      isPickedByPlayer1(segmentPicks.data.find((segment) => segment.name === 'Fresh Meat')!)
-    ">
-    <img src="./img/pick/yellow/pickyellowfresh.png" style="position: absolute" />
+    v-if="segmentPicks &&
+       segmentPicks.data &&
+       segmentPicks.data.find((segment) => segment.name === 'Fresh Meat') != undefined &&
+       isPickedByPlayer1(segmentPicks.data.find((segment) => segment.name === 'Fresh Meat')!)">
+  <div style="position: relative; text-align: center;">
+    <div style="position: absolute;">
+      <img src="./img/pick/yellow/pickyellowfresh.png" style="position: absolute;" />
+    </div>
+    <div style="position: absolute; top: 0; left: 0; width: 100%; text-align: center;">
+      <p style="
+        font-family: 'Bebas Neue'; 
+        font-size: 31px;
+        position: relative; 
+        z-index: 2;
+        top: 540px; 
+        height: 150px;
+        line-height: 0px;
+        text-align: center;
+        transform: translate(-490px, 29px); 
+        margin: 0; 
+      ">
+        PICKED BY
+        <br />
+        <span style="
+        "><pre style="
+          font-family: 'Bebas Neue'; 
+          font-size: 31px;
+          color: #ffde1b;
+        ">{{ currentMatch?.data?.players.player1.name }}</pre></span>
+      </p>
+    </div>
   </div>
+</div>
 
-  <div
+<div
     id="thirdwayYellowPick"
-    v-if="
-      segmentPicks &&
-      segmentPicks.data &&
-      segmentPicks.data.find((segment) => segment.name === 'The Third Way') &&
-      isPickedByPlayer1(segmentPicks.data.find((segment) => segment.name === 'The Third Way')!)
-    ">
-    <img src="./img/pick/yellow/pickyellowttw.png" style="position: absolute" />
+    v-if="segmentPicks &&
+       segmentPicks.data &&
+       segmentPicks.data.find((segment) => segment.name === 'The Third Way') != undefined &&
+       isPickedByPlayer1(segmentPicks.data.find((segment) => segment.name === 'The Third Way')!)">
+  <div style="position: relative; text-align: center;">
+    <div style="position: absolute;">
+      <img src="./img/pick/yellow/pickyellowttw.png" style="position: absolute;" />
+    </div>
+    <div style="position: absolute; top: 0; left: 0; width: 100%; text-align: center;">
+      <p style="
+        font-family: 'Bebas Neue'; 
+        font-size: 31px;
+        position: relative; 
+        z-index: 2;
+        top: 540px; 
+        height: 150px;
+        line-height: 0px;
+        text-align: center;
+        transform: translate(-275px, 29px); 
+        margin: 0; 
+      ">
+        PICKED BY
+        <br />
+        <span style="
+        "><pre style="
+          font-family: 'Bebas Neue'; 
+          font-size: 31px;
+          color: #ffde1b;
+        ">{{ currentMatch?.data?.players.player1.name }}</pre></span>
+      </p>
+    </div>
   </div>
+</div>
 
-  <div
+<div
     id="asjYellowPick"
-    v-if="
-      segmentPicks &&
-      segmentPicks.data &&
-      segmentPicks.data.find((segment) => segment.name === 'All Stunt Jumps') &&
-      isPickedByPlayer1(segmentPicks.data.find((segment) => segment.name === 'All Stunt Jumps')!)
-    ">
-    <img src="./img/pick/yellow/pickyellowasj.png" style="position: absolute" />
+    v-if="segmentPicks &&
+       segmentPicks.data &&
+       segmentPicks.data.find((segment) => segment.name === 'All Stunt Jumps') != undefined &&
+       isPickedByPlayer1(segmentPicks.data.find((segment) => segment.name === 'All Stunt Jumps')!)">
+  <div style="position: relative; text-align: center;">
+    <div style="position: absolute;">
+      <img src="./img/pick/yellow/pickyellowasj.png" style="position: absolute;" />
+    </div>
+    <div style="position: absolute; top: 0; left: 0; width: 100%; text-align: center;">
+      <p style="
+        font-family: 'Bebas Neue'; 
+        font-size: 31px;
+        position: relative; 
+        z-index: 2;
+        top: 540px; 
+        height: 150px;
+        line-height: 0px;
+        text-align: center;
+        transform: translate(-705px, 238px); 
+        margin: 0; 
+      ">
+        PICKED BY
+        <br />
+        <span style="
+        "><pre style="
+          font-family: 'Bebas Neue'; 
+          font-size: 31px;
+          color: #ffde1b;
+        ">{{ currentMatch?.data?.players.player1.name }}</pre></span>
+      </p>
+    </div>
   </div>
+</div>
 
   <div
     id="racesYellowPick"
-    v-if="
-      segmentPicks &&
-      segmentPicks.data &&
-      segmentPicks.data.find((segment) => segment.name === 'All Races') &&
-      isPickedByPlayer1(segmentPicks.data.find((segment) => segment.name === 'All Races')!)
-    ">
-    <img src="./img/pick/yellow/pickyellowraces.png" style="position: absolute" />
+    v-if="segmentPicks &&
+       segmentPicks.data &&
+       segmentPicks.data.find((segment) => segment.name === 'All Races') != undefined &&
+       isPickedByPlayer1(segmentPicks.data.find((segment) => segment.name === 'All Races')!)">
+  <div style="position: relative; text-align: center;">
+    <div style="position: absolute;">
+      <img src="./img/pick/yellow/pickyellowraces.png" style="position: absolute;" />
+    </div>
+    <div style="position: absolute; top: 0; left: 0; width: 100%; text-align: center;">
+      <p style="
+        font-family: 'Bebas Neue'; 
+        font-size: 31px;
+        position: relative; 
+        z-index: 2;
+        top: 540px; 
+        height: 150px;
+        line-height: 0px;
+        text-align: center;
+        transform: translate(-490px, 238px); 
+        margin: 0; 
+      ">
+        PICKED BY
+        <br />
+        <span style="
+        "><pre style="
+          font-family: 'Bebas Neue'; 
+          font-size: 31px;
+          color: #ffde1b;
+        ">{{ currentMatch?.data?.players.player1.name }}</pre></span>
+      </p>
+    </div>
   </div>
+</div>
 
   <div
     id="epsilonYellowPick"
-    v-if="
-      segmentPicks &&
-      segmentPicks.data &&
-      segmentPicks.data.find((segment) => segment.name === 'Epsilon Program') &&
-      isPickedByPlayer1(segmentPicks.data.find((segment) => segment.name === 'Epsilon Program')!)
-    ">
-    <img src="./img/pick/yellow/pickyellowepsilon.png" style="position: absolute" />
+    v-if="segmentPicks &&
+       segmentPicks.data &&
+       segmentPicks.data.find((segment) => segment.name === 'Epsilon Program') != undefined &&
+       isPickedByPlayer1(segmentPicks.data.find((segment) => segment.name === 'Epsilon Program')!)">
+  <div style="position: relative; text-align: center;">
+    <div style="position: absolute;">
+      <img src="./img/pick/yellow/pickyellowepsilon.png" style="position: absolute;" />
+    </div>
+    <div style="position: absolute; top: 0; left: 0; width: 100%; text-align: center;">
+      <p style="
+        font-family: 'Bebas Neue'; 
+        font-size: 31px;
+        position: relative; 
+        z-index: 2;
+        top: 540px; 
+        height: 150px;
+        line-height: 0px;
+        text-align: center;
+        transform: translate(-275px, 238px); 
+        margin: 0; 
+      ">
+        PICKED BY
+        <br />
+        <span style="
+        "><pre style="
+          font-family: 'Bebas Neue'; 
+          font-size: 31px;
+          color: #ffde1b;
+        ">{{ currentMatch?.data?.players.player1.name }}</pre></span>
+      </p>
+    </div>
   </div>
+</div>
 
-  <!-- Player 2 Picks -->
-  <div
-    id="trevisPinkPick"
-    v-if="
-      segmentPicks &&
-      segmentPicks.data &&
-      segmentPicks.data.find((segment) => segment.name === 'Trevor%') != undefined &&
-      isPickedByPlayer2(segmentPicks.data.find((segment) => segment.name === 'Trevor%')!)
-    ">
-    <img src="./img/pick/pink/pickpinktrevor.png" style="position: absolute" />
+
+<!-- Player 2 Picks -->
+<div id="trevisPinkPick"
+  v-if="segmentPicks &&
+       segmentPicks.data &&
+       segmentPicks.data.find((segment) => segment.name === 'Trevor%') != undefined &&
+       isPickedByPlayer2(segmentPicks.data.find((segment) => segment.name === 'Trevor%')!)">
+  <div style="position: relative; text-align: center;">
+    <div style="position: absolute;">
+      <img src="./img/pick/pink/pickpinktrevor.png" style="position: absolute;" />
+    </div>
+    <div style="position: absolute; top: 0; left: 0; width: 100%; text-align: center;">
+      <p style="
+        font-family: 'Bebas Neue'; 
+        font-size: 31px;
+        position: relative; 
+        z-index: 2;
+        top: 540px; 
+        height: 150px;
+        line-height: 0px;
+        text-align: center;
+        transform: translate(-705px, -180px); 
+        margin: 0; 
+      ">
+        PICKED BY
+        <br />
+        <span style="
+        "><pre style="
+          font-family: 'Bebas Neue'; 
+          font-size: 31px;
+          color: #ff1b62;
+        ">{{ currentMatch?.data?.players.player2.name }}</pre></span>
+      </p>
+    </div>
   </div>
+</div>
 
   <div
     id="countrysidePinkPick"
-    v-if="
-      segmentPicks &&
-      segmentPicks.data &&
-      segmentPicks.data.find((segment) => segment.name === 'Countryside') != undefined &&
-      isPickedByPlayer2(segmentPicks.data.find((segment) => segment.name === 'Countryside')!)
-    ">
-    <img src="./img/pick/pink/pickpinkcountry.png" style="position: absolute" />
+    v-if="segmentPicks &&
+       segmentPicks.data &&
+       segmentPicks.data.find((segment) => segment.name === 'Countryside') != undefined &&
+       isPickedByPlayer2(segmentPicks.data.find((segment) => segment.name === 'Countryside')!)">
+  <div style="position: relative; text-align: center;">
+    <div style="position: absolute;">
+      <img src="./img/pick/pink/pickpinkcountry.png" style="position: absolute;" />
+    </div>
+    <div style="position: absolute; top: 0; left: 0; width: 100%; text-align: center;">
+      <p style="
+        font-family: 'Bebas Neue'; 
+        font-size: 31px;
+        position: relative; 
+        z-index: 2;
+        top: 540px; 
+        height: 150px;
+        line-height: 0px;
+        text-align: center;
+        transform: translate(-490px, -180px); 
+        margin: 0; 
+      ">
+        PICKED BY
+        <br />
+        <span style="
+        "><pre style="
+          font-family: 'Bebas Neue'; 
+          font-size: 31px;
+          color: #ff1b62;
+        ">{{ currentMatch?.data?.players.player2.name }}</pre></span>
+      </p>
+    </div>
   </div>
+</div>
 
   <div
     id="blitzPinkPick"
-    v-if="
-      segmentPicks &&
-      segmentPicks.data &&
-      segmentPicks.data.find((segment) => segment.name === 'Blitz Play') != undefined &&
-      isPickedByPlayer2(segmentPicks.data.find((segment) => segment.name === 'Blitz Play')!)
-    ">
-    <img src="./img/pick/pink/pickpinkblitz.png" style="position: absolute" />
+    v-if="segmentPicks &&
+       segmentPicks.data &&
+       segmentPicks.data.find((segment) => segment.name === 'Blitz Play') != undefined &&
+       isPickedByPlayer2(segmentPicks.data.find((segment) => segment.name === 'Blitz Play')!)">
+  <div style="position: relative; text-align: center;">
+    <div style="position: absolute;">
+      <img src="./img/pick/pink/pickpinkblitz.png" style="position: absolute;" />
+    </div>
+    <div style="position: absolute; top: 0; left: 0; width: 100%; text-align: center;">
+      <p style="
+        font-family: 'Bebas Neue'; 
+        font-size: 31px;
+        position: relative; 
+        z-index: 2;
+        top: 540px; 
+        height: 150px;
+        line-height: 0px;
+        text-align: center;
+        transform: translate(-275px, -180px); 
+        margin: 0; 
+      ">
+        PICKED BY
+        <br />
+        <span style="
+        "><pre style="
+          font-family: 'Bebas Neue'; 
+          font-size: 31px;
+          color: #ff1b62;
+        ">{{ currentMatch?.data?.players.player2.name }}</pre></span>
+      </p>
+    </div>
   </div>
+</div>
 
   <div
     id="deepinsidePinkPick"
-    v-if="
-      segmentPicks &&
-      segmentPicks.data &&
-      segmentPicks.data.find((segment) => segment.name === 'Deep Inside') &&
-      isPickedByPlayer2(segmentPicks.data.find((segment) => segment.name === 'Deep Inside')!)
-    ">
-    <img src="./img/pick/pink/pickpinkdeep.png" style="position: absolute" />
+    v-if="segmentPicks &&
+       segmentPicks.data &&
+       segmentPicks.data.find((segment) => segment.name === 'Deep Inside') != undefined &&
+       isPickedByPlayer2(segmentPicks.data.find((segment) => segment.name === 'Deep Inside')!)">
+  <div style="position: relative; text-align: center;">
+    <div style="position: absolute;">
+      <img src="./img/pick/pink/pickpinkdeep.png" style="position: absolute;" />
+    </div>
+    <div style="position: absolute; top: 0; left: 0; width: 100%; text-align: center;">
+      <p style="
+        font-family: 'Bebas Neue'; 
+        font-size: 31px;
+        position: relative; 
+        z-index: 2;
+        top: 540px; 
+        height: 150px;
+        line-height: 0px;
+        text-align: center;
+        transform: translate(-705px, -180px); 
+        margin: 0; 
+      ">
+        PICKED BY
+        <br />
+        <span style="
+        "><pre style="
+          font-family: 'Bebas Neue'; 
+          font-size: 31px;
+          color: #ff1b62;
+        ">{{ currentMatch?.data?.players.player2.name }}</pre></span>
+      </p>
+    </div>
   </div>
+</div>
 
   <div
     id="freshmeatPinkPick"
-    v-if="
-      segmentPicks &&
-      segmentPicks.data &&
-      segmentPicks.data.find((segment) => segment.name === 'Fresh Meat') &&
-      isPickedByPlayer2(segmentPicks.data.find((segment) => segment.name === 'Fresh Meat')!)
-    ">
-    <img src="./img/pick/pink/pickpinkfresh.png" style="position: absolute" />
+    v-if="segmentPicks &&
+       segmentPicks.data &&
+       segmentPicks.data.find((segment) => segment.name === 'Fresh Meat') != undefined &&
+       isPickedByPlayer2(segmentPicks.data.find((segment) => segment.name === 'Fresh Meat')!)">
+  <div style="position: relative; text-align: center;">
+    <div style="position: absolute;">
+      <img src="./img/pick/pink/pickpinkfresh.png" style="position: absolute;" />
+    </div>
+    <div style="position: absolute; top: 0; left: 0; width: 100%; text-align: center;">
+      <p style="
+        font-family: 'Bebas Neue'; 
+        font-size: 31px;
+        position: relative; 
+        z-index: 2;
+        top: 540px; 
+        height: 150px;
+        line-height: 0px;
+        text-align: center;
+        transform: translate(-490px, -180px); 
+        margin: 0; 
+      ">
+        PICKED BY
+        <br />
+        <span style="
+        "><pre style="
+          font-family: 'Bebas Neue'; 
+          font-size: 31px;
+          color: #ff1b62;
+        ">{{ currentMatch?.data?.players.player2.name }}</pre></span>
+      </p>
+    </div>
   </div>
+</div>
 
-  <div
+<div
     id="thirdwayPinkPick"
-    v-if="
-      segmentPicks &&
-      segmentPicks.data &&
-      segmentPicks.data.find((segment) => segment.name === 'The Third Way') &&
-      isPickedByPlayer2(segmentPicks.data.find((segment) => segment.name === 'The Third Way')!)
-    ">
-    <img src="./img/pick/pink/pickpinkttw.png" style="position: absolute" />
+    v-if="segmentPicks &&
+       segmentPicks.data &&
+       segmentPicks.data.find((segment) => segment.name === 'The Third Way') != undefined &&
+       isPickedByPlayer2(segmentPicks.data.find((segment) => segment.name === 'The Third Way')!)">
+  <div style="position: relative; text-align: center;">
+    <div style="position: absolute;">
+      <img src="./img/pick/pink/pickpinkttw.png" style="position: absolute;" />
+    </div>
+    <div style="position: absolute; top: 0; left: 0; width: 100%; text-align: center;">
+      <p style="
+        font-family: 'Bebas Neue'; 
+        font-size: 31px;
+        position: relative; 
+        z-index: 2;
+        top: 540px; 
+        height: 150px;
+        line-height: 0px;
+        text-align: center;
+        transform: translate(-275px, -180px); 
+        margin: 0; 
+      ">
+        PICKED BY
+        <br />
+        <span style="
+        "><pre style="
+          font-family: 'Bebas Neue'; 
+          font-size: 31px;
+          color: #ff1b62;
+        ">{{ currentMatch?.data?.players.player2.name }}</pre></span>
+      </p>
+    </div>
   </div>
+</div>
 
-  <div
+<div
     id="asjPinkPick"
-    v-if="
-      segmentPicks &&
-      segmentPicks.data &&
-      segmentPicks.data.find((segment) => segment.name === 'All Stunt Jumps') &&
-      isPickedByPlayer2(segmentPicks.data.find((segment) => segment.name === 'All Stunt Jumps')!)
-    ">
-    <img src="./img/pick/pink/pickpinkasj.png" style="position: absolute" />
+    v-if="segmentPicks &&
+       segmentPicks.data &&
+       segmentPicks.data.find((segment) => segment.name === 'All Stunt Jumps') != undefined &&
+       isPickedByPlayer2(segmentPicks.data.find((segment) => segment.name === 'All Stunt Jumps')!)">
+  <div style="position: relative; text-align: center;">
+    <div style="position: absolute;">
+      <img src="./img/pick/pink/pickpinkasj.png" style="position: absolute;" />
+    </div>
+    <div style="position: absolute; top: 0; left: 0; width: 100%; text-align: center;">
+      <p style="
+        font-family: 'Bebas Neue'; 
+        font-size: 31px;
+        position: relative; 
+        z-index: 2;
+        top: 540px; 
+        height: 150px;
+        line-height: 0px;
+        text-align: center;
+        transform: translate(-705px, -180px); 
+        margin: 0; 
+      ">
+        PICKED BY
+        <br />
+        <span style="
+        "><pre style="
+          font-family: 'Bebas Neue'; 
+          font-size: 31px;
+          color: #ff1b62;
+        ">{{ currentMatch?.data?.players.player2.name }}</pre></span>
+      </p>
+    </div>
   </div>
+</div>
 
   <div
     id="racesPinkPick"
-    v-if="
-      segmentPicks &&
-      segmentPicks.data &&
-      segmentPicks.data.find((segment) => segment.name === 'All Races') &&
-      isPickedByPlayer2(segmentPicks.data.find((segment) => segment.name === 'All Races')!)
-    ">
-    <img src="./img/pick/pink/pickpinkraces.png" style="position: absolute" />
+    v-if="segmentPicks &&
+       segmentPicks.data &&
+       segmentPicks.data.find((segment) => segment.name === 'All Races') != undefined &&
+       isPickedByPlayer2(segmentPicks.data.find((segment) => segment.name === 'All Races')!)">
+  <div style="position: relative; text-align: center;">
+    <div style="position: absolute;">
+      <img src="./img/pick/pink/pickpinkraces.png" style="position: absolute;" />
+    </div>
+    <div style="position: absolute; top: 0; left: 0; width: 100%; text-align: center;">
+      <p style="
+        font-family: 'Bebas Neue'; 
+        font-size: 31px;
+        position: relative; 
+        z-index: 2;
+        top: 540px; 
+        height: 150px;
+        line-height: 0px;
+        text-align: center;
+        transform: translate(-490px, -180px); 
+        margin: 0; 
+      ">
+        PICKED BY
+        <br />
+        <span style="
+        "><pre style="
+          font-family: 'Bebas Neue'; 
+          font-size: 31px;
+          color: #ff1b62;
+        ">{{ currentMatch?.data?.players.player2.name }}</pre></span>
+      </p>
+    </div>
   </div>
+</div>
 
   <div
     id="epsilonPinkPick"
-    v-if="
-      segmentPicks &&
-      segmentPicks.data &&
-      segmentPicks.data.find((segment) => segment.name === 'Epsilon Program') &&
-      isPickedByPlayer2(segmentPicks.data.find((segment) => segment.name === 'Epsilon Program')!)
-    ">
-    <img src="./img/pick/pink/pickpinkepsilon.png" style="position: absolute" />
+    v-if="segmentPicks &&
+       segmentPicks.data &&
+       segmentPicks.data.find((segment) => segment.name === 'Epsilon Program') != undefined &&
+       isPickedByPlayer2(segmentPicks.data.find((segment) => segment.name === 'Epsilon Program')!)">
+  <div style="position: relative; text-align: center;">
+    <div style="position: absolute;">
+      <img src="./img/pick/pink/pickpinkepsilon.png" style="position: absolute;" />
+    </div>
+    <div style="position: absolute; top: 0; left: 0; width: 100%; text-align: center;">
+      <p style="
+        font-family: 'Bebas Neue'; 
+        font-size: 31px;
+        position: relative; 
+        z-index: 2;
+        top: 540px; 
+        height: 150px;
+        line-height: 0px;
+        text-align: center;
+        transform: translate(-275px, -180px); 
+        margin: 0; 
+      ">
+        PICKED BY
+        <br />
+        <span style="
+        "><pre style="
+          font-family: 'Bebas Neue'; 
+          font-size: 31px;
+          color: #ff1b62;
+        ">{{ currentMatch?.data?.players.player2.name }}</pre></span>
+      </p>
+    </div>
   </div>
+</div>
 
   <PlayerInfo />
   <MatchInfo />
