@@ -93,7 +93,16 @@
     </div>
 
     <div
-      style="position: absolute; bottom: 326px; z-index: 2; width: 88px; height: 88px; left: 41px"
+      style="
+        position: absolute;
+        bottom: 326px;
+        z-index: 2;
+        width: 88px;
+        height: 88px;
+        left: 41px;
+        object-fit: contain;
+        overflow: hidden;
+      "
       v-if="currentMatch && currentMatch.data">
       <img
         v-if="
@@ -131,7 +140,16 @@
     </div>
 
     <div
-      style="position: absolute; bottom: 326px; z-index: 2; width: 88px; height: 88px; right: 41px"
+      style="
+        position: absolute;
+        bottom: 326px;
+        z-index: 2;
+        width: 88px;
+        height: 88px;
+        right: 41px;
+        object-fit: contain;
+        overflow: hidden;
+      "
       v-if="currentMatch && currentMatch.data">
       <img
         v-if="
