@@ -1,5 +1,5 @@
 <template>
-  <div style="display: flex; flex-direction: row; gap: 5px">
+  <transition-group style="display: flex; flex-direction: row; gap: 5px" tag="div" name="segments">
     <Segment
       v-for="segment in segments"
       :segment="segment"
@@ -10,7 +10,7 @@
       :is-b-o1="isBO1"
       :is-segment-done="isSegmentDone(segment)"
       :colour-to-use="getPlayerColor(segment)" />
-  </div>
+  </transition-group>
 </template>
 
 <script setup lang="ts">
@@ -59,3 +59,16 @@
     }
   }
 </script>
+
+<style scoped>
+  .segments-enter-active {
+    transition: all 1s;
+  }
+  .segments-enter-from, .segments-leave-to {
+    opacity: 0;
+    transform: translateX(100%);
+  }
+  .segments-move {
+    transition: transform 1s;
+  }
+</style>
