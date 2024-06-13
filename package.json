@@ -90,6 +90,12 @@
         "width": 3
       },
       {
+        "name": "omnibarfield",
+        "title": "Omnibarfield",
+        "file": "omnibarfield.html",
+        "width": 3
+      },
+      {
         "name": "prize-pool",
         "title": "Prize Pool",
         "file": "prize-pool.html",

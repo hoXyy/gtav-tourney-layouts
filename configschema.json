@@ -29,9 +29,13 @@
         "intermission": {
           "type": "string",
           "default": "Intermission"
+        },
+        "intermission_interview": {
+          "type": "string",
+          "default": "Intermission Interview"
         }
       },
-      "required": ["enabled", "address", "password", "feed1", "feed2", "intermission"]
+      "required": ["enabled", "address", "password", "feed1", "feed2", "intermission", "intermission_interview"]
     }
   },
   "required": ["obs"]
