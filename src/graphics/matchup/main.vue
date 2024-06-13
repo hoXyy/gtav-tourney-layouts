@@ -55,6 +55,8 @@
         z-index: 2;
         width: 100%;
         height: auto;
+        object-fit: contain;
+        overflow: hidden;
       "
       v-if="currentMatch && currentMatch.data">
       <img
