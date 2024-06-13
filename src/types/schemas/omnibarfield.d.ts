@@ -5,15 +5,4 @@
  * and run json-schema-to-typescript to regenerate this file.
  */
 
-export interface Configschema {
-	obs: {
-		enabled: boolean;
-		address: string;
-		password: string;
-		feed1: string;
-		feed2: string;
-		intermission: string;
-		intermission_interview: string;
-		[k: string]: unknown;
-	};
-}
+export type Omnibarfield = string;

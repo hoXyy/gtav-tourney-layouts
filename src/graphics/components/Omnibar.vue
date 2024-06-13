@@ -1,7 +1,7 @@
 <template>
   <div style="position: absolute; bottom: -6px; z-index: 3">
     <marquee
-      v-if="matches && matches.data && commentators && commentators.data"
+      v-if="matches && matches.data && commentators && commentators.data && omnibarfield && omnibarfield.data"
       style="
         position: absolute;
         bottom: -35px;
@@ -12,22 +12,46 @@
       ">
       <p v-if="isIntermission">
         <span style="margin-right: 80px"
-          >Feel like supporting the tournament in style? Pick some of our exclusive merch up at
-          store.streamelements.com/2022summer! Find out more with !merch in chat!</span
+          >Feel like supporting the tournament in style? Pick some of our exclusive merch up with !merch in chat!</span
         >
-        <span
-          >Commentary on deck: {{ commentators.data }}. Enjoying their banter? Check out our cast
-          with !commentary in the chat!</span
+        <span style="margin-right: 80px"
+          >Check out our commentators with !commentary in the chat!</span
         >
+        <span style="margin-right: 80px;"
+          >Feeling the gambling itch? We have Twitch Channel Point predictions running for each game, so bet on your favorites!</span
+        >
+        <span 
+          >{{ omnibarfield.data }}</span
+        >
+      </p>
+      <p v-else-if="isIntermissionInterview">
+        <span style="margin-right: 80px"
+          >Feel like supporting the tournament in style? Pick some of our exclusive merch up with !merch in chat!</span
+        >
+        <span style="margin-right: 80px"
+          >Check out our commentators with !commentary in the chat!</span
+        >
+        <span style="margin-right: 80px;"
+          >Feeling the gambling itch? We have Twitch Channel Point predictions running for each game, so bet on your favorites!</span
+        >
+        <span style="margin-right: 80px;"
+          >{{ omnibarfield.data }}</span
+        >
+        <span  v-if="getNextMatchString()">{{ getNextMatchString() }}</span>
       </p>
       <p v-else>
         <span style="margin-right: 80px"
-          >Feel like supporting the tournament in style? Pick some of our exclusive merch up at
-          store.streamelements.com/2022summer! Find out more with !merch in chat!</span
+          >Feel like supporting the tournament in style? Pick some of our exclusive merch up with !merch in chat!</span
         >
         <span style="margin-right: 80px"
           >Commentary on deck: {{ commentators.data }}. Enjoying their banter? Check out our cast
           with !commentary in the chat!</span
+        >
+        <span style="margin-right: 80px;"
+          >Feeling the gambling itch? We have Twitch Channel Point predictions running for each game, so bet on your favorites!</span
+        >
+        <span style="margin-right: 80px;"
+          >{{ omnibarfield.data }}</span
         >
         <span v-if="getNextMatchString()">{{ getNextMatchString() }}</span>
       </p>
@@ -38,7 +62,7 @@
 
 <script setup lang="ts">
   import { CurrentMatch, Matches } from '@layouts/types';
-  import { Commentators, Configschema } from '@layouts/types/schemas';
+  import { Commentators, Configschema, Omnibarfield } from '@layouts/types/schemas';
   import { $computed, $ref } from 'vue/macros';
   import { useReplicant } from 'nodecg-vue-composable';
   import { timeToMatch } from '../time-to-run';
@@ -46,9 +70,14 @@
   const matches = useReplicant<Matches>('matches', 'gtav-tourney-layouts');
   const currentMatch = useReplicant<CurrentMatch>('currentMatch', 'gtav-tourney-layouts');
   const commentators = useReplicant<Commentators>('commentators', 'gtav-tourney-layouts');
+  const omnibarfield = useReplicant<Omnibarfield>('omnibarfield', 'gtav-tourney-layouts');
 
   const isIntermission = $computed(() => {
     return currentOBSScene?.data === (nodecg.bundleConfig as Configschema).obs.intermission;
+  });
+
+  const isIntermissionInterview = $computed(() => {
+    return currentOBSScene?.data === (nodecg.bundleConfig as Configschema).obs.intermission_interview;
   });
 
   function getNextMatchString() {

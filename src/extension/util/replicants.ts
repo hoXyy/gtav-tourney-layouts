@@ -1,6 +1,6 @@
 /* eslint-disable max-len */
 
-import { Commentators, Timer } from '@layouts/types/schemas';
+import { Commentators, Omnibarfield, Timer } from '@layouts/types/schemas';
 import {
   Avatars,
   CurrentMatch,
@@ -27,6 +27,7 @@ export const matches = nodecg().Replicant<Matches>('matches', {
 export const currentMatch = nodecg().Replicant<CurrentMatch | undefined>('currentMatch');
 export const currentSegment = nodecg().Replicant<CurrentSegment | undefined>('currentSegment');
 export const commentators = nodecg().Replicant<Commentators>('commentators');
+export const omnibarfield = nodecg().Replicant<Omnibarfield>('omnibarfield');
 export const playerPBs = nodecg().Replicant<PlayerPbs>('playerPbs');
 export const timer = nodecg().Replicant<Timer>('timer');
 export const finishTimes = nodecg().Replicant<FinishTimes>('finishTimes', {
