@@ -23,7 +23,7 @@
           avatars.data &&
           avatars.data.player1
         "
-        :style="{ width: '267px' }"
+        width="267"
         :src="avatars.data.player1" />
       <img v-else :style="{ width: '267px', height: '267px' }" src="./img/nopic.png" />
     </div>
@@ -64,7 +64,7 @@
           avatars.data &&
           avatars.data.player2
         "
-        :style="{ width: '267px', height: '267px' }"
+        width="267"
         :src="avatars.data.player2" />
       <img v-else :style="{ width: '267px', height: '267px' }" src="./img/nopic.png" />
     </div>
