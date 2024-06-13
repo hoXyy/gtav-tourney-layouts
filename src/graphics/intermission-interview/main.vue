@@ -3,11 +3,11 @@
 
   <!-- Player 1 name backgrounds -->
   <img
-    style="position: absolute; z-index: 1"
+    style="position: absolute; z-index: 1; transform: translateX(-100%)"
     v-if="currentMatch && currentMatch.data && currentMatch.data.players.player1.name.length <= 6"
     src="../intermission/img/yellow6.png" />
   <img
-    style="position: absolute; z-index: 1"
+    style="position: absolute; z-index: 1; transform: translateX(-100%)"
     v-if="
       currentMatch &&
       currentMatch.data &&
@@ -16,7 +16,7 @@
     "
     src="../intermission/img/yellow9.png" />
   <img
-    style="position: absolute; z-index: 1"
+    style="position: absolute; z-index: 1; transform: translateX(-100%)"
     v-if="currentMatch && currentMatch.data && currentMatch.data.players.player1.name.length > 9"
     src="../intermission/img/yellow12.png" />
 
