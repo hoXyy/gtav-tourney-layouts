@@ -547,7 +547,7 @@
         height: 150px;
         line-height: 0px;
         text-align: center;
-        transform: translate(-705px, -180px); 
+        transform: translate(-705px, 29px); 
         margin: 0; 
       ">
         PICKED BY
@@ -583,7 +583,7 @@
         height: 150px;
         line-height: 0px;
         text-align: center;
-        transform: translate(-490px, -180px); 
+        transform: translate(-490px, 29px); 
         margin: 0; 
       ">
         PICKED BY
@@ -619,7 +619,7 @@
         height: 150px;
         line-height: 0px;
         text-align: center;
-        transform: translate(-275px, -180px); 
+        transform: translate(-275px, 29px); 
         margin: 0; 
       ">
         PICKED BY
@@ -655,7 +655,7 @@
         height: 150px;
         line-height: 0px;
         text-align: center;
-        transform: translate(-705px, -180px); 
+        transform: translate(-705px, 238px); 
         margin: 0; 
       ">
         PICKED BY
@@ -691,7 +691,7 @@
         height: 150px;
         line-height: 0px;
         text-align: center;
-        transform: translate(-490px, -180px); 
+        transform: translate(-490px, 238px); 
         margin: 0; 
       ">
         PICKED BY
@@ -727,7 +727,7 @@
         height: 150px;
         line-height: 0px;
         text-align: center;
-        transform: translate(-275px, -180px); 
+        transform: translate(-275px, 238px); 
         margin: 0; 
       ">
         PICKED BY

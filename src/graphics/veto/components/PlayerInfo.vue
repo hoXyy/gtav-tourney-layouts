@@ -20,11 +20,11 @@
 
   <!-- Player 2 name backgrounds -->
   <img
-    style="position: absolute; transform: scaleX(-1); z-index: 1"
+    style="position: absolute; z-index: 1"
     v-if="currentMatch && currentMatch.data && currentMatch.data.players.player2.name.length <= 6"
     src="./img/pink6.png" />
   <img
-    style="position: absolute; transform: scaleX(-1); z-index: 1"
+    style="position: absolute; z-index: 1"
     v-if="
       currentMatch &&
       currentMatch.data &&
@@ -33,7 +33,7 @@
     "
     src="./img/pink9.png" />
   <img
-    style="position: absolute; transform: scaleX(-1); z-index: 1"
+    style="position: absolute; z-index: 1"
     v-if="currentMatch && currentMatch.data && currentMatch.data.players.player2.name.length > 9"
     src="./img/pink12.png" />
 
