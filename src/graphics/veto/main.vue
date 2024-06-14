@@ -1138,10 +1138,10 @@
       if (newVal != undefined) {
         if (oldVal != undefined) {
           if (newVal.length > oldVal.length) {
-            nodecg.playSound('segment-pick', { updateVolume: true });
+            nodecg.playSound('segment-ban', { updateVolume: true });
           }
         } else {
-          nodecg.playSound('segment-pick', { updateVolume: true });
+          nodecg.playSound('segment-ban', { updateVolume: true });
         }
       }
     }

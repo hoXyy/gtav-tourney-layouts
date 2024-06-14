@@ -85,13 +85,13 @@
     "soundCues": [
       {
         "name": "segment-pick",
-        "defaultFile": "sound/segment-pick.wav",
-        "defaultVolume": 80
+        "defaultFile": "sound/segment-pick.mp3",
+        "defaultVolume": 100
       },
       {
         "name": "segment-ban",
-        "defaultFile": "sound/segment-ban.wav",
-        "defaultVolume": 80
+        "defaultFile": "sound/segment-ban.mp3",
+        "defaultVolume": 100
       }
     ],
     "dashboardPanels": [
