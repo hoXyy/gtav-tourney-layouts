@@ -9,7 +9,7 @@
         position: absolute;
         top: 353.5px;
         left: 309.5px;
-        z-index: 2;
+        z-index: -1;
         width: 267px;
         height: auto;
         object-fit: contain;
@@ -52,7 +52,7 @@
         position: absolute;
         top: 353.5px;
         left: 1343.5px;
-        z-index: 2;
+        z-index: -1;
         width: 100%;
         height: auto;
         object-fit: contain;
