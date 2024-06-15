@@ -2,11 +2,11 @@
   <img
     src="./img/finish1.png"
     style="position: absolute"
-    v-if="finishTimes && finishTimes.data && finishTimes.data.player1" />
+    v-show="finishTimes && finishTimes.data && finishTimes.data.player1" />
   <img
     src="./img/finish2.png"
     style="position: absolute"
-    v-if="finishTimes && finishTimes.data && finishTimes.data.player2" />
+    v-show="finishTimes && finishTimes.data && finishTimes.data.player2" />
   <p
     style="position: absolute; top: 170px; left: 325px; font-size: 122px"
     v-if="finishTimes && finishTimes.data && finishTimes.data.player1">
