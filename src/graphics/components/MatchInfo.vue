@@ -10,7 +10,7 @@
       position: absolute;
       bottom: 70px;
       gap: 5px;
-      z-index: 3
+      z-index: 3;
     "
     v-if="currentMatch && currentMatch.data">
     <div
@@ -36,7 +36,7 @@
       <SegmentBar
         id="segments"
         :segments="currentMatch.data.segments"
-        :is-b-o1="currentMatch.data.type === 'bo1'"
+        :is-b-o1="currentMatch.data.type === 'bo1' || currentMatch.data.type === 'showmatch'"
         :player1="currentMatch.data.players.player1.name"
         :player2="currentMatch.data.players.player2.name" />
     </div>

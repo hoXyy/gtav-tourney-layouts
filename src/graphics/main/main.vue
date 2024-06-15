@@ -3,7 +3,12 @@
     <TopBar />
     <img
       style="position: absolute"
-      v-if="currentMatch && currentMatch.data && currentMatch.data.type != 'bo1'"
+      v-if="
+        currentMatch &&
+        currentMatch.data &&
+        currentMatch.data.type != 'bo1' &&
+        currentMatch.data.type != 'showmatch'
+      "
       src="./img/boprogress.png" />
 
     <!-- Segment pick backgrounds -->
