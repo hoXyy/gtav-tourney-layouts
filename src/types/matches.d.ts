@@ -38,5 +38,6 @@ export type Matches = {
       | 'All Races'
       | 'Epsilon Program';
     pickedBy: string;
+    wonBy: string | null;
   }[];
 }[];

@@ -17,4 +17,5 @@ export interface CurrentSegment {
     | 'All Races'
     | 'Epsilon Program';
   pickedBy: string;
+  wonBy: string | null;
 }

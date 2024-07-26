@@ -38,5 +38,6 @@ export interface CurrentMatch {
       | 'All Races'
       | 'Epsilon Program';
     pickedBy: string;
+    wonBy: string | null;
   }[];
 }

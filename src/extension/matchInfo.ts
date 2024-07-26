@@ -63,6 +63,42 @@ function updateMatchData(matchData: CurrentMatch) {
   }
 }
 
+function markPlayer1AsSegmentWinner() {
+  if (currentSegment.value && matches.value && currentMatch.value) {
+    if (matches.value.length > 0) {
+      const index = matches.value.findIndex((match) => match.id === currentMatch.value!.id);
+      if (index > -1) {
+        matches.value[index].segments.forEach((segment) => {
+          if (segment.name === currentSegment.value!.name) {
+            if (segment.wonBy === null) {
+              segment.wonBy = matches.value[index].players.player1.name;
+            }
+          }
+        });
+      }
+    }
+  }
+}
+
+function markPlayer2AsSegmentWinner() {
+  if (currentSegment.value && matches.value && currentMatch.value) {
+    if (matches.value.length > 0) {
+      const index = matches.value.findIndex((match) => match.id === currentMatch.value!.id);
+      if (index > -1) {
+        matches.value[index].segments.forEach((segment) => {
+          if (segment.name === currentSegment.value!.name) {
+            if (segment.wonBy === null) {
+              segment.wonBy = matches.value[index].players.player2.name;
+            }
+          }
+        });
+      }
+    }
+  }
+}
+
 nodecg.listenFor('removeMatch', (matchId) => removeMatch(matchId));
 nodecg.listenFor('setMatchAsActive', (matchId) => setMatchAsActive(matchId));
 nodecg.listenFor('updateMatchData', (matchData) => updateMatchData(matchData));
+nodecg.listenFor('finishPlayer1', markPlayer1AsSegmentWinner);
+nodecg.listenFor('finishPlayer2', markPlayer2AsSegmentWinner);

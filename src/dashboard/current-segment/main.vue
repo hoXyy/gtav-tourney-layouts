@@ -45,12 +45,15 @@
   );
 
   watch(
-    () => currentMatch?.data, (newVal) => {
-      if (newVal != undefined) {
-        if (newVal.segments.length > 0) {
-          selectedSegment = newVal.segments[0].name;
+    () => currentMatch?.data,
+    (newVal) => {
+      if (selectedSegment == '') {
+        if (newVal != undefined) {
+          if (newVal.segments.length > 0) {
+            selectedSegment = newVal.segments[0].name;
+          }
         }
       }
     }
-  )
+  );
 </script>

@@ -9,7 +9,8 @@
       "
       :is-b-o1="isBO1"
       :is-segment-done="isSegmentDone(segment)"
-      :colour-to-use="getPlayerColor(segment)" />
+      :colour-to-use="getPlayerColor(segment)"
+      :winner-colour="getWinnerColour(segment)"/>
   </transition-group>
 </template>
 
@@ -56,6 +57,16 @@
       return '#ff1b62';
     } else {
       return 'white';
+    }
+  }
+
+  function getWinnerColour(segment: CurrentSegment) {
+    if (segment.wonBy === props.player1) {
+      return '#ffde1b';
+    } else if (segment.wonBy === props.player2) {
+      return '#ff1b62';
+    } else {
+      return '';
     }
   }
 </script>

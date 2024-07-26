@@ -27,7 +27,14 @@
       ">
       <div
         :class="isCurrent ? 'current' : ''"
-        style="line-height: 59px; font-size: 64px; height: 52px">
+        style="line-height: 59px; font-size: 64px; height: 52px"
+        :style="{
+          backgroundColor: !isCurrent ? winnerColour : '',
+          textAlign: !isCurrent && winnerColour != '' ? 'center' : 'left',
+          color: isCurrent || winnerColour == '#ffde1b' ? 'black' : 'white',
+          paddingLeft: isSegmentDone && segment.name === 'The Third Way' ? '7px': '0px',
+          paddingRight: isSegmentDone && segment.name === 'The Third Way' ? '7px': '0px',
+        }">
         {{ isSegmentDone ? shortNames[segment.name as string] : segment.name }}
       </div>
       <div :style="{ color: props.colourToUse }" style="margin-top: -33px; font-size: 30px">
@@ -41,7 +48,14 @@
 <script setup lang="ts">
   import { $ref } from 'vue/macros';
 
-  const props = defineProps(['segment', 'isCurrent', 'isSegmentDone', 'colourToUse', 'isBO1']);
+  const props = defineProps([
+    'segment',
+    'isCurrent',
+    'isSegmentDone',
+    'colourToUse',
+    'isBO1',
+    'winnerColour',
+  ]);
 
   const shortNames = $ref<{ [key: string]: string }>({
     'The Third Way': 'TTW',
@@ -60,7 +74,7 @@
   .current {
     background-color: white;
     color: black;
-    padding-left: 7px;
-    padding-right: 7px;
+    padding-left: 7px !important;
+    padding-right: 7px !important;
   }
 </style>

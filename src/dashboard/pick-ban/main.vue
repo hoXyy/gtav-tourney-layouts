@@ -139,7 +139,7 @@
 
   function pickSegment(segmentName: string, pickedBy: string) {
     if (segmentPicks && segmentPicks.data) {
-      const segment = { name: segmentName as Segments, pickedBy };
+      const segment = { name: segmentName as Segments, pickedBy, wonBy: null };
       if (matches && matches.data) {
         matches.data[currentMatchIndex].segments.push(segment);
         matches.save();
@@ -151,7 +151,7 @@
 
   function banSegment(segmentName: string, pickedBy: string) {
     if (segmentBans && segmentBans.data) {
-      const segment = { name: segmentName as Segments, pickedBy };
+      const segment = { name: segmentName as Segments, pickedBy, wonBy: null };
       segmentBans.data.push(segment);
       segmentBans.save();
     }
