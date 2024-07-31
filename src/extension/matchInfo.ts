@@ -1,6 +1,6 @@
 import { CurrentMatch } from '@layouts/types';
 import { get } from './util/nodecg';
-import { currentMatch, currentSegment, matches, playerPBs } from './util/replicants';
+import { currentMatch, currentSegment, matches, playerPBs, score } from './util/replicants';
 import { klona as clone } from 'klona/json';
 
 const nodecg = get();
@@ -17,12 +17,13 @@ matches.on('change', (newVal) => {
   }
 });
 
-// zero out current segment on match change
+// zero out current segment and scores on match change
 currentMatch.on('change', (newVal, oldVal) => {
   if (newVal) {
     if (oldVal) {
       if (newVal.id != oldVal.id) {
         currentSegment.value = undefined;
+        score.value = { player1: 0, player2: 0 };
       }
     } else {
       currentSegment.value = undefined;
@@ -72,6 +73,7 @@ function markPlayer1AsSegmentWinner() {
           if (segment.name === currentSegment.value!.name) {
             if (segment.wonBy === null) {
               segment.wonBy = matches.value[index].players.player1.name;
+              score.value.player1++;
             }
           }
         });
@@ -89,6 +91,7 @@ function markPlayer2AsSegmentWinner() {
           if (segment.name === currentSegment.value!.name) {
             if (segment.wonBy === null) {
               segment.wonBy = matches.value[index].players.player2.name;
+              score.value.player2++;
             }
           }
         });
