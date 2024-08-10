@@ -179,7 +179,12 @@
         gap: 1px;
       "
       v-if="
-        currentMatch && currentMatch.data && currentMatch.data.type != 'bo1' && score && score.data
+        currentMatch &&
+        currentMatch.data &&
+        currentMatch.data.type != 'bo1' &&
+        currentMatch.data.type != 'showmatch' &&
+        score &&
+        score.data
       ">
       <span>{{ score.data.player1 || 0 }}</span>
       <span>-</span>
