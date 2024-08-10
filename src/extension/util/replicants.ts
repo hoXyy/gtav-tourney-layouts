@@ -1,13 +1,16 @@
 /* eslint-disable max-len */
 
+import { Commentators, Omnibarfield, Timer } from '@layouts/types/schemas';
 import {
-    Matchinfo,
-    Timer,
-    Player1,
-    Player2,
-    Manual,
-} from '@layouts/types/schemas';
-import { Commentators } from '@layouts/types/schemas/commentators';
+  Avatars,
+  CurrentMatch,
+  CurrentSegment,
+  FinishTimes,
+  ManualPb,
+  Matches,
+  PlayerPbs,
+  Score,
+} from '@layouts/types';
 import { get as nodecg } from './nodecg';
 
 /**
@@ -15,10 +18,36 @@ import { get as nodecg } from './nodecg';
  * and to make sure they have any correct settings on startup.
  */
 
-export const timerRep = nodecg().Replicant<Timer>('timer');
-export const matchinfoRep = nodecg().Replicant<Matchinfo>('matchinfo');
-export const commentatorsRep = nodecg().Replicant<Commentators>('commentators');
-export const player1Rep = nodecg().Replicant<Player1>('player1');
-export const player2Rep = nodecg().Replicant<Player2>('player2');
-export const manualpb = nodecg().Replicant<Manual>('manual');
-export const connectedToOBS = nodecg().Replicant<boolean>('connectedToOBS', { defaultValue: false });
+export const connectedToOBS = nodecg().Replicant<boolean>('connectedToOBS', {
+  defaultValue: false,
+});
+export const matches = nodecg().Replicant<Matches>('matches', {
+  defaultValue: [],
+});
+export const currentMatch = nodecg().Replicant<CurrentMatch | undefined>('currentMatch');
+export const currentSegment = nodecg().Replicant<CurrentSegment | undefined>('currentSegment');
+export const commentators = nodecg().Replicant<Commentators>('commentators');
+export const omnibarfield = nodecg().Replicant<Omnibarfield>('omnibarfield');
+export const playerPBs = nodecg().Replicant<PlayerPbs>('playerPbs');
+export const timer = nodecg().Replicant<Timer>('timer');
+export const finishTimes = nodecg().Replicant<FinishTimes>('finishTimes', {
+  defaultValue: { player1: '', player2: '' },
+});
+export const score = nodecg().Replicant<Score>('score', {
+  defaultValue: { player1: 0, player2: 0 },
+});
+export const prizePool = nodecg().Replicant<number>('prizePool');
+export const segmentPicks = nodecg().Replicant<CurrentSegment[]>('segmentPicks', {
+  defaultValue: [],
+});
+export const segmentBans = nodecg().Replicant<CurrentSegment[]>('segmentBans', {
+  defaultValue: [],
+});
+
+export const manualPb = nodecg().Replicant<ManualPb>('manualPb', {
+  defaultValue: { player1: false, player2: false },
+});
+export const currentObsScene = nodecg().Replicant<string>('currentObsScene');
+export const playerAvatars = nodecg().Replicant<Avatars>('playerAvatars', {
+  defaultValue: { player1: '', player2: '' },
+});

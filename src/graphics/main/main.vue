@@ -1,290 +1,223 @@
 <template>
-    <div>
-        <img id="background" src="./img/main.png" />
-        <div id="on-deck">
-            <commentators />
-            <prize-pool />
-        </div>
-        <div class="player" id="player1">
-            <div
-                id="avatar"
-                :style="{
-                    width: '92px',
-                    height: '92px',
-                    position: 'absolute',
-                    left: '-81px',
-                    bottom: '11px',
-                }"
-            >
-                <img
-                    v-if="player1.hasAvatar"
-                    :src="player1.avatar"
-                    :style="{
-                        width: '100%',
-                        height: '100%',
-                        objectFit: 'cover',
-                    }"
-                />
-                <img
-                    v-else
-                    src="../img/nopic.png"
-                    :style="{
-                        width: '100%',
-                        height: '100%',
-                        objectFit: 'cover',
-                    }"
-                />
-            </div>
-            <p
-                id="player1-name"
-                style="font-family: Myriad Pro Bold; font-size: 72px"
-            >
-                {{ player1.name }}
-            </p>
-            <p id="player1-pb" style="font-size: 32px">
-                PB: {{ player1.pb || '--:--' }}
-                <template v-if="player1.finishTime">
-                    | Finish Time: {{ player1.finishTime }}</template
-                >
-            </p>
-        </div>
-        <div class="player" id="player2">
-            <div
-                id="avatar"
-                :style="{
-                    width: '92px',
-                    height: '92px',
-                    position: 'absolute',
-                    right: '-78px',
-                    bottom: '11px',
-                }"
-            >
-                <img
-                    v-if="player2.hasAvatar"
-                    :src="player2.avatar"
-                    :style="{
-                        width: '100%',
-                        height: '100%',
-                        objectFit: 'cover',
-                    }"
-                />
-                <img
-                    v-else
-                    src="../img/nopic.png"
-                    :style="{
-                        width: '100%',
-                        height: '100%',
-                        objectFit: 'cover',
-                    }"
-                />
-            </div>
-            <p
-                id="player2-name"
-                style="font-family: Myriad Pro Bold; font-size: 72px"
-            >
-                {{ player2.name }}
-            </p>
-            <p id="player2-pb" style="font-size: 32px">
-                <template v-if="player2.finishTime">
-                    Finish Time: {{ player2.finishTime }} |
-                </template>
-                PB: {{ player2.pb || '--:--' }}
-            </p>
-        </div>
-        <div id="timer">
-            {{ timer.time }} <br />
-            <p style="font-size: 72px">
-                {{ score.player1 }} - {{ score.player2 }}
-            </p>
-        </div>
-        <div id="tourney-stage">
-            <p id="tourney-stage-name">
-                <transition name="fade" mode="out-in">
-                    <b :key="timestamp" v-if="textCycle === 0">{{
-                        matchInfo.stage
-                    }}</b>
-                    <b :key="timestamp" v-if="textCycle === 1">{{
-                        matchInfo.segment
-                    }}</b>
-                </transition>
-            </p>
-        </div>
+  <div>
+    <TopBar />
+    <img
+      style="position: absolute"
+      v-if="
+        currentMatch &&
+        currentMatch.data &&
+        currentMatch.data.type != 'bo1' &&
+        currentMatch.data.type != 'showmatch'
+      "
+      src="./img/boprogress.png" />
+
+    <!-- Segment pick backgrounds -->
+    <img
+      style="position: absolute; z-index: 0"
+      src="./img/pinkpick.png"
+      v-if="
+        currentMatch &&
+        currentMatch.data &&
+        currentSegment &&
+        currentSegment.data &&
+        currentSegment.data.pickedBy === currentMatch.data.players.player2.name
+      " />
+    <img
+      style="position: absolute; z-index: 0"
+      src="./img/yellowpick.png"
+      v-if="
+        currentMatch &&
+        currentMatch.data &&
+        currentSegment &&
+        currentSegment.data &&
+        currentSegment.data.pickedBy === currentMatch.data.players.player1.name
+      " />
+
+    <!-- Player 1 name backgrounds -->
+    <img
+      style="position: absolute; z-index: 1"
+      v-if="currentMatch && currentMatch.data && currentMatch.data.players.player1.name.length <= 6"
+      src="./img/yellow6.png" />
+    <img
+      style="position: absolute; z-index: 1"
+      v-if="
+        currentMatch &&
+        currentMatch.data &&
+        currentMatch.data.players.player1.name.length > 6 &&
+        currentMatch.data.players.player1.name.length <= 9
+      "
+      src="./img/yellow9.png" />
+    <img
+      style="position: absolute; z-index: 1"
+      v-if="currentMatch && currentMatch.data && currentMatch.data.players.player1.name.length > 9"
+      src="./img/yellow12.png" />
+
+    <!-- Player 2 name backgrounds -->
+    <img
+      style="position: absolute; z-index: 1"
+      v-if="currentMatch && currentMatch.data && currentMatch.data.players.player2.name.length <= 6"
+      src="./img/pink6.png" />
+    <img
+      style="position: absolute; z-index: 1"
+      v-if="
+        currentMatch &&
+        currentMatch.data &&
+        currentMatch.data.players.player2.name.length > 6 &&
+        currentMatch.data.players.player2.name.length <= 9
+      "
+      src="./img/pink9.png" />
+    <img
+      style="position: absolute; z-index: 1"
+      v-if="currentMatch && currentMatch.data && currentMatch.data.players.player2.name.length > 9"
+      src="./img/pink12.png" />
+
+    <img style="position: absolute; z-index: 1" src="./img/feeds.png" />
+    <div id="background">
+      <img class="bg" src="./img/background.png" />
     </div>
+
+    <!-- Player 1 Data -->
+    <div
+      style="
+        position: absolute;
+        z-index: 2;
+        bottom: 321px;
+        left: 144px;
+        font-size: 78px;
+        height: 150px;
+        color: black;
+        line-height: 0px;
+      "
+      v-if="currentMatch && currentMatch.data">
+      <p style="font-family: 'Europa Grotesk SH DemBol'">
+        {{ currentMatch.data.players.player1.name }}
+      </p>
+      <p v-if="playerPbs && playerPbs.data" style="font-size: 38px; margin-top: -19px">
+        PB: {{ playerPbs.data.player1 }}
+      </p>
+    </div>
+
+    <div
+      style="
+        position: absolute;
+        bottom: 326px;
+        z-index: 2;
+        width: 88px;
+        height: 88px;
+        left: 41px;
+        object-fit: contain;
+        overflow: hidden;
+      "
+      v-if="currentMatch && currentMatch.data">
+      <img
+        v-if="
+          currentMatch.data.players.player1.showAvatar &&
+          avatars &&
+          avatars.data &&
+          avatars.data.player1
+        "
+        width="88"
+        :src="avatars.data.player1" />
+      <img v-else width="88" src="../img/nopic.png" />
+    </div>
+
+    <!-- Player 2 Data -->
+    <div
+      style="
+        position: absolute;
+        z-index: 2;
+        bottom: 321px;
+        right: 144px;
+        font-size: 78px;
+        height: 150px;
+        color: white;
+        line-height: 0px;
+      "
+      v-if="currentMatch && currentMatch.data">
+      <p style="font-family: 'Europa Grotesk SH DemBol'">
+        {{ currentMatch.data.players.player2.name }}
+      </p>
+      <p
+        v-if="playerPbs && playerPbs.data"
+        style="font-size: 38px; margin-top: -19px; text-align: right">
+        PB: {{ playerPbs.data.player2 }}
+      </p>
+    </div>
+
+    <div
+      style="
+        position: absolute;
+        bottom: 326px;
+        z-index: 2;
+        width: 88px;
+        height: 88px;
+        right: 41px;
+        object-fit: contain;
+        overflow: hidden;
+      "
+      v-if="currentMatch && currentMatch.data">
+      <img
+        v-if="
+          currentMatch.data.players.player2.showAvatar &&
+          avatars &&
+          avatars.data &&
+          avatars.data.player2
+        "
+        width="88"
+        :src="avatars.data.player2" />
+      <img v-else width="88" src="../img/nopic.png" />
+    </div>
+
+    <!-- Score -->
+    <p
+      style="
+        position: absolute;
+        bottom: 124px;
+        left: 924px;
+        font-size: 65px;
+        display: flex;
+        gap: 1px;
+      "
+      v-if="
+        currentMatch &&
+        currentMatch.data &&
+        currentMatch.data.type != 'bo1' &&
+        currentMatch.data.type != 'showmatch' &&
+        score &&
+        score.data
+      ">
+      <span>{{ score.data.player1 || 0 }}</span>
+      <span>-</span>
+      <span>{{ score.data.player2 || 0 }}</span>
+    </p>
+
+    <!-- Timer -->
+    <p
+      v-if="timer && timer.data"
+      style="position: absolute; bottom: 150px; width: 100%; text-align: center; font-size: 122px">
+      {{ timer.data.time }}
+    </p>
+    <MatchInfo />
+    <Omnibar />
+  </div>
 </template>
 
-<script lang="ts">
-    import { Vue, Component, Watch } from 'vue-property-decorator';
-    import { Getter } from 'vuex-class';
-    import type {
-        Timer,
-        Matchinfo,
-        Player1,
-        Player2,
-        Score,
-    } from '@layouts/types/schemas';
-    import fitty, { FittyInstance } from 'fitty';
-    import Commentators from '../components/Commentators.vue';
-    import PrizePool from '../components/PrizePool.vue';
+<script setup lang="ts">
+  import { CurrentMatch, CurrentSegment, PlayerPbs, Score, Avatars } from '@layouts/types';
+  import { useReplicant } from 'nodecg-vue-composable';
+  import TopBar from '../components/TopBar.vue';
+  import MatchInfo from '../components/MatchInfo.vue';
+  import Omnibar from '../components/Omnibar.vue';
+  import { Timer } from '@layouts/types/schemas';
 
-    @Component({
-        components: {
-            Commentators,
-            PrizePool,
-        },
-    })
-    export default class extends Vue {
-        @Getter readonly timer!: Timer;
-        @Getter readonly matchInfo!: Matchinfo;
-        @Getter readonly player1!: Player1;
-        @Getter readonly player2!: Player2;
-        @Getter readonly score!: Score;
-
-        fittyName1: FittyInstance[] | undefined;
-        fittyName2: FittyInstance[] | undefined;
-        fittyStage: FittyInstance[] | undefined;
-
-        textCycle: number = 0;
-        timestamp = Date.now();
-
-        fit(): void {
-            this.fittyName1 = fitty('#player1-name', {
-                minSize: 1,
-                maxSize: 72,
-            });
-            this.fittyName2 = fitty('#player2-name', {
-                minSize: 1,
-                maxSize: 72,
-            });
-            this.fittyStage = fitty('#tourney-stage-name', {
-                minSize: 1,
-                maxSize: 60,
-            });
-        }
-
-        mounted() {
-            setTimeout(() => {
-                this.fit();
-            }, 500);
-
-            setInterval(() => {
-                this.timestamp = Date.now();
-                if (!this.textCycle) {
-                    this.textCycle = 1;
-                } else {
-                    this.textCycle = 0;
-                }
-            }, 30 * 1000);
-        }
-
-        @Watch('player1')
-        onPlayer1Change(newVal: Player1) {
-            if (newVal.finishTime && !this.player2.finishTime) {
-                nodecg.playSound('timer-done', { updateVolume: true });
-            }
-            
-            setTimeout(() => {
-                this.fit();
-            }, 500);
-        }
-
-        @Watch('player2')
-        onPlayer2Change(newVal: Player2) {
-            if (newVal.finishTime && !this.player1.finishTime) {
-                nodecg.playSound('timer-done', { updateVolume: true });
-            }
-
-            setTimeout(() => {
-                this.fit();
-            }, 500);
-        }
-
-        @Watch('matchInfo')
-        onInfoChange() {
-            setTimeout(() => {
-                this.fit();
-            }, 500);
-        }
-    }
+  const currentMatch = useReplicant<CurrentMatch>('currentMatch', 'gtav-tourney-layouts');
+  const currentSegment = useReplicant<CurrentSegment>('currentSegment', 'gtav-tourney-layouts');
+  const playerPbs = useReplicant<PlayerPbs>('playerPbs', 'gtav-tourney-layouts');
+  const score = useReplicant<Score>('score', 'gtav-tourney-layouts');
+  const timer = useReplicant<Timer>('timer', 'gtav-tourney-layouts');
+  const avatars = useReplicant<Avatars>('playerAvatars', 'gtav-tourney-layouts');
 </script>
 
 <style>
-    @import url('../css/base.css');
-
-    .fade-enter-active,
-    .fade-leave-active {
-        transition: opacity 0.7s;
-    }
-    .fade-enter,
-    .fade-leave-to {
-        opacity: 0;
-    }
-
-    #on-deck {
-        font-family: 'signpainter_housescriptRg';
-        color: white;
-        position: absolute;
-        bottom: 5px;
-        left: 45px;
-        font-size: 72px;
-        line-height: 1px;
-        width: calc(100% - 90px);
-        display: flex;
-        justify-content: space-between;
-    }
-
-    #background {
-        position: absolute;
-        top: 0;
-        left: 0;
-        z-index: -1;
-    }
-
-    #tourney-stage {
-        color: white;
-        position: absolute;
-        font-size: 60px;
-        right: 40px;
-        font-family: 'Trebuchet MS';
-        width: 800px;
-        text-align: center;
-        height: 100px;
-        top: 20px;
-        line-height: 0px;
-        text-transform: uppercase;
-    }
-
-    #timer {
-        color: white;
-        font-family: 'ChaletComprime-CologneSixty';
-        font-size: 128px;
-        width: 100%;
-        text-align: center;
-        position: absolute;
-        bottom: 110px;
-        line-height: 15px;
-    }
-
-    .player {
-        color: white;
-        display: flex;
-        flex-direction: column;
-        position: absolute;
-        /*   background-color: rgba(255, 255, 255, 0.5); */
-        width: 38%;
-        line-height: 0px;
-    }
-    #player1 {
-        bottom: 209px;
-        left: 120px;
-    }
-
-    .player > p {
-        margin: 25px;
-    }
-
-    #player2 {
-        bottom: 209px;
-        right: 120px;
-        text-align: right;
-    }
+  @import url('../css/base.css');
 </style>

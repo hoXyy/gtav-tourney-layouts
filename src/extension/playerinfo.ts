@@ -1,287 +1,157 @@
-import {
-    player1Rep,
-    player2Rep,
-    matchinfoRep,
-    manualpb,
-} from './util/replicants';
-import { msToTimeStr } from './util/helpers';
 import axios from 'axios';
-import { get } from './util/nodecg';
 import imageToBase64 from 'image-to-base64';
 import fetch from 'node-fetch';
 import { getMimeType } from 'stream-mime-type';
-
-let pb1_string = null;
-let pb2_string = null;
+import { msToTimeStr } from './util/helpers';
+import { get } from './util/nodecg';
+import {
+  currentMatch,
+  currentSegment,
+  manualPb,
+  matches,
+  playerPBs,
+  playerAvatars,
+} from './util/replicants';
 
 const nodecg = get();
 
 const segmentIDs: { [key: string]: string } = {
-    'Trevor%': '814344kq',
-    Countryside: 'z197dd4l',
-    'Blitz Play': 'p123442l',
-    'Deep Inside': '81p866nl',
-    'Paleto Score': 'jqzkyykq',
-    'Fresh Meat': 'xqk7664l',
-    'Bureau Raid': 'gq7kzzr1',
-    'The Third Way': '21gyooo1',
+  'Trevor%': '814344kq',
+  Countryside: 'z197dd4l',
+  'Blitz Play': 'p123442l',
+  'Deep Inside': '81p866nl',
+  'Fresh Meat': 'xqk7664l',
+  'The Third Way': '21gyooo1',
 };
 
-function updatePlayer1PB(): void {
-    if (!manualpb.value.player1) {
-        axios
-            .get(
-                `https://www.speedrun.com/api/v1/users?lookup=${encodeURIComponent(
-                    player1Rep.value.src
-                )}`
-            )
-            .then((res) => {
-                let parsed = res.data;
-                if (parsed.data.length > 0) {
-                    axios
-                        .get(
-                            `https://www.speedrun.com/api/v1/users/` +
-                                parsed.data[0].id +
-                                `/personal-bests`
-                        )
-                        .then((res) => {
-                            parsed = res.data;
-                            let x = null;
-                            let nopb = false;
-                            for (let i = 0; i < parsed.data.length; i++) {
-                                x += parsed.data[i];
-                                if (
-                                    parsed.data[i].run.category ===
-                                        '7kjvmgk3' &&
-                                    parsed.data[i].run.values.jlzwo90l ==
-                                        segmentIDs[matchinfoRep.value.segment]
-                                ) {
-                                    var time = msToTimeStr(
-                                        parsed.data[i].run.times.realtime_t *
-                                            1000
-                                    );
-                                    nopb = false;
-                                    if (parsed.data[i].place % 10 === 1) {
-                                        pb1_string =
-                                            time +
-                                            ` (` +
-                                            parsed.data[i].place +
-                                            `st)`;
-                                    } else if (
-                                        parsed.data[i].place % 10 ===
-                                        2
-                                    ) {
-                                        pb1_string =
-                                            time +
-                                            ` (` +
-                                            parsed.data[i].place +
-                                            `nd)`;
-                                    } else if (
-                                        parsed.data[i].place % 10 ===
-                                        3
-                                    ) {
-                                        pb1_string =
-                                            time +
-                                            ` (` +
-                                            parsed.data[i].place +
-                                            `rd)`;
-                                    } else {
-                                        pb1_string =
-                                            time +
-                                            ` (` +
-                                            parsed.data[i].place +
-                                            `th)`;
-                                    }
-                                    player1Rep.value.pb = pb1_string;
-                                } else if (nopb) {
-                                    player1Rep.value.pb = '--:--';
-                                }
-                            }
-                        })
-                        .catch((err) => {
-                            nodecg.log.error(err);
-                        });
-                }
-            })
-            .catch((err) => {
-                nodecg.log.error(err);
-            });
+const categoryIDs: { [key: string]: string } = {
+  'All Stunt Jumps': '9d8vge6k',
+  'All Races': 'w205pr5d',
+  'Epsilon Program': 'rklzx7n2',
+};
+
+// Reset the PB variables on launch
+playerPBs.value = { player1: '', player2: '' };
+
+async function getPlayerPB(srcUsername: string, category: string) {
+  let pb = '--:--';
+  try {
+    const userList = (
+      await axios.get(
+        `https://www.speedrun.com/api/v1/users?lookup=${encodeURIComponent(srcUsername)}`
+      )
+    ).data;
+    if (userList.data.length > 0) {
+      const userData = (
+        await axios.get(
+          `https://www.speedrun.com/api/v1/users/${userList.data[0].id}/personal-bests`
+        )
+      ).data;
+      let nopb = false;
+      for (let i = 0; i < userData.data.length; i++) {
+        if (Object.keys(segmentIDs).includes(category)) {
+          if (
+            userData.data[i].run.category === '7kjvmgk3' &&
+            userData.data[i].run.values.jlzwo90l == segmentIDs[category] &&
+            userData.data[i].run.values['0nw02xkl'] === 'klrg0emq'
+          ) {
+            nopb = false;
+            pb = msToTimeStr(userData.data[i].run.times.realtime_t * 1000);
+            break;
+          } else if (nopb) {
+            pb = '--:--';
+          }
+        } else {
+          if (userData.data[i].run.category == categoryIDs[category]) {
+            if (userData.data[i].run.category == categoryIDs['Epsilon Program']) {
+              if (userData.data[i].run.values.kn091v7n == 'q65y0r3l') {
+                nopb = false;
+                pb = msToTimeStr(userData.data[i].run.times.realtime_t * 1000);
+                break;
+              }
+            } else {
+              nopb = false;
+              pb = msToTimeStr(userData.data[i].run.times.realtime_t * 1000);
+              break;
+            }
+          } else if (nopb) {
+            pb = '--:--';
+          }
+        }
+      }
     }
+  } catch (err: any) {
+    nodecg.log.error(`Error getting PB for ${srcUsername}: `, err);
+  }
+
+  return pb;
 }
 
-function updatePlayer2PB(): void {
-    if (!manualpb.value.player2) {
-        axios
-            .get(
-                `https://www.speedrun.com/api/v1/users?lookup=${encodeURIComponent(
-                    player2Rep.value.src
-                )}`
-            )
-            .then((res) => {
-                let parsed = res.data;
-                if (parsed.data.length > 0) {
-                    axios
-                        .get(
-                            `https://www.speedrun.com/api/v1/users/` +
-                                parsed.data[0].id +
-                                `/personal-bests`
-                        )
-                        .then((res) => {
-                            parsed = res.data;
-                            let x = null;
-                            let nopb = false;
-                            for (let i = 0; i < parsed.data.length; i++) {
-                                x += parsed.data[i];
-                                if (
-                                    parsed.data[i].run.category ===
-                                        '7kjvmgk3' &&
-                                    parsed.data[i].run.values.jlzwo90l ==
-                                        segmentIDs[matchinfoRep.value.segment]
-                                ) {
-                                    var time = msToTimeStr(
-                                        parsed.data[i].run.times.realtime_t *
-                                            1000
-                                    );
-                                    nopb = false;
-                                    if (parsed.data[i].place % 10 === 1) {
-                                        pb2_string =
-                                            time +
-                                            ` (` +
-                                            parsed.data[i].place +
-                                            `st)`;
-                                    } else if (
-                                        parsed.data[i].place % 10 ===
-                                        2
-                                    ) {
-                                        pb2_string =
-                                            time +
-                                            ` (` +
-                                            parsed.data[i].place +
-                                            `nd)`;
-                                    } else if (
-                                        parsed.data[i].place % 10 ===
-                                        3
-                                    ) {
-                                        pb2_string =
-                                            time +
-                                            ` (` +
-                                            parsed.data[i].place +
-                                            `rd)`;
-                                    } else {
-                                        pb2_string =
-                                            time +
-                                            ` (` +
-                                            parsed.data[i].place +
-                                            `th)`;
-                                    }
-                                    player2Rep.value.pb = pb2_string;
-                                } else if (nopb) {
-                                    player2Rep.value.pb = '--:--';
-                                }
-                            }
-                        })
-                        .catch((err) => {
-                            nodecg.log.error(err);
-                        });
-                }
-            })
-            .catch((err) => {
-                nodecg.log.error(err);
-            });
+async function getPlayerAvatar(srcUsername: string) {
+  let avatarBase64 = '';
+  try {
+    let userData = await axios.get(
+      `https://www.speedrun.com/api/v1/users?lookup=${encodeURIComponent(srcUsername)}`
+    );
+    if (userData.data.data.length > 0) {
+      let userId = userData.data.data[0].id;
+      const user = (await axios.get(`https://www.speedrun.com/api/v1/users/${userId}`)).data;
+      if (user.data.assets.image.uri != null) {
+        const base64 = await imageToBase64(user.data.assets.image.uri);
+        const mimeType = await getFileType(user.data.assets.image.uri);
+        if (!mimeType.includes('gif')) {
+          avatarBase64 = `data:${mimeType};base64,${base64}`;
+        }
+      }
     }
-}
+  } catch (err: any) {
+    nodecg.log.error(`Error getting avatar for ${srcUsername}: `, err);
+  }
 
-function getPlayer1Avatar(): void {
-    if (player1Rep.value.src) {
-        axios
-            .get(
-                `https://www.speedrun.com/api/v1/users?lookup=${encodeURIComponent(
-                    player1Rep.value.src
-                )}`
-            )
-            .then((res) => {
-                let data = res.data;
-                if (data.data.length > 0) {
-                    axios
-                        .get(
-                            `https://www.speedrun.com/api/v1/users/${data.data[0].id}`
-                        )
-                        .then(async (res) => {
-                            data = res.data;
-                            if (data.data.assets.image.uri != null) {
-                                player1Rep.value.hasAvatar = true;
-                                const avatarBase64 = await imageToBase64(
-                                    data.data.assets.image.uri
-                                );
-                                const mimeType = await getFileType(
-                                    data.data.assets.image.uri
-                                );
-                                let fullAvatar = `data:${mimeType};base64,${avatarBase64}`;
-                                player1Rep.value.avatar = fullAvatar;
-                            } else {
-                                player1Rep.value.hasAvatar = false;
-                                player1Rep.value.avatar = '';
-                            }
-                        });
-                }
-            });
-    }
-}
-
-function getPlayer2Avatar(): void {
-    if (player2Rep.value.src) {
-        axios
-            .get(
-                `https://www.speedrun.com/api/v1/users?lookup=${encodeURIComponent(
-                    player2Rep.value.src
-                )}`
-            )
-            .then((res) => {
-                let data = res.data;
-                if (data.data.length > 0) {
-                    axios
-                        .get(
-                            `https://www.speedrun.com/api/v1/users/${data.data[0].id}`
-                        )
-                        .then(async (res) => {
-                            data = res.data;
-                            if (data.data.assets.image.uri != null) {
-                                player2Rep.value.hasAvatar = true;
-                                const avatarBase64 = await imageToBase64(
-                                    data.data.assets.image.uri
-                                );
-                                const mimeType = await getFileType(
-                                    data.data.assets.image.uri
-                                );
-                                let fullAvatar = `data:${mimeType};base64,${avatarBase64}`;
-                                player2Rep.value.avatar = fullAvatar;
-                            } else {
-                                player2Rep.value.hasAvatar = false;
-                                player2Rep.value.avatar = '';
-                            }
-                        });
-                }
-            });
-    }
+  return avatarBase64;
 }
 
 async function getFileType(url: string): Promise<string> {
-    const response = await fetch(url);
-    const { stream, mime } = await getMimeType(response.body);
-    return mime;
+  const response = await fetch(url);
+  const { stream, mime } = await getMimeType(response.body!);
+  return mime;
 }
 
-player1Rep.on('change', () => {
-    updatePlayer1PB();
-    getPlayer1Avatar();
+currentMatch.on('change', async (newVal) => {
+  if (newVal) {
+    // Get players' avatar
+    if (newVal.players.player1.srcUsername) {
+      const avatar = await getPlayerAvatar(newVal.players.player1.srcUsername);
+      playerAvatars.value.player1 = avatar;
+    }
+
+    if (newVal.players.player2.srcUsername) {
+      const avatar = await getPlayerAvatar(newVal.players.player2.srcUsername);
+      playerAvatars.value.player2 = avatar;
+    }
+  }
+
 });
 
-player2Rep.on('change', () => {
-    updatePlayer2PB();
-    getPlayer2Avatar();
-});
+currentSegment.on('change', async (val) => {
+  if (val && val.name) {
+    if (currentMatch.value) {
+      if (!manualPb.value.player1) {
+        if (currentMatch.value.players.player1.srcUsername) {
+          const pb = await getPlayerPB(currentMatch.value.players.player1.srcUsername, val.name);
+          playerPBs.value.player1 = pb;
+        }
+      }
 
-matchinfoRep.on('change', () => {
-    updatePlayer1PB();
-    updatePlayer2PB();
+      if (!manualPb.value.player2) {
+        if (currentMatch.value.players.player2.srcUsername) {
+          const pb = await getPlayerPB(currentMatch.value.players.player2.srcUsername, val.name);
+          playerPBs.value.player2 = pb;
+        }
+      }
+    }
+  } else {
+    playerPBs.value.player1 = '';
+    playerPBs.value.player2 = '';
+  }
 });

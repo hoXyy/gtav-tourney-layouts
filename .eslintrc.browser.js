@@ -8,9 +8,8 @@ module.exports = {
   parser: 'vue-eslint-parser',
   parserOptions: {
     parser: '@typescript-eslint/parser',
-    project: 'tsconfig.browser.json',
+    project: path.join(__dirname, 'tsconfig.browser.json'),
     extraFileExtensions: ['.vue'],
-    ecmaVersion: 2020,
   },
   globals: {
     nodecg: 'readonly',
@@ -31,10 +30,7 @@ module.exports = {
     'import/resolver': {
       typescript: {
         // This is needed to properly resolve paths.
-        project: 'tsconfig.browser.json',
-      },
-      webpack: {
-        config: path.join(__dirname, 'webpack.config.mjs'),
+        project: path.join(__dirname, 'tsconfig.browser.json'),
       },
     },
     'import/extensions': ['.js', '.jsx', '.ts', '.tsx'],
@@ -46,17 +42,9 @@ module.exports = {
     'max-len': ['error', { code: 100, ignorePattern: '^import\\s.+\\sfrom\\s.+;' }],
     // I mainly have this off as it ruins auto import sorting in VSCode.
     'object-curly-newline': 'off',
-    '@typescript-eslint/lines-between-class-members': 'off',
-    'vue/html-self-closing': ['error'],
-    'class-methods-use-this': 'off',
-    'no-param-reassign': ['error', {
-      props: true,
-      ignorePropertyModificationsFor: [
-        'state', // for vuex state
-        'acc', // for reduce accumulators
-        'e', // for e.returnvalue
-      ],
-    }],
+    // Allows "main.vue" files to be named as such.
+    'vue/multi-word-component-names': ['error', { 'ignores': ['main'] }],
+    // Not sure how much this is needed anymore?
     'import/extensions': ['error', 'ignorePackages', {
       js: 'never',
       jsx: 'never',
