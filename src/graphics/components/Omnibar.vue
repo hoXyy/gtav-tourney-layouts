@@ -3,6 +3,7 @@
     <marquee
       v-if="matches && matches.data && commentators && commentators.data && omnibarfield && omnibarfield.data != undefined"
       style="
+        color: white;
         position: absolute;
         bottom: -35px;
         width: 1851px;
