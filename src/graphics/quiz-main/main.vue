@@ -22,6 +22,9 @@
         <p style="font-family: 'Europa Grotesk SH DemBol'">
           {{ currentMatch.data.players.player1.name }}
         </p>
+        <p v-if="score && score.data" style="font-size: 38px; margin-top: -19px">
+        Score: {{ score.data.player1 }}
+        </p>
       </div>
   
       <div
@@ -64,6 +67,9 @@
         <p style="font-family: 'Europa Grotesk SH DemBol'">
           {{ currentMatch.data.players.player2.name }}
         </p>
+        <p v-if="score && score.data" style="font-size: 38px; margin-top: -19px">
+        Score: {{ score.data.player2 }}
+        </p>
       </div>
   
       <div
@@ -95,7 +101,7 @@
         style="
           position: absolute;
           z-index: 2;
-          bottom: 321px;
+          bottom: 121px;
           right: 144px;
           font-size: 78px;
           height: 150px;
@@ -104,14 +110,17 @@
         "
         v-if="currentMatch && currentMatch.data">
         <p style="font-family: 'Europa Grotesk SH DemBol'">
-          {{ currentMatch.data.players.player2.name }}
+          {{ currentMatch.data.players.player3.name }}
+        </p>
+        <p v-if="score && score.data" style="font-size: 38px; margin-top: -19px">
+        Score: {{ score.data.player3 }}
         </p>
       </div>
   
       <div
         style="
           position: absolute;
-          bottom: 326px;
+          bottom: 126px;
           z-index: 2;
           width: 88px;
           height: 88px;
@@ -122,13 +131,13 @@
         v-if="currentMatch && currentMatch.data">
         <img
           v-if="
-            currentMatch.data.players.player2.showAvatar &&
+            currentMatch.data.players.player3.showAvatar &&
             avatars &&
             avatars.data &&
-            avatars.data.player2
+            avatars.data.player3
           "
           width="88"
-          :src="avatars.data.player2" />
+          :src="avatars.data.player3" />
         <img v-else width="88" src="../img/nopic.png" />
       </div>
   
@@ -137,40 +146,43 @@
         style="
           position: absolute;
           z-index: 2;
-          bottom: 321px;
-          right: 144px;
+          bottom: 121px;
+          left: 144px;
           font-size: 78px;
           height: 150px;
-          color: white;
+          color: black;
           line-height: 0px;
         "
         v-if="currentMatch && currentMatch.data">
         <p style="font-family: 'Europa Grotesk SH DemBol'">
-          {{ currentMatch.data.players.player2.name }}
+          {{ currentMatch.data.players.player4.name }}
+        </p>
+        <p v-if="score && score.data" style="font-size: 38px; margin-top: -19px">
+        Score: {{ score.data.player4 }}
         </p>
       </div>
   
       <div
         style="
           position: absolute;
-          bottom: 326px;
+          bottom: 126px;
           z-index: 2;
           width: 88px;
           height: 88px;
-          right: 41px;
+          left: 41px;
           object-fit: contain;
           overflow: hidden;
         "
         v-if="currentMatch && currentMatch.data">
         <img
           v-if="
-            currentMatch.data.players.player2.showAvatar &&
+            currentMatch.data.players.player4.showAvatar &&
             avatars &&
             avatars.data &&
-            avatars.data.player2
+            avatars.data.player4
           "
           width="88"
-          :src="avatars.data.player2" />
+          :src="avatars.data.player4" />
         <img v-else width="88" src="../img/nopic.png" />
       </div>
   
@@ -197,7 +209,7 @@
     const currentSegment = useReplicant<CurrentSegment>('currentSegment', 'gtav-tourney-layouts');
     const playerPbs = useReplicant<PlayerPbs>('playerPbs', 'gtav-tourney-layouts');
     const score = useReplicant<Score>('score', 'gtav-tourney-layouts');
-    const timer = useReplicant<Timer>('quiz-timer', 'gtav-tourney-layouts');
+    const timer = useReplicant<Timer>('timer', 'gtav-tourney-layouts');
     const avatars = useReplicant<Avatars>('playerAvatars', 'gtav-tourney-layouts');
   </script>
   

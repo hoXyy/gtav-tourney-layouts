@@ -18,17 +18,31 @@ const LS_TIMER_PHASE = {
   Paused: 3,
 };
 
+const COUNTDOWN_START_MS = 30 * 1000; // 30s in ms
+
 /**
  * Resets timer replicant to default settings.
  */
 function resetTimerRepToDefault(): void {
   timerRep.value = {
-    time: '00:00:00',
-    milliseconds: 0,
-    timestamp: 0,
+    time: msToTimeStr(COUNTDOWN_START_MS),
+    milliseconds: COUNTDOWN_START_MS,
+    timestamp: Date.now(),
     phase: 'stopped',
   };
   nodecg.log.debug('[Timer] Replicant restored to default');
+}
+
+/**
+ * Use jokers
+ */
+function joker(): void {
+  timerRep.value = {
+    time: msToTimeStr(15000),
+    milliseconds: 15000,
+    timestamp: Date.now(),
+    phase: 'running',
+  };
 }
 
 /**
@@ -61,33 +75,31 @@ function setGameTime(ms: number): void {
  */
 async function startTimer(force?: boolean): Promise<void> {
   try {
-    // Error if the timer is disabled.
     if (!force) {
       throw new Error('Timer changes are disabled');
     }
-    // Error if the timer is finished.
-    if (timerRep.value.state === 'finished') {
+    if (timerRep.value.phase === 'finished') {
       throw new Error('Timer is in the finished state');
     }
-    // Error if the timer isn't stopped or paused (and we're not forcing it).
     if (!force && !['stopped', 'paused'].includes(timerRep.value.phase)) {
       throw new Error('Timer is not stopped/paused');
     }
 
     if (timer.currentPhase() === LS_TIMER_PHASE.NotRunning) {
       timer.start();
-      nodecg.log.debug('[Timer] Started');
+      nodecg.log.debug('[Timer] Countdown started');
     } else {
       timer.resume();
-      nodecg.log.debug('[Timer] Resumed');
+      nodecg.log.debug('[Timer] Countdown resumed');
     }
-    setGameTime(timerRep.value.milliseconds);
     timerRep.value.phase = 'running';
+    timerRep.value.timestamp = Date.now();
   } catch (err) {
     nodecg.log.debug('[Timer] Cannot start/resume timer:', err);
     throw err;
   }
 }
+
 
 /**
  * Pause the timer.
@@ -114,11 +126,9 @@ async function pauseTimer(): Promise<void> {
  */
 export async function resetTimer(force?: boolean): Promise<void> {
   try {
-    // Error if the timer is disabled.
     if (!force) {
       throw new Error('Timer changes are disabled');
     }
-    // Error if the timer is stopped.
     if (timerRep.value.phase === 'stopped') {
       throw new Error('Timer is stopped');
     }
@@ -128,12 +138,13 @@ export async function resetTimer(force?: boolean): Promise<void> {
     finishTimes.value.player1 = '';
     finishTimes.value.player2 = '';
     runnersFinished = false;
-    nodecg.log.debug('[Timer] Reset');
+    nodecg.log.debug('[Timer] Reset with countdown start');
   } catch (err) {
     nodecg.log.debug('[Timer] Cannot reset timer:', err);
     throw err;
   }
 }
+
 
 /**
  * Stop/finish the timer.
@@ -163,13 +174,33 @@ async function stopTimer(): Promise<void> {
 /**
  * This stuff runs every 1/10th a second to keep the time updated.
  */
+let lastTickTime = Date.now(); // Track the last time the tick function was executed
+
 function tick(): void {
   if (timerRep.value.phase === 'running') {
-    // Calculates the milliseconds the timer has been running for and updates the replicant.
-    const time = timer.currentTime().gameTime() as livesplitCore.TimeSpanRef;
-    const ms = Math.floor(time.totalSeconds() * 1000);
-    setTime(ms);
-    timerRep.value.timestamp = Date.now();
+    const now = Date.now();
+    const elapsedSinceLastTick = now - lastTickTime;
+
+    // Only update the timer if a full second has passed
+    if (elapsedSinceLastTick >= 1000) {
+      // Calculate the new remaining time by subtracting exactly 1000ms
+      const remainingTime = timerRep.value.milliseconds - 1000;
+
+      // If time has run out, stop the timer
+      if (remainingTime <= 0) {
+        setTime(0);
+        stopTimer().catch((err) => nodecg.log.error('Failed to stop timer:', err));
+        return;
+      }
+
+      // Update the timer with the new remaining time
+      setTime(remainingTime);
+
+      // Update the last tick time and the timestamp in timerRep
+      lastTickTime = now;
+      timerRep.value.timestamp = now;
+      timerRep.value.milliseconds = remainingTime;
+    }
   }
 }
 
@@ -211,7 +242,9 @@ nodecg.listenFor('timerFinish', (data, ack) => {
     .then(() => processAck(ack, null))
     .catch((err) => processAck(ack, err));
 });
-
+nodecg.listenFor('joker', () => {
+  joker()
+});
 nodecg.listenFor('finishPlayer1', () => {
   finishTimes.value.player1 = timerRep.value.time;
 });

@@ -25,6 +25,20 @@ export type Matches = {
       avatar: string;
       showAvatar: boolean;
     };
+    player3: {
+      name: string;
+      srcUsername?: string;
+      manualPb?: boolean;
+      avatar: string;
+      showAvatar: boolean;
+    };
+    player4: {
+      name: string;
+      srcUsername?: string;
+      manualPb?: boolean;
+      avatar: string;
+      showAvatar: boolean;
+    };
   };
   segments: {
     name:

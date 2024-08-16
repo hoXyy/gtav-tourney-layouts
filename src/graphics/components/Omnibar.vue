@@ -44,7 +44,7 @@
           >Feel like supporting the tournament in style? Pick some of our exclusive merch up with !merch in chat!</span
         >
         <span style="margin-right: 80px"
-          >Commentary on deck: {{ commentators.data }}. Enjoying their banter? Check out our cast
+          >Hosts on deck: {{ commentators.data }}. Enjoying their banter? Check out our cast
           with !commentary in the chat!</span
         >
         <span style="margin-right: 80px;"

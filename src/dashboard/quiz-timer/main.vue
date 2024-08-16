@@ -26,7 +26,7 @@
     const score = useReplicant<Score>('score', 'gtav-tourney-layouts');
     const currentMatch = useReplicant<CurrentMatch>('currentMatch', 'gtav-tourney-layouts');
     const finishTimes = useReplicant<FinishTimes>('finishTimes', 'gtav-tourney-layouts');
-    const timer = useReplicant<Timer>('quiz-timer', 'gtav-tourney-layouts');
+    const timer = useReplicant<Timer>('timer', 'gtav-tourney-layouts');
   
     let phase = $ref('');
   

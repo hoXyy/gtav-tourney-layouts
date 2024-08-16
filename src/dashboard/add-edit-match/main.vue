@@ -49,6 +49,30 @@
           label="Player 2 speedrun.com name"
           style="width: 50%" />
       </div>
+      <div style="display: flex; gap: 5px">
+        <QInput
+          outlined
+          v-model="editedMatchData.players.player3.name"
+          label="Player 3 Name"
+          style="width: 50%" />
+        <QInput
+          outlined
+          v-model="editedMatchData.players.player3.srcUsername"
+          label="Player 3 speedrun.com name"
+          style="width: 50%" />
+      </div>
+      <div style="display: flex; gap: 5px">
+        <QInput
+          outlined
+          v-model="editedMatchData.players.player4.name"
+          label="Player 4 Name"
+          style="width: 50%" />
+        <QInput
+          outlined
+          v-model="editedMatchData.players.player4.srcUsername"
+          label="Player 4 speedrun.com name"
+          style="width: 50%" />
+      </div>
     </div>
     <QSeparator />
     <div style="display: flex; flex-direction: column; gap: 5px">
@@ -129,6 +153,16 @@
         showAvatar: true,
       },
       player2: {
+        name: '',
+        avatar: '',
+        showAvatar: true,
+      },
+      player3: {
+        name: '',
+        avatar: '',
+        showAvatar: true,
+      },
+      player4: {
         name: '',
         avatar: '',
         showAvatar: true,

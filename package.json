@@ -97,7 +97,7 @@
     "dashboardPanels": [
       {
         "name": "commentators",
-        "title": "Commentators",
+        "title": "Hosts",
         "file": "commentators.html",
         "width": 3
       },
@@ -205,6 +205,21 @@
       },
       {
         "file": "intermission-base.html",
+        "width": 1920,
+        "height": 1080
+      },
+      {
+        "file": "quiz-main.html",
+        "width": 1920,
+        "height": 1080
+      },
+      {
+        "file": "quiz-intro.html",
+        "width": 1920,
+        "height": 1080
+      },
+      {
+        "file": "quiz-answer-reveal.html",
         "width": 1920,
         "height": 1080
       }

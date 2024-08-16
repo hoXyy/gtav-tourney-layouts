@@ -23,7 +23,7 @@ currentMatch.on('change', (newVal, oldVal) => {
     if (oldVal) {
       if (newVal.id != oldVal.id) {
         currentSegment.value = undefined;
-        score.value = { player1: 0, player2: 0 };
+        score.value = { player1: 0, player2: 0, player3: 0, player4: 0 };
       }
     } else {
       currentSegment.value = undefined;
