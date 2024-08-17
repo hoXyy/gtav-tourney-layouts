@@ -10,7 +10,7 @@
     <!-- Main Container -->
     <div id="container">
       <!-- Player 1 Data -->
-      <div id="player1" class="movable player-section player1">
+      <div id="player1" class="player-section">
         <div class="player-info">
           <p v-if="currentMatch && currentMatch.data" class="player-name player-name1">
             {{ currentMatch.data.players.player1.name }}
@@ -24,7 +24,7 @@
       </div>
 
       <!-- Player 2 Data -->
-      <div id="player2" class="movable player-section player2">
+      <div id="player2" class="player-section">
         <div class="player-info">
           <p v-if="currentMatch && currentMatch.data" class="player-name player-name2">
             {{ currentMatch.data.players.player2.name }}
@@ -38,7 +38,7 @@
       </div>
 
       <!-- Player 3 Data -->
-      <div id="player3" class="movable player-section player3">
+      <div id="player3" class="player-section">
         <div class="player-info">
           <p v-if="currentMatch && currentMatch.data" class="player-name player-name3">
             {{ currentMatch.data.players.player3.name }}
@@ -52,7 +52,7 @@
       </div>
 
       <!-- Player 4 Data -->
-      <div id="player4" class="movable player-section player4">
+      <div id="player4" class="player-section">
         <div class="player-info">
           <p v-if="currentMatch && currentMatch.data" class="player-name player-name4">
             {{ currentMatch.data.players.player4.name }}
@@ -86,40 +86,82 @@
     </div>
 
     <!-- Answers -->
-    <div v-if="showAnswers?.data">
-      <div class="animate__animated animate__fadeInRightBig" ref="answer1Slide" >
-        <img src="./img/answerslide4.png" class="answerslide"/>
+    <div v-if="showingAnswerA?.data">
+      <div class="animate__animated animate__fadeInRightBig" ref="answer1Slide">
+        <img
+          v-if="!setCorrectAnswerA?.data"
+          src="./img/answerslide4.png"
+          class="answerslide"
+        />
+        <img
+          v-else
+          src="./img/correct4.png"
+          class="answerslide"
+        />
         <div class="answer1box">
-        <p v-if="currentQuestion && currentQuestion.data" class="answer-text">
-        {{ currentQuestion.data.answers.answer1 }}
-        </p>
+          <p v-if="currentQuestion && currentQuestion.data" class="answer-text">
+            {{ currentQuestion.data.answers.answer1 }}
+          </p>
         </div>
       </div>
+    </div>
 
-      <div class="animate__animated animate__fadeInRightBig" ref="answer2Slide" >
-        <img src="./img/answerslide3.png" class="answerslide"/>
+    <div v-if="showingAnswerB?.data">
+      <div class="animate__animated animate__fadeInRightBig" ref="answer2Slide">
+        <img
+          v-if="!setCorrectAnswerB?.data"
+          src="./img/answerslide3.png"
+          class="answerslide"
+        />
+        <img
+          v-else
+          src="./img/correct3.png"
+          class="answerslide"
+        />
         <div class="answer2box">
-        <p v-if="currentQuestion && currentQuestion.data" class="answer-text">
-        {{ currentQuestion.data.answers.answer2 }}
-        </p>
+          <p v-if="currentQuestion && currentQuestion.data" class="answer-text">
+            {{ currentQuestion.data.answers.answer2 }}
+          </p>
         </div>
       </div>
+    </div>
 
-      <div class="animate__animated animate__fadeInRightBig" ref="answer3Slide" >
-        <img src="./img/answerslide2.png" class="answerslide"/>
+    <div v-if="showingAnswerC?.data">
+      <div class="animate__animated animate__fadeInRightBig" ref="answer3Slide">
+        <img
+          v-if="!setCorrectAnswerC?.data"
+          src="./img/answerslide2.png"
+          class="answerslide"
+        />
+        <img
+          v-else
+          src="./img/correct2.png"
+          class="answerslide"
+        />
         <div class="answer3box">
-        <p v-if="currentQuestion && currentQuestion.data" class="answer-text">
-        {{ currentQuestion.data.answers.answer3 }}
-        </p>
+          <p v-if="currentQuestion && currentQuestion.data" class="answer-text">
+            {{ currentQuestion.data.answers.answer3 }}
+          </p>
         </div>
       </div>
+    </div>
 
-      <div class="animate__animated animate__fadeInRightBig" ref="answer4Slide" >
-        <img src="./img/answerslide.png" class="answerslide"/>
+    <div v-if="showingAnswerD?.data">
+      <div class="animate__animated animate__fadeInRightBig" ref="answer4Slide">
+        <img
+          v-if="!setCorrectAnswerD?.data"
+          src="./img/answerslide.png"
+          class="answerslide"
+        />
+        <img
+          v-else
+          src="./img/correct.png"
+          class="answerslide"
+        />
         <div class="answer4box">
-        <p v-if="currentQuestion && currentQuestion.data" class="answer-text">
-        {{ currentQuestion.data.answers.answer4 }}
-        </p>
+          <p v-if="currentQuestion && currentQuestion.data" class="answer-text">
+            {{ currentQuestion.data.answers.answer4 }}
+          </p>
         </div>
       </div>
     </div>
@@ -177,12 +219,62 @@
   const timer = useReplicant<Timer>('timer', 'gtav-tourney-layouts');
   const question = useReplicant<questions>('questions', 'gtav-tourney-layouts');
   const avatars = useReplicant<Avatars>('playerAvatars', 'gtav-tourney-layouts');
-  const showAnswers = useReplicant<boolean>('showAnswers', 'gtav-tourney-layouts', {
+
+  const showingAnswerA = useReplicant<boolean>('showsAnswerA', 'gtav-tourney-layouts', {
+    defaultValue: false
+  });
+  const showingAnswerB = useReplicant<boolean>('showsAnswerB', 'gtav-tourney-layouts', {
+    defaultValue: false
+  });
+  const showingAnswerC = useReplicant<boolean>('showsAnswerC', 'gtav-tourney-layouts', {
+    defaultValue: false
+  });
+  const showingAnswerD = useReplicant<boolean>('showsAnswerD', 'gtav-tourney-layouts', {
+    defaultValue: false
+  });
+  const setCorrectAnswerA = useReplicant<boolean>('correctsAnswerA', 'gtav-tourney-layouts', {
+    defaultValue: false
+  });
+  const setCorrectAnswerB = useReplicant<boolean>('correctsAnswerB', 'gtav-tourney-layouts', {
+    defaultValue: false
+  });
+  const setCorrectAnswerC = useReplicant<boolean>('correctsAnswerC', 'gtav-tourney-layouts', {
+    defaultValue: false
+  });
+  const setCorrectAnswerD = useReplicant<boolean>('correctsAnswerD', 'gtav-tourney-layouts', {
     defaultValue: false
   });
 
-  nodecg.listenFor('showAnswers', (show: boolean) => {
-    showAnswers!.data = show;
+  nodecg.listenFor('showAnswerA', (show: boolean) => {
+    showingAnswerA!.data = show;
+  });
+
+  nodecg.listenFor('showAnswerB', (show: boolean) => {
+    showingAnswerB!.data = show;
+  });
+
+  nodecg.listenFor('showAnswerC', (show: boolean) => {
+    showingAnswerC!.data = show;
+  });
+
+  nodecg.listenFor('showAnswerD', (show: boolean) => {
+    showingAnswerD!.data = show;
+  });
+
+  nodecg.listenFor('correctAnswerA', (correct: boolean) => {
+    setCorrectAnswerA!.data = correct;
+  });
+
+  nodecg.listenFor('correctAnswerB', (correct: boolean) => {
+    setCorrectAnswerB!.data = correct;
+  });
+
+  nodecg.listenFor('correctAnswerC', (correct: boolean) => {
+    setCorrectAnswerC!.data = correct;
+  });
+
+  nodecg.listenFor('correctAnswerD', (correct: boolean) => {
+    setCorrectAnswerD!.data = correct;
   });
 
   const questionSlide = ref<HTMLElement | null>(null);
@@ -197,14 +289,14 @@
     y: number;
   }
 
-  const basePosition: Position = { x:0, y:300}; //TODO
-  
-  const positions: Position[] = [
-    {x: 0, y: 300},  // Adjusted for player1
-    {x: 0, y: 300},  // Adjusted for player2
-    {x: 0, y: 300},  // Adjusted for player3
-    {x: 0, y: 300}   // Adjusted for player4
-  ]
+  const basePosition: Position = { x:100 , y: 0}; //TODO
+
+  const positions: { [key: string] : number } = {
+    0: 100,
+    1: 300,
+    2: 500,
+    3: 700
+  }
 
   const mapDivs: { [key: string]: number} = {
     player1: 0,
@@ -228,8 +320,8 @@
     players.forEach((player, index) => {
       const div = document.getElementById(player.id);
       if (div) {
-        const position = { ...basePosition, y: basePosition.y + index * 150}; //TODO
-        div.style.transform = `translate(${position.x}px, ${position.y}px)`;
+        const positionY = positions[index];
+        div.style.transform = `translate(${basePosition.x}px, ${positionY}px)`;
         div.style.position = 'absolute';
       }
     });
@@ -262,7 +354,58 @@
       }
     }, { once: true });
 
-    showAnswers!.data = false;
+    showingAnswerA!.data = false;
+    showingAnswerB!.data = false;
+    showingAnswerC!.data = false;
+    showingAnswerD!.data = false;
+    setCorrectAnswerA!.data = false;
+    setCorrectAnswerB!.data = false;
+    setCorrectAnswerC!.data = false;
+    setCorrectAnswerD!.data = false;
+  }
+});
+
+watch([showingAnswerA, setCorrectAnswerA], async () => {
+  if (answer1Slide.value) {
+    answer1Slide.value.classList.remove('animate__fadeInRightBig');
+    await nextTick();
+    answer1Slide.value.classList.add('animate__animated', 'animate__fadeInRightBig');
+    answer1Slide.value.addEventListener('animationend', () => {
+      answer1Slide.value?.classList.remove('animate__animated', 'animate__fadeInRightBig');
+    }, { once: true });
+  }
+});
+
+watch([showingAnswerB, setCorrectAnswerB], async () => {
+  if (answer2Slide.value) {
+    answer2Slide.value.classList.remove('animate__fadeInRightBig');
+    await nextTick();
+    answer2Slide.value.classList.add('animate__animated', 'animate__fadeInRightBig');
+    answer2Slide.value.addEventListener('animationend', () => {
+      answer2Slide.value?.classList.remove('animate__animated', 'animate__fadeInRightBig');
+    }, { once: true });
+  }
+});
+
+watch([showingAnswerC, setCorrectAnswerC], async () => {
+  if (answer3Slide.value) {
+    answer3Slide.value.classList.remove('animate__fadeInRightBig');
+    await nextTick();
+    answer3Slide.value.classList.add('animate__animated', 'animate__fadeInRightBig');
+    answer3Slide.value.addEventListener('animationend', () => {
+      answer3Slide.value?.classList.remove('animate__animated', 'animate__fadeInRightBig');
+    }, { once: true });
+  }
+});
+
+watch([showingAnswerD, setCorrectAnswerD], async () => {
+  if (answer4Slide.value) {
+    answer4Slide.value.classList.remove('animate__fadeInRightBig');
+    await nextTick();
+    answer4Slide.value.classList.add('animate__animated', 'animate__fadeInRightBig');
+    answer4Slide.value.addEventListener('animationend', () => {
+      answer4Slide.value?.classList.remove('animate__animated', 'animate__fadeInRightBig');
+    }, { once: true });
   }
 });
 
@@ -303,7 +446,9 @@
   /* Container with player sections and color overlays */
   #container {
     position: relative;
-    z-index: 1; 
+    width: 100%;
+    height: 100%;
+    z-index: 1;
   }
 
   .movable {
@@ -312,9 +457,10 @@
   }
 
   .player-section {
-    display: flex;
-    align-items: center;
-    gap: 10px;
+    position: absolute;
+    width: 100%;
+    text-align: center;
+    z-index: 3;
   }
 
   .player-info {
@@ -328,7 +474,6 @@
     height: 78px;
     object-fit: contain;
     z-index: 4;
-    position: relative;
   }
 
   /* Adjust avatar position for Players */
@@ -347,10 +492,8 @@
   }
 
   /* Adjust name position for Players */
-  .player-name1 { top: -94px; left: 120px; color: white } 
-  .player-name2 { top: 54px; left: 120px; } 
-  .player-name3 { top: 213px; left: 120px; color: white } 
-  .player-name4 { top: 373px; left: 120px; } 
+  .player-name1 { color: white } 
+  .player-name3 { color: white } 
 
   .color-overlay {
     position: absolute;

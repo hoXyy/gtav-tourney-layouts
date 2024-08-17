@@ -25,7 +25,16 @@
     >
     <p v-else style="text-align: center; font-size: 20px">No questions to list.</p>
     <QSeparator/>
-    <QBtn color="black" @click="showAnswers(true)">Show Answers</QBtn>
+    <div class="button-container">
+      <QBtn color="black" @click="showAnswerA(true)">Show Answer A</QBtn>
+      <QBtn color="black" @click="correctAnswerA(true)">Correct Answer A</QBtn>
+      <QBtn color="black" @click="showAnswerB(true)">Show Answer B</QBtn>
+      <QBtn color="black" @click="correctAnswerB(true)">Correct Answer B</QBtn>
+      <QBtn color="black" @click="showAnswerC(true)">Show Answer C</QBtn>
+      <QBtn color="black" @click="correctAnswerC(true)">Correct Answer C</QBtn>
+      <QBtn color="black" @click="showAnswerD(true)">Show Answer D</QBtn>
+      <QBtn color="black" @click="correctAnswerD(true)">Correct Answer D</QBtn>
+    </div>
   </div>
 </template>
 
@@ -53,7 +62,49 @@
     nodecg.sendMessage('setQuestionAsActive', questionId);
   }
 
-  function showAnswers(show: boolean){
-    nodecg.sendMessage('showAnswers', show);
+  function showAnswerA(show: boolean){
+    nodecg.sendMessage('showAnswerA', show);
+  }
+
+  function showAnswerB(show: boolean){
+    nodecg.sendMessage('showAnswerB', show);
+  }
+
+  function showAnswerC(show: boolean){
+    nodecg.sendMessage('showAnswerC', show);
+  }
+
+  function showAnswerD(show: boolean){
+    nodecg.sendMessage('showAnswerD', show);
+  }
+
+  function correctAnswerA(correct: boolean){
+    nodecg.sendMessage('correctAnswerA', correct);
+  }
+
+  function correctAnswerB(correct: boolean){
+    nodecg.sendMessage('correctAnswerB', correct);
+  }
+
+  function correctAnswerC(correct: boolean){
+    nodecg.sendMessage('correctAnswerC', correct);
+  }
+
+  function correctAnswerD(correct: boolean){
+    nodecg.sendMessage('correctAnswerD', correct);
   }
 </script>
+
+<style>
+  .button-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+
+  .button-container QBtn {
+    flex: 1 1 45%; 
+    max-width: 45%; 
+    box-sizing: border-box;
+  }
+</style>
