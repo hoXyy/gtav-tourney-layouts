@@ -73,7 +73,7 @@
     <img src="./img/questions.png" class="question" />
     <div class="questionamountbox">
       <p v-if="currentQuestion && currentQuestion.data" class="question-id">
-      QUESTION {{ currentQuestion.data.id }} / {{ question?.data?.length }}
+      QUESTION {{ currentQuestion.data.id }}/{{ question?.data?.length }}
       </p>
     </div>
     <div class="animate__animated animate__fadeInRightBig" ref="questionSlide" >
@@ -478,61 +478,6 @@
   const answer3Slide = ref<HTMLElement | null>(null);
   const answer4Slide = ref<HTMLElement | null>(null);
 
-  type Position = {
-    x: number;
-    y: number;
-  }
-
-  const basePosition: Position = { x:100 , y: 0}; //TODO
-
-  const positions: { [key: string] : number } = {
-    0: 100,
-    1: 300,
-    2: 500,
-    3: 700
-  }
-
-  const mapDivs: { [key: string]: number} = {
-    player1: 0,
-    player2: 1,
-    player3: 2,
-    player4: 3
-  };
-
-  function moveDivs() {
-    if (!score?.data || !currentMatch?.data) return;
-    
-    const players = [
-      { id: 'player1', score: score.data.player1, positionIndex: mapDivs.player1},
-      { id: 'player2', score: score.data.player2, positionIndex: mapDivs.player2},
-      { id: 'player3', score: score.data.player3, positionIndex: mapDivs.player3},
-      { id: 'player4', score: score.data.player4, positionIndex: mapDivs.player4},
-    ]
-
-    players.sort((a, b) => b.score - a.score);
-
-    players.forEach((player, index) => {
-      const div = document.getElementById(player.id);
-      if (div) {
-        const positionY = positions[index];
-        div.style.transform = `translate(${basePosition.x}px, ${positionY}px)`;
-        div.style.position = 'absolute';
-      }
-    });
-    }
-
-    if (score) {
-      watch(score, () => {
-        nextTick(() => {
-        moveDivs();
-      })
-    })
-    }
-
-  nextTick(() => {
-    moveDivs();
-  });
-
   
   watch(() => currentQuestion?.data?.question, (newQuestion, oldQuestion) => {
   if (newQuestion !== oldQuestion && questionSlide.value) {
@@ -712,13 +657,13 @@ watch(
   }
 
   /* Adjust avatar position for Players */
-  .player-avatar1 { position:absolute; top: -62px; left: 21px; } 
-  .player-avatar2 { position:absolute; top: 86px; left: 21px; }
-  .player-avatar3 { position:absolute; top: 245px; left: 21px; }
-  .player-avatar4 { position:absolute; top: 406px; left: 21px; } 
+  .player-avatar1 { position:absolute; top: 188px; left: 21px; } 
+  .player-avatar2 { position:absolute; top: 336px; left: 21px; }
+  .player-avatar3 { position:absolute; top: 495px; left: 21px; }
+  .player-avatar4 { position:absolute; top: 656px; left: 21px; } 
 
   .player-name {
-    font-size: 70px;
+    font-size: 66px;
     color: black;
     line-height: 0;
     font-family: 'Europa Grotesk SH DemBol';
@@ -727,23 +672,25 @@ watch(
   }
 
   /* Adjust name position for Players */
-  .player-name1 { color: white } 
-  .player-name3 { color: white } 
+  .player-name1 { top: 159px; left: 124px; color: white } 
+  .player-name2 { top: 309px; left: 124px; } 
+  .player-name3 { top: 468px; left: 124px; color: white } 
+  .player-name4 { top: 628px; left: 124px; } 
 
   .color-overlay {
     position: absolute;
     z-index: 2; /* Ensure color overlays are below player names but above the background */
   }
 
-  .color-pink { top: -250px; left: 0; }
-  .color-yellow { top: -250px; left: 0; }
-  .color-purple { top: -250px; left: 0; }
-  .color-teal { top: -250px; left: 0; }
+  .color-pink { top: 0px; left: 0px; }
+  .color-yellow { top: 0px; left: 0px; }
+  .color-purple { top: 0px; left: 0px; }
+  .color-teal { top: 0px; left: 0px; }
 
   .timer {
     position: absolute;
-    bottom: 765px;
-    left: 356px;
+    bottom: 780px;
+    left: 386px;
     width: 100%;
     color: white;
     font-family: "Bebas Neue";
@@ -842,8 +789,8 @@ watch(
     z-index: 5;
     width: 768px;
     height: 143px;
-    top: 50px;
-    left: 1135px;
+    top: 54px;
+    left: 1117px;
     position:absolute;
     box-sizing: border-box;
     overflow:visible;
