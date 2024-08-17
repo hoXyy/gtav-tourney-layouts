@@ -31,6 +31,7 @@
     "watch:extension": "tsc -b tsconfig.extension.json -w"
   },
   "dependencies": {
+    "animate.css": "^4.1.1",
     "axios": "^1.7.2",
     "fitty": "^2.3.6",
     "gsap": "^3.12.5",
@@ -136,6 +137,29 @@
         "title": "List of matches",
         "file": "matches.html",
         "width": 3
+      },
+      {
+        "name": "questions",
+        "title": "List of questions",
+        "file": "questions-list.html",
+        "width": 3
+      },
+      {
+        "name": "add-edit-questions",
+        "title": "Add/Edit Question",
+        "file": "add-edit-questions.html",
+        "width": 6,
+        "dialog": true,
+        "dialogButtons": [
+          {
+            "name": "save",
+            "type": "confirm"
+          },
+          {
+            "name": "cancel",
+            "type": "dismiss"
+          }
+        ]
       },
       {
         "name": "pick-ban",

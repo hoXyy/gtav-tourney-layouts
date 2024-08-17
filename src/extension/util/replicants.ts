@@ -4,11 +4,13 @@ import { Commentators, Omnibarfield, Timer } from '@layouts/types/schemas';
 import {
   Avatars,
   CurrentMatch,
+  currentQuestion,
   CurrentSegment,
   FinishTimes,
   ManualPb,
   Matches,
   PlayerPbs,
+  questions,
   Score,
 } from '@layouts/types';
 import { get as nodecg } from './nodecg';
@@ -24,7 +26,11 @@ export const connectedToOBS = nodecg().Replicant<boolean>('connectedToOBS', {
 export const matches = nodecg().Replicant<Matches>('matches', {
   defaultValue: [],
 });
+export const Questions = nodecg().Replicant<questions>('questions', {
+  defaultValue: [],
+});
 export const currentMatch = nodecg().Replicant<CurrentMatch | undefined>('currentMatch');
+export const CurrentQuestion = nodecg().Replicant<currentQuestion | undefined>('currentQuestion');
 export const currentSegment = nodecg().Replicant<CurrentSegment | undefined>('currentSegment');
 export const commentators = nodecg().Replicant<Commentators>('commentators');
 export const omnibarfield = nodecg().Replicant<Omnibarfield>('omnibarfield');

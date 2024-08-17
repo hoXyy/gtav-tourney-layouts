@@ -62,14 +62,65 @@
             v-bind:src="currentMatch.data.players.player4.showAvatar && avatars?.data?.player4 ? avatars.data.player4 : '../img/nopic.png'"
           />
         </div>
-        <img src="./img/teal.png" class="color-overlay color-teal" />
+          <img src="./img/teal.png" class="color-overlay color-teal" />
       </div>
     </div>
 
-    <!-- Timer -->
+    <!-- Timer & Question -->
     <p v-if="timer && timer.data" class="timer">
       {{ timer.data.time }}
     </p>
+    <img src="./img/questions.png" class="question" />
+    <div class="questionamountbox">
+      <p v-if="currentQuestion && currentQuestion.data" class="question-id">
+      QUESTION {{ currentQuestion.data.id }} / {{ question?.data?.length }}
+      </p>
+    </div>
+    <div class="animate__animated animate__fadeInRightBig" ref="questionSlide" >
+      <img src="./img/questionslide.png" class="questionslide"/>
+      <div class="questionbox">
+      <p v-if="currentQuestion && currentQuestion.data" class="question-text">
+      {{ currentQuestion.data.question }}
+      </p>
+      </div>
+    </div>
+
+    <!-- Answers -->
+    <div class="animate__animated animate__fadeInRightBig" ref="answer1Slide" >
+      <img src="./img/answerslide.png" class="answer1slide"/>
+      <div class="answer1box">
+      <p v-if="currentQuestion && currentQuestion.data" class="answer1-text">
+      {{ currentQuestion.data.answers.answer1 }}
+      </p>
+      </div>
+    </div>
+
+    <div class="animate__animated animate__fadeInRightBig" ref="answer2Slide" >
+      <img src="./img/answerslide2.png" class="answer2slide"/>
+      <div class="answer2box">
+      <p v-if="currentQuestion && currentQuestion.data" class="answer2-text">
+      {{ currentQuestion.data.answers.answer2 }}
+      </p>
+      </div>
+    </div>
+
+    <div class="animate__animated animate__fadeInRightBig" ref="answer3Slide" >
+      <img src="./img/answerslide3.png" class="answer3slide"/>
+      <div class="answer3box">
+      <p v-if="currentQuestion && currentQuestion.data" class="answer3-text">
+      {{ currentQuestion.data.answers.answer3 }}
+      </p>
+      </div>
+    </div>
+
+    <div class="animate__animated animate__fadeInRightBig" ref="answer4Slide" >
+      <img src="./img/answerslide4.png" class="answer4slide"/>
+      <div class="answer4box">
+      <p v-if="currentQuestion && currentQuestion.data" class="answer4-text">
+      {{ currentQuestion.data.answers.answer4 }}
+      </p>
+      </div>
+    </div>
 
     <!-- Bobar -->
     <img src="./img/bobar.png" class="bottom-overlay" />
@@ -107,20 +158,30 @@
 </template>
 
 <script setup lang="ts">
-  import { CurrentMatch, CurrentSegment, PlayerPbs, Score, Avatars } from '@layouts/types';
+  import { CurrentMatch, CurrentSegment, PlayerPbs, Score, Avatars, currentQuestion, questions } from '@layouts/types';
   import { useReplicant } from 'nodecg-vue-composable';
   import TopBar from '../components/TopBar.vue';
   import MatchInfo from '../components/MatchInfo.vue';
   import Omnibar from '../components/Omnibar.vue';
   import { Timer } from '@layouts/types/schemas';
-  import { nextTick, watch } from 'vue';
+  import { nextTick, watch, ref } from 'vue';
+  import 'animate.css';
 
   const currentMatch = useReplicant<CurrentMatch>('currentMatch', 'gtav-tourney-layouts');
+  const currentQuestion = useReplicant<currentQuestion>('currentQuestion', 'gtav-tourney-layouts');
   const currentSegment = useReplicant<CurrentSegment>('currentSegment', 'gtav-tourney-layouts');
   const playerPbs = useReplicant<PlayerPbs>('playerPbs', 'gtav-tourney-layouts');
   const score = useReplicant<Score>('score', 'gtav-tourney-layouts');
   const timer = useReplicant<Timer>('timer', 'gtav-tourney-layouts');
+  const question = useReplicant<questions>('questions', 'gtav-tourney-layouts');
   const avatars = useReplicant<Avatars>('playerAvatars', 'gtav-tourney-layouts');
+
+  const questionSlide = ref<HTMLElement | null>(null);
+  const answer1Slide = ref<HTMLElement | null>(null);
+  const answer2Slide = ref<HTMLElement | null>(null);
+  const answer3Slide = ref<HTMLElement | null>(null);
+  const answer4Slide = ref<HTMLElement | null>(null);
+
 
   type Position = {
     x: number;
@@ -176,10 +237,27 @@
   nextTick(() => {
     moveDivs();
   });
+
+  watch(() => currentQuestion?.data?.question, (newQuestion, oldQuestion) => {
+  if (newQuestion !== oldQuestion && questionSlide.value) {
+    questionSlide.value.classList.remove('animate__fadeInRightBig');
+    
+    void questionSlide.value.offsetWidth; 
+
+    questionSlide.value.classList.add('animate__animated', 'animate__fadeInRightBig');
+    
+    questionSlide.value.addEventListener('animationend', () => {
+      if (questionSlide.value) {
+        questionSlide.value.classList.remove('animate__animated', 'animate__fadeInRightBig');
+      }
+    }, { once: true });
+  }
+});
+
+
 </script>
 
 <style>
-
   @font-face {
     font-family: 'Europa Grotesk SH DemBol';
     src: url('../css/fonts/europa/EuropaGroteskSH-DemBol.woff2') format('woff2');
@@ -275,18 +353,20 @@
 
   .timer {
     position: absolute;
-    bottom: 150px;
+    bottom: 765px;
+    left: 356px;
     width: 100%;
+    color: white;
     font-family: "Bebas Neue";
     text-align: center;
-    font-size: 122px;
+    font-size: 68px;
     z-index: 5; /* Ensure timer is above all player and color overlays */
   }
 
   .bottom-overlay {
     position: absolute;
     bottom: 0;
-    z-index: 2; /* Ensure bottom overlay is above the background but below other elements */
+    z-index: 3; /* Ensure bottom overlay is above the background but below other elements */
   }
 
   .scores {
@@ -320,5 +400,184 @@
   .score-name2 { position: relative; top: 257px; left: 188px; color: #ffde1b} 
   .score-name3 { position: relative; top: 187px; left: 428px; color: #9c39ff} 
   .score-name4 { position: relative; top: 117px; left: 664px; color: #00ff9d} 
+
+  .question {
+    position: absolute;
+    z-index: 4;
+  }
+
+  .questionslide {
+    position: absolute;
+    z-index: 4;
+  }
+
+  .question-text{
+    z-index: 6;
+    font-family: "Bebas Neue";
+    font-size: 50px;
+    color: white;
+    text-align: right;
+    overflow-wrap: break-word;
+    word-wrap: break-word;
+    white-space: normal;
+    width: 100%;
+    line-height: 1;
+  }
+
+  .questionbox{
+    z-index: 5;
+    width: 768px;
+    height: 143px;
+    top: 314px;
+    left: 1135px;
+    position:absolute;
+    box-sizing: border-box;
+    padding: 10px;
+    overflow:visible;
+  }
+
+  .question-id{
+    z-index: 6;
+    font-family: "Bebas Neue";
+    font-size: 88px;
+    color: white;
+    text-align: right;
+    overflow-wrap: break-word;
+    word-wrap: break-word;
+    white-space: normal;
+    width: 100%;
+    line-height: 1;
+  }
+
+  .questionamountbox{
+    z-index: 5;
+    width: 768px;
+    height: 143px;
+    top: 50px;
+    left: 1135px;
+    position:absolute;
+    box-sizing: border-box;
+    overflow:visible;
+  }
+
+  .answer1slide {
+    position: absolute;
+    z-index: 4;
+  }
+
+  .answer1box{
+    z-index: 5;
+    width: 768px;
+    height: 143px;
+    top: 414px;
+    left: 1135px;
+    position:absolute;
+    box-sizing: border-box;
+    padding: 10px;
+    overflow:visible;
+  }
+
+  .answer1-text{
+    z-index: 6;
+    font-family: "Bebas Neue";
+    font-size: 37px;
+    color: white;
+    text-align: right;
+    overflow-wrap: break-word;
+    word-wrap: break-word;
+    white-space: normal;
+    width: 100%;
+    line-height: 1;
+  }
+
+  .answer2slide {
+    position: absolute;
+    z-index: 4;
+  }
+
+  .answer2box{
+    z-index: 5;
+    width: 768px;
+    height: 143px;
+    top: 314px;
+    left: 1135px;
+    position:absolute;
+    box-sizing: border-box;
+    padding: 10px;
+    overflow:visible;
+  }
+
+  .answer2-text{
+    z-index: 6;
+    font-family: "Bebas Neue";
+    font-size: 37px;
+    color: white;
+    text-align: right;
+    overflow-wrap: break-word;
+    word-wrap: break-word;
+    white-space: normal;
+    width: 100%;
+    line-height: 1;
+  }
+
+  .answer3slide {
+    position: absolute;
+    z-index: 4;
+  }
+
+  .answer3box{
+    z-index: 5;
+    width: 768px;
+    height: 143px;
+    top: 414px;
+    left: 1135px;
+    position:absolute;
+    box-sizing: border-box;
+    padding: 10px;
+    overflow:visible;
+  }
+
+  .answer3-text{
+    z-index: 6;
+    font-family: "Bebas Neue";
+    font-size: 37px;
+    color: white;
+    text-align: right;
+    overflow-wrap: break-word;
+    word-wrap: break-word;
+    white-space: normal;
+    width: 100%;
+    line-height: 1;
+  }
+
+  .answer4slide {
+    position: absolute;
+    z-index: 4;
+  }
+
+  .answer4box{
+    z-index: 5;
+    width: 768px;
+    height: 143px;
+    top: 414px;
+    left: 1135px;
+    position:absolute;
+    box-sizing: border-box;
+    padding: 10px;
+    overflow:visible;
+  }
+
+  .answer4-text{
+    z-index: 6;
+    font-family: "Bebas Neue";
+    font-size: 37px;
+    color: white;
+    text-align: right;
+    overflow-wrap: break-word;
+    word-wrap: break-word;
+    white-space: normal;
+    width: 100%;
+    line-height: 1;
+  }
 
 </style>

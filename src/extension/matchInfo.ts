@@ -1,6 +1,6 @@
-import { CurrentMatch } from '@layouts/types';
+import { CurrentMatch, currentQuestion } from '@layouts/types';
 import { get } from './util/nodecg';
-import { currentMatch, currentSegment, matches, playerPBs, score } from './util/replicants';
+import { currentMatch, CurrentQuestion, currentSegment, matches, playerPBs, Questions, score } from './util/replicants';
 import { klona as clone } from 'klona/json';
 
 const nodecg = get();
@@ -49,6 +49,24 @@ function setMatchAsActive(matchId: string) {
   }
 }
 
+function removeQuestion(questionId: string) {
+  if (Questions.value) {
+    const index = Questions.value.findIndex((question) => question.id === questionId);
+    if (index > -1) {
+      Questions.value.splice(index, 1);
+    }
+  }
+}
+
+function setQuestionAsActive(questionId: string) {
+  if (Questions.value) {
+    const question = Questions.value.find((question) => question.id === questionId);
+    if (question) {
+      CurrentQuestion.value = clone(question);
+    }
+  }
+}
+
 function updateMatchData(matchData: CurrentMatch) {
   if (matches.value) {
     if (matches.value.length > 0) {
@@ -60,6 +78,21 @@ function updateMatchData(matchData: CurrentMatch) {
       }
     } else {
       matches.value.push(matchData);
+    }
+  }
+}
+
+function updateQuestionData(questionData: currentQuestion) {
+  if (Questions.value) {
+    if (Questions.value.length > 0) {
+      const index = Questions.value.findIndex((question) => question.id === questionData.id);
+      if (index > -1) {
+        Questions.value[index] = questionData;
+      } else {
+        Questions.value.push(questionData);
+      }
+    } else {
+      Questions.value.push(questionData);
     }
   }
 }
@@ -101,7 +134,10 @@ function markPlayer2AsSegmentWinner() {
 }
 
 nodecg.listenFor('removeMatch', (matchId) => removeMatch(matchId));
+nodecg.listenFor('removeQuestion', (questionId) => removeQuestion(questionId));
 nodecg.listenFor('setMatchAsActive', (matchId) => setMatchAsActive(matchId));
+nodecg.listenFor('setQuestionAsActive', (questionId) => setQuestionAsActive(questionId));
 nodecg.listenFor('updateMatchData', (matchData) => updateMatchData(matchData));
+nodecg.listenFor('updatedQuestionData', (questionData) => updateQuestionData(questionData));
 nodecg.listenFor('finishPlayer1', markPlayer1AsSegmentWinner);
 nodecg.listenFor('finishPlayer2', markPlayer2AsSegmentWinner);
