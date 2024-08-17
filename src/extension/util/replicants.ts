@@ -57,3 +57,4 @@ export const currentObsScene = nodecg().Replicant<string>('currentObsScene');
 export const playerAvatars = nodecg().Replicant<Avatars>('playerAvatars', {
   defaultValue: { player1: '', player2: '', player3: '', player4: '' },
 });
+export const showsAnswers = nodecg().Replicant<boolean>('showsAnswers');

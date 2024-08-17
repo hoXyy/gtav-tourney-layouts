@@ -86,39 +86,41 @@
     </div>
 
     <!-- Answers -->
-    <div class="animate__animated animate__fadeInRightBig" ref="answer1Slide" >
-      <img src="./img/answerslide.png" class="answer1slide"/>
-      <div class="answer1box">
-      <p v-if="currentQuestion && currentQuestion.data" class="answer1-text">
-      {{ currentQuestion.data.answers.answer1 }}
-      </p>
+    <div v-if="showAnswers?.data">
+      <div class="animate__animated animate__fadeInRightBig" ref="answer1Slide" >
+        <img src="./img/answerslide4.png" class="answerslide"/>
+        <div class="answer1box">
+        <p v-if="currentQuestion && currentQuestion.data" class="answer-text">
+        {{ currentQuestion.data.answers.answer1 }}
+        </p>
+        </div>
       </div>
-    </div>
 
-    <div class="animate__animated animate__fadeInRightBig" ref="answer2Slide" >
-      <img src="./img/answerslide2.png" class="answer2slide"/>
-      <div class="answer2box">
-      <p v-if="currentQuestion && currentQuestion.data" class="answer2-text">
-      {{ currentQuestion.data.answers.answer2 }}
-      </p>
+      <div class="animate__animated animate__fadeInRightBig" ref="answer2Slide" >
+        <img src="./img/answerslide3.png" class="answerslide"/>
+        <div class="answer2box">
+        <p v-if="currentQuestion && currentQuestion.data" class="answer-text">
+        {{ currentQuestion.data.answers.answer2 }}
+        </p>
+        </div>
       </div>
-    </div>
 
-    <div class="animate__animated animate__fadeInRightBig" ref="answer3Slide" >
-      <img src="./img/answerslide3.png" class="answer3slide"/>
-      <div class="answer3box">
-      <p v-if="currentQuestion && currentQuestion.data" class="answer3-text">
-      {{ currentQuestion.data.answers.answer3 }}
-      </p>
+      <div class="animate__animated animate__fadeInRightBig" ref="answer3Slide" >
+        <img src="./img/answerslide2.png" class="answerslide"/>
+        <div class="answer3box">
+        <p v-if="currentQuestion && currentQuestion.data" class="answer-text">
+        {{ currentQuestion.data.answers.answer3 }}
+        </p>
+        </div>
       </div>
-    </div>
 
-    <div class="animate__animated animate__fadeInRightBig" ref="answer4Slide" >
-      <img src="./img/answerslide4.png" class="answer4slide"/>
-      <div class="answer4box">
-      <p v-if="currentQuestion && currentQuestion.data" class="answer4-text">
-      {{ currentQuestion.data.answers.answer4 }}
-      </p>
+      <div class="animate__animated animate__fadeInRightBig" ref="answer4Slide" >
+        <img src="./img/answerslide.png" class="answerslide"/>
+        <div class="answer4box">
+        <p v-if="currentQuestion && currentQuestion.data" class="answer-text">
+        {{ currentQuestion.data.answers.answer4 }}
+        </p>
+        </div>
       </div>
     </div>
 
@@ -175,6 +177,13 @@
   const timer = useReplicant<Timer>('timer', 'gtav-tourney-layouts');
   const question = useReplicant<questions>('questions', 'gtav-tourney-layouts');
   const avatars = useReplicant<Avatars>('playerAvatars', 'gtav-tourney-layouts');
+  const showAnswers = useReplicant<boolean>('showAnswers', 'gtav-tourney-layouts', {
+    defaultValue: false
+  });
+
+  nodecg.listenFor('showAnswers', (show: boolean) => {
+    showAnswers!.data = show;
+  });
 
   const questionSlide = ref<HTMLElement | null>(null);
   const answer1Slide = ref<HTMLElement | null>(null);
@@ -238,6 +247,7 @@
     moveDivs();
   });
 
+  
   watch(() => currentQuestion?.data?.question, (newQuestion, oldQuestion) => {
   if (newQuestion !== oldQuestion && questionSlide.value) {
     questionSlide.value.classList.remove('animate__fadeInRightBig');
@@ -251,9 +261,10 @@
         questionSlide.value.classList.remove('animate__animated', 'animate__fadeInRightBig');
       }
     }, { once: true });
+
+    showAnswers!.data = false;
   }
 });
-
 
 </script>
 
@@ -460,124 +471,70 @@
     overflow:visible;
   }
 
-  .answer1slide {
+  .answerslide {
     position: absolute;
     z-index: 4;
+  }
+
+  .answer-text{
+    z-index: 6;
+    font-family: "Bebas Neue";
+    font-size: 37px;
+    color: white;
+    text-align: right;
+    overflow-wrap: break-word;
+    word-wrap: break-word;
+    white-space: normal;
+    width: 100%;
+    line-height: 1;
   }
 
   .answer1box{
+    position:absolute;
     z-index: 5;
     width: 768px;
     height: 143px;
-    top: 414px;
+    top: 454px;
     left: 1135px;
-    position:absolute;
     box-sizing: border-box;
     padding: 10px;
     overflow:visible;
-  }
-
-  .answer1-text{
-    z-index: 6;
-    font-family: "Bebas Neue";
-    font-size: 37px;
-    color: white;
-    text-align: right;
-    overflow-wrap: break-word;
-    word-wrap: break-word;
-    white-space: normal;
-    width: 100%;
-    line-height: 1;
-  }
-
-  .answer2slide {
-    position: absolute;
-    z-index: 4;
   }
 
   .answer2box{
+    position:absolute;
     z-index: 5;
     width: 768px;
     height: 143px;
-    top: 314px;
+    top: 614px;
     left: 1135px;
-    position:absolute;
     box-sizing: border-box;
     padding: 10px;
     overflow:visible;
-  }
-
-  .answer2-text{
-    z-index: 6;
-    font-family: "Bebas Neue";
-    font-size: 37px;
-    color: white;
-    text-align: right;
-    overflow-wrap: break-word;
-    word-wrap: break-word;
-    white-space: normal;
-    width: 100%;
-    line-height: 1;
-  }
-
-  .answer3slide {
-    position: absolute;
-    z-index: 4;
   }
 
   .answer3box{
     z-index: 5;
     width: 768px;
     height: 143px;
-    top: 414px;
+    top: 654px;
     left: 1135px;
     position:absolute;
     box-sizing: border-box;
     padding: 10px;
     overflow:visible;
-  }
-
-  .answer3-text{
-    z-index: 6;
-    font-family: "Bebas Neue";
-    font-size: 37px;
-    color: white;
-    text-align: right;
-    overflow-wrap: break-word;
-    word-wrap: break-word;
-    white-space: normal;
-    width: 100%;
-    line-height: 1;
-  }
-
-  .answer4slide {
-    position: absolute;
-    z-index: 4;
   }
 
   .answer4box{
     z-index: 5;
     width: 768px;
     height: 143px;
-    top: 414px;
+    top: 754px;
     left: 1135px;
     position:absolute;
     box-sizing: border-box;
     padding: 10px;
     overflow:visible;
-  }
-
-  .answer4-text{
-    z-index: 6;
-    font-family: "Bebas Neue";
-    font-size: 37px;
-    color: white;
-    text-align: right;
-    overflow-wrap: break-word;
-    word-wrap: break-word;
-    white-space: normal;
-    width: 100%;
-    line-height: 1;
   }
 
 </style>
