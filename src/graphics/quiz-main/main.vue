@@ -88,82 +88,118 @@
     <!-- Answers -->
     <div v-if="showingAnswerA?.data">
       <div class="animate__animated animate__fadeInRightBig" ref="answer1Slide">
-        <img
-          v-if="!setCorrectAnswerA?.data"
-          src="./img/answerslide4.png"
-          class="answerslide"
-        />
-        <img
-          v-else
+        <div
+          v-if="!setCorrectAnswerA?.data">
+            <img
+            src="./img/answerslide4.png"
+            class="answerslide"
+          />
+          <div class="answer1box">
+            <p v-if="currentQuestion && currentQuestion.data" class="answer-text">
+              {{ currentQuestion.data.answers.answer1 }}
+            </p>
+          </div>
+        </div>
+        <div
+        v-else>
+          <img
           src="./img/correct4.png"
           class="answerslide"
         />
         <div class="answer1box">
-          <p v-if="currentQuestion && currentQuestion.data" class="answer-text">
+          <p v-if="currentQuestion && currentQuestion.data" class="answer-textALT">
             {{ currentQuestion.data.answers.answer1 }}
           </p>
         </div>
       </div>
+        </div>
     </div>
 
     <div v-if="showingAnswerB?.data">
       <div class="animate__animated animate__fadeInRightBig" ref="answer2Slide">
-        <img
-          v-if="!setCorrectAnswerB?.data"
-          src="./img/answerslide3.png"
-          class="answerslide"
-        />
-        <img
-          v-else
+        <div
+          v-if="!setCorrectAnswerB?.data">
+            <img
+            src="./img/answerslide3.png"
+            class="answerslide"
+          />
+          <div class="answer2box">
+            <p v-if="currentQuestion && currentQuestion.data" class="answer-text">
+              {{ currentQuestion.data.answers.answer2 }}
+            </p>
+          </div>
+        </div>
+        <div
+        v-else>
+          <img
           src="./img/correct3.png"
           class="answerslide"
         />
         <div class="answer2box">
-          <p v-if="currentQuestion && currentQuestion.data" class="answer-text">
+          <p v-if="currentQuestion && currentQuestion.data" class="answer-textALT">
             {{ currentQuestion.data.answers.answer2 }}
           </p>
         </div>
       </div>
+        </div>
     </div>
 
     <div v-if="showingAnswerC?.data">
       <div class="animate__animated animate__fadeInRightBig" ref="answer3Slide">
-        <img
-          v-if="!setCorrectAnswerC?.data"
-          src="./img/answerslide2.png"
-          class="answerslide"
-        />
-        <img
-          v-else
+        <div
+          v-if="!setCorrectAnswerC?.data">
+            <img
+            src="./img/answerslide2.png"
+            class="answerslide"
+          />
+          <div class="answer3box">
+            <p v-if="currentQuestion && currentQuestion.data" class="answer-text">
+              {{ currentQuestion.data.answers.answer3 }}
+            </p>
+          </div>
+        </div>
+        <div
+        v-else>
+          <img
           src="./img/correct2.png"
           class="answerslide"
         />
         <div class="answer3box">
-          <p v-if="currentQuestion && currentQuestion.data" class="answer-text">
+          <p v-if="currentQuestion && currentQuestion.data" class="answer-textALT">
             {{ currentQuestion.data.answers.answer3 }}
           </p>
         </div>
       </div>
+        </div>
     </div>
 
     <div v-if="showingAnswerD?.data">
       <div class="animate__animated animate__fadeInRightBig" ref="answer4Slide">
-        <img
-          v-if="!setCorrectAnswerD?.data"
-          src="./img/answerslide.png"
-          class="answerslide"
-        />
-        <img
-          v-else
+        <div
+          v-if="!setCorrectAnswerD?.data">
+            <img
+            src="./img/answerslide.png"
+            class="answerslide"
+          />
+          <div class="answer4box">
+            <p v-if="currentQuestion && currentQuestion.data" class="answer-text">
+              {{ currentQuestion.data.answers.answer4 }}
+            </p>
+          </div>
+        </div>
+        <div
+        v-else>
+          <img
           src="./img/correct.png"
           class="answerslide"
         />
         <div class="answer4box">
-          <p v-if="currentQuestion && currentQuestion.data" class="answer-text">
+          <p v-if="currentQuestion && currentQuestion.data" class="answer-textALT">
             {{ currentQuestion.data.answers.answer4 }}
           </p>
         </div>
       </div>
+        </div>
     </div>
 
     <!-- Bobar -->
@@ -624,6 +660,19 @@ watch([showingAnswerD, setCorrectAnswerD], async () => {
     font-family: "Bebas Neue";
     font-size: 37px;
     color: white;
+    text-align: right;
+    overflow-wrap: break-word;
+    word-wrap: break-word;
+    white-space: normal;
+    width: 100%;
+    line-height: 1;
+  }
+
+  .answer-textALT{
+    z-index: 6;
+    font-family: "Bebas Neue";
+    font-size: 37px;
+    color: black;
     text-align: right;
     overflow-wrap: break-word;
     word-wrap: break-word;
