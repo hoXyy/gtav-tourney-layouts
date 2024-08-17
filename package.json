@@ -93,6 +93,11 @@
         "name": "segment-ban",
         "defaultFile": "sound/segment-ban.mp3",
         "defaultVolume": 100
+      },
+      {
+        "name": "correct-answer",
+        "defaultFile": "sound/correct-answer.mp3",
+        "defaultVolume": 100
       }
     ],
     "dashboardPanels": [

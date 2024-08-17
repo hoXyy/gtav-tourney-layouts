@@ -5,18 +5,22 @@
         <b>{{ timer.data.time }}</b>
       </h1>
       <div style="display: flex; text-align: center; justify-content: space-between; width: 100%">
-      <QBtn width="20%" color="black" @click="startTimer" :disable="phase === 'finished'">{{
+      <QBtn width="12%" color="black" @click="startTimer" :disable="phase === 'finished'">{{
         phase === 'running' ? 'Pause Timer' : 'Start Timer'
       }}</QBtn>
-      <QBtn width="20%" color="black" @click="resetTimer" :disable="phase === 'stopped'"
+      <QBtn width="12%" color="black" @click="resetTimer" :disable="phase === 'stopped'"
         >Reset Timer</QBtn
       >
-      <QBtn width="20%" color="black" @click="fifteenS"
+      <QBtn width="12%" color="black" @click="fifteenS"
         >15s</QBtn
       >
 
-      <QBtn width="20%" color="black" @click="pauseTimer"
+      <QBtn width="12%" color="black" @click="pauseTimer"
         >Pause</QBtn
+      >
+
+      <QBtn width="12%" color="black" @click="fourtyfiveS"
+        >45s</QBtn
       >
     </div>
     </div>
@@ -236,6 +240,14 @@
   async function fifteenS(): Promise<void> {
     try {
       await nodecg.sendMessage('joker', true);
+    } catch (err) {
+      // error
+    }
+  }
+
+  async function fourtyfiveS(): Promise<void> {
+    try {
+      await nodecg.sendMessage('enum', true);
     } catch (err) {
       // error
     }

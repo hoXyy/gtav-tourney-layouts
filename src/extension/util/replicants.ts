@@ -65,3 +65,8 @@ export const correctsAnswerA = nodecg().Replicant<boolean>('correctsAnswerA');
 export const correctsAnswerB = nodecg().Replicant<boolean>('correctsAnswerB');
 export const correctsAnswerC = nodecg().Replicant<boolean>('correctsAnswerC');
 export const correctsAnswerD = nodecg().Replicant<boolean>('correctsAnswerD');
+export const setsPinkPick = nodecg().Replicant<boolean>('setsPinkPick');
+export const setsYellowPick = nodecg().Replicant<boolean>('setsYellowPick');
+export const setsPurplePick = nodecg().Replicant<boolean>('setsPurplePick');
+export const setsTealPick = nodecg().Replicant<boolean>('setsTealPick');
+

@@ -26,5 +26,6 @@
     right: 27px;
     top: -39px;
     text-align: right;
+    font-family: "Bebas Neue";
   }
 </style>

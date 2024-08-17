@@ -85,11 +85,13 @@
       </div>
     </div>
 
-    <!-- Answers -->
+    <!-- Answer 1 -->
     <div v-if="showingAnswerA?.data">
       <div class="animate__animated animate__fadeInRightBig" ref="answer1Slide">
         <div
           v-if="!setCorrectAnswerA?.data">
+          <div
+            v-if="currentQuestion?.data?.type==='normal'">
             <img
             src="./img/answerslide4.png"
             class="answerslide"
@@ -98,6 +100,19 @@
             <p v-if="currentQuestion && currentQuestion.data" class="answer-text">
               {{ currentQuestion.data.answers.answer1 }}
             </p>
+          </div>
+          </div>
+          <div
+          v-if="currentQuestion?.data?.type!=='normal'">
+          <img
+            src="./img/enum.png"
+            class="answerslide"
+          />
+          <div class="answer1box">
+            <p v-if="currentQuestion && currentQuestion.data" class="answer-text">
+              {{ currentQuestion.data.answers.answer1 }}
+            </p>
+          </div>
           </div>
         </div>
         <div
@@ -113,12 +128,31 @@
         </div>
       </div>
         </div>
+        <div
+        v-if="setPinkPick?.data ==='A'">
+          <img src="./img/a14.png" class="answerslide">
+        </div>
+        <div
+        v-if="setYellowPick?.data ==='A'">
+          <img src="./img/a13.png" class="answerslide">
+        </div>
+        <div
+        v-if="setPurplePick?.data ==='A'">
+          <img src="./img/a12.png" class="answerslide">
+        </div>
+        <div
+        v-if="setTealPick?.data ==='A'">
+          <img src="./img/a11.png" class="answerslide">
+        </div>
     </div>
 
+    <!-- Answer 2 -->
     <div v-if="showingAnswerB?.data">
       <div class="animate__animated animate__fadeInRightBig" ref="answer2Slide">
         <div
           v-if="!setCorrectAnswerB?.data">
+          <div
+            v-if="currentQuestion?.data?.type==='normal'">
             <img
             src="./img/answerslide3.png"
             class="answerslide"
@@ -127,6 +161,19 @@
             <p v-if="currentQuestion && currentQuestion.data" class="answer-text">
               {{ currentQuestion.data.answers.answer2 }}
             </p>
+          </div>
+        </div>
+        <div
+          v-if="currentQuestion?.data?.type!=='normal'">
+          <img
+            src="./img/enum2.png"
+            class="answerslide"
+          />
+          <div class="answer2box">
+            <p v-if="currentQuestion && currentQuestion.data" class="answer-text">
+              {{ currentQuestion.data.answers.answer2 }}
+            </p>
+          </div>
           </div>
         </div>
         <div
@@ -142,12 +189,31 @@
         </div>
       </div>
         </div>
+        <div
+        v-if="setPinkPick?.data ==='B'">
+          <img src="./img/a24.png" class="answerslide">
+        </div>
+        <div
+        v-if="setYellowPick?.data ==='B'">
+          <img src="./img/a23.png" class="answerslide">
+        </div>
+        <div
+        v-if="setPurplePick?.data ==='B'">
+          <img src="./img/a22.png" class="answerslide">
+        </div>
+        <div
+        v-if="setTealPick?.data ==='B'">
+          <img src="./img/a21.png" class="answerslide">
+        </div>
     </div>
 
+    <!-- Answer 3 -->
     <div v-if="showingAnswerC?.data">
       <div class="animate__animated animate__fadeInRightBig" ref="answer3Slide">
         <div
           v-if="!setCorrectAnswerC?.data">
+          <div
+            v-if="currentQuestion?.data?.type==='normal'">
             <img
             src="./img/answerslide2.png"
             class="answerslide"
@@ -156,6 +222,19 @@
             <p v-if="currentQuestion && currentQuestion.data" class="answer-text">
               {{ currentQuestion.data.answers.answer3 }}
             </p>
+          </div>
+        </div>
+        <div
+          v-if="currentQuestion?.data?.type!=='normal'">
+          <img
+            src="./img/enum3.png"
+            class="answerslide"
+          />
+          <div class="answer3box">
+            <p v-if="currentQuestion && currentQuestion.data" class="answer-text">
+              {{ currentQuestion.data.answers.answer3 }}
+            </p>
+          </div>
           </div>
         </div>
         <div
@@ -171,12 +250,31 @@
         </div>
       </div>
         </div>
+        <div
+        v-if="setPinkPick?.data ==='C'">
+          <img src="./img/a34.png" class="answerslide">
+        </div>
+        <div
+        v-if="setYellowPick?.data ==='C'">
+          <img src="./img/a33.png" class="answerslide">
+        </div>
+        <div
+        v-if="setPurplePick?.data ==='C'">
+          <img src="./img/a32.png" class="answerslide">
+        </div>
+        <div
+        v-if="setTealPick?.data ==='C'">
+          <img src="./img/a31.png" class="answerslide">
+        </div>
     </div>
 
+    <!-- Answer 4 -->
     <div v-if="showingAnswerD?.data">
       <div class="animate__animated animate__fadeInRightBig" ref="answer4Slide">
         <div
           v-if="!setCorrectAnswerD?.data">
+          <div
+            v-if="currentQuestion?.data?.type==='normal'">
             <img
             src="./img/answerslide.png"
             class="answerslide"
@@ -185,6 +283,19 @@
             <p v-if="currentQuestion && currentQuestion.data" class="answer-text">
               {{ currentQuestion.data.answers.answer4 }}
             </p>
+          </div>
+          </div>
+          <div
+          v-if="currentQuestion?.data?.type!=='normal'">
+          <img
+            src="./img/enum4.png"
+            class="answerslide"
+          />
+          <div class="answer4box">
+            <p v-if="currentQuestion && currentQuestion.data" class="answer-text">
+              {{ currentQuestion.data.answers.answer4 }}
+            </p>
+          </div>
           </div>
         </div>
         <div
@@ -199,6 +310,22 @@
           </p>
         </div>
       </div>
+        </div>
+        <div
+        v-if="setPinkPick?.data ==='D'">
+          <img src="./img/a44.png" class="answerslide">
+        </div>
+        <div
+        v-if="setYellowPick?.data ==='D'">
+          <img src="./img/a43.png" class="answerslide">
+        </div>
+        <div
+        v-if="setPurplePick?.data ==='D'">
+          <img src="./img/a42.png" class="answerslide">
+        </div>
+        <div
+        v-if="setTealPick?.data ==='D'">
+          <img src="./img/a41.png" class="answerslide">
         </div>
     </div>
 
@@ -281,6 +408,22 @@
     defaultValue: false
   });
 
+  const setPinkPick = useReplicant<string>('setsPinkPick', 'gtav-tourney-layouts', {
+    defaultValue: ''
+  });
+
+  const setYellowPick = useReplicant<string>('setsYellowPick', 'gtav-tourney-layouts', {
+    defaultValue: ''
+  });
+
+  const setPurplePick = useReplicant<string>('setsPurplePick', 'gtav-tourney-layouts', {
+    defaultValue: ''
+  });
+
+  const setTealPick = useReplicant<string>('setsTealPick', 'gtav-tourney-layouts', {
+    defaultValue: ''
+  });
+
   nodecg.listenFor('showAnswerA', (show: boolean) => {
     showingAnswerA!.data = show;
   });
@@ -313,12 +456,27 @@
     setCorrectAnswerD!.data = correct;
   });
 
+  nodecg.listenFor('pinkPicks', (answer: string) => {
+      setPinkPick!.data = answer;
+  });
+
+  nodecg.listenFor('yellowPicks', (answer: string) => {
+    setYellowPick!.data = answer;
+  });
+
+  nodecg.listenFor('purplePicks', (answer: string) => {
+    setPurplePick!.data = answer;
+  });
+
+  nodecg.listenFor('tealPicks', (answer: string) => {
+    setTealPick!.data = answer;
+  });
+
   const questionSlide = ref<HTMLElement | null>(null);
   const answer1Slide = ref<HTMLElement | null>(null);
   const answer2Slide = ref<HTMLElement | null>(null);
   const answer3Slide = ref<HTMLElement | null>(null);
   const answer4Slide = ref<HTMLElement | null>(null);
-
 
   type Position = {
     x: number;
@@ -398,6 +556,11 @@
     setCorrectAnswerB!.data = false;
     setCorrectAnswerC!.data = false;
     setCorrectAnswerD!.data = false;
+    setPinkPick!.data = '';
+    setYellowPick!.data = '';
+    setPurplePick!.data = '';
+    setTealPick!.data = '';
+
   }
 });
 
@@ -444,6 +607,42 @@ watch([showingAnswerD, setCorrectAnswerD], async () => {
     }, { once: true });
   }
 });
+
+watch(
+  () => setCorrectAnswerA?.data,
+  (newVal, oldVal) => {
+    if (oldVal === false && newVal === true) {
+        window.nodecg.playSound('correct-answer', { updateVolume: true });
+    }
+  }
+);
+
+watch(
+  () => setCorrectAnswerB?.data,
+  (newVal, oldVal) => {
+    if (oldVal === false && newVal === true) {
+        window.nodecg.playSound('correct-answer', { updateVolume: true });
+    }
+  }
+);
+
+watch(
+  () => setCorrectAnswerC?.data,
+  (newVal, oldVal) => {
+    if (oldVal === false && newVal === true) {
+        window.nodecg.playSound('correct-answer', { updateVolume: true });
+    }
+  }
+);
+
+watch(
+  () => setCorrectAnswerD?.data,
+  (newVal, oldVal) => {
+    if (oldVal === false && newVal === true) {
+        window.nodecg.playSound('correct-answer', { updateVolume: true });
+    }
+  }
+);
 
 </script>
 
@@ -684,7 +883,7 @@ watch([showingAnswerD, setCorrectAnswerD], async () => {
   .answer1box{
     position:absolute;
     z-index: 5;
-    width: 768px;
+    width: 730px;
     height: 143px;
     top: 454px;
     left: 1135px;
@@ -696,7 +895,7 @@ watch([showingAnswerD, setCorrectAnswerD], async () => {
   .answer2box{
     position:absolute;
     z-index: 5;
-    width: 768px;
+    width: 730px;
     height: 143px;
     top: 614px;
     left: 1135px;
@@ -707,7 +906,7 @@ watch([showingAnswerD, setCorrectAnswerD], async () => {
 
   .answer3box{
     z-index: 5;
-    width: 768px;
+    width: 730px;
     height: 143px;
     top: 654px;
     left: 1135px;
@@ -719,7 +918,7 @@ watch([showingAnswerD, setCorrectAnswerD], async () => {
 
   .answer4box{
     z-index: 5;
-    width: 768px;
+    width: 730px;
     height: 143px;
     top: 754px;
     left: 1135px;

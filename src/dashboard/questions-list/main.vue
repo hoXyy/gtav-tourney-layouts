@@ -27,13 +27,40 @@
     <QSeparator/>
     <div class="button-container">
       <QBtn color="black" @click="showAnswerA(true)">Show Answer A</QBtn>
-      <QBtn color="black" @click="correctAnswerA(true)">Correct Answer A</QBtn>
+      <QBtn color="green" @click="correctAnswerA(true)">Correct Answer A</QBtn>
       <QBtn color="black" @click="showAnswerB(true)">Show Answer B</QBtn>
-      <QBtn color="black" @click="correctAnswerB(true)">Correct Answer B</QBtn>
+      <QBtn color="green" @click="correctAnswerB(true)">Correct Answer B</QBtn>
       <QBtn color="black" @click="showAnswerC(true)">Show Answer C</QBtn>
-      <QBtn color="black" @click="correctAnswerC(true)">Correct Answer C</QBtn>
+      <QBtn color="green" @click="correctAnswerC(true)">Correct Answer C</QBtn>
       <QBtn color="black" @click="showAnswerD(true)">Show Answer D</QBtn>
-      <QBtn color="black" @click="correctAnswerD(true)">Correct Answer D</QBtn>
+      <QBtn color="green" @click="correctAnswerD(true)">Correct Answer D</QBtn>
+    </div>
+    <QSeparator/>
+    <div class="answer-container">
+      <div>
+        <QBtn color="pink" @click="pinkPicks('A')">Pink Picks A</QBtn>
+        <QBtn color="pink" @click="pinkPicks('B')">Pink Picks B</QBtn>
+        <QBtn color="pink" @click="pinkPicks('C')">Pink Picks C</QBtn>
+        <QBtn color="pink" @click="pinkPicks('D')">Pink Picks D</QBtn>
+      </div>
+      <div>
+        <QBtn color="black" @click="yellowPicks('A')">Yellow Picks A</QBtn>
+        <QBtn color="black" @click="yellowPicks('B')">Yellow Picks B</QBtn>
+        <QBtn color="black" @click="yellowPicks('C')">Yellow Picks C</QBtn>
+        <QBtn color="black" @click="yellowPicks('D')">Yellow Picks D</QBtn>
+      </div>
+      <div>
+        <QBtn color="purple" @click="purplePicks('A')">Purple Picks A</QBtn>
+        <QBtn color="purple" @click="purplePicks('B')">Purple Picks B</QBtn>
+        <QBtn color="purple" @click="purplePicks('C')">Purple Picks C</QBtn>
+        <QBtn color="purple" @click="purplePicks('D')">Purple Picks D</QBtn>
+      </div>
+      <div>
+        <QBtn color="teal" @click="tealPicks('A')">Teal Picks A</QBtn>
+        <QBtn color="teal" @click="tealPicks('B')">Teal Picks B</QBtn>
+        <QBtn color="teal" @click="tealPicks('C')">Teal Picks C</QBtn>
+        <QBtn color="teal" @click="tealPicks('D')">Teal Picks D</QBtn>
+      </div>
     </div>
   </div>
 </template>
@@ -93,6 +120,23 @@
   function correctAnswerD(correct: boolean){
     nodecg.sendMessage('correctAnswerD', correct);
   }
+
+  function pinkPicks(answer: string){
+    nodecg.sendMessage('pinkPicks', answer);
+  }
+
+  function yellowPicks(answer: string){
+    nodecg.sendMessage('yellowPicks', answer);
+  }
+
+  function purplePicks(answer: string){
+    nodecg.sendMessage('purplePicks', answer);
+  }
+
+  function tealPicks(answer: string){
+    nodecg.sendMessage('tealPicks', answer);
+  }
+
 </script>
 
 <style>
@@ -105,6 +149,18 @@
   .button-container QBtn {
     flex: 1 1 45%; 
     max-width: 45%; 
+    box-sizing: border-box;
+  }
+
+  .answer-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+
+  .answer-container QBtn {
+    flex: 1 1 22%; 
+    max-width: 22%; 
     box-sizing: border-box;
   }
 </style>

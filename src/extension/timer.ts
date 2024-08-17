@@ -46,6 +46,18 @@ function joker(): void {
 }
 
 /**
+ * Use enumeration timer
+ */
+function enumeration(): void {
+  timerRep.value = {
+    time: msToTimeStr(45000),
+    milliseconds: 45000,
+    timestamp: Date.now(),
+    phase: 'running',
+  };
+}
+
+/**
  * Set timer replicant string time and milliseconds based off a millisecond value.
  * @param ms Milliseconds you want to set the timer replicant at.
  */
@@ -244,6 +256,9 @@ nodecg.listenFor('timerFinish', (data, ack) => {
 });
 nodecg.listenFor('joker', () => {
   joker()
+});
+nodecg.listenFor('enum', () => {
+  enumeration()
 });
 nodecg.listenFor('finishPlayer1', () => {
   finishTimes.value.player1 = timerRep.value.time;
