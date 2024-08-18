@@ -158,7 +158,7 @@
             class="answerslide"
           />
           <div class="answer2box">
-            <p v-if="currentQuestion && currentQuestion.data" class="answer-text">
+            <p v-if="currentQuestion && currentQuestion.data" :class="getClassA(2)">
               {{ currentQuestion.data.answers.answer2 }}
             </p>
           </div>
@@ -170,7 +170,7 @@
             class="answerslide"
           />
           <div class="answer2box">
-            <p v-if="currentQuestion && currentQuestion.data" class="answer-text">
+            <p v-if="currentQuestion && currentQuestion.data" :class="getClassA(2)">
               {{ currentQuestion.data.answers.answer2 }}
             </p>
           </div>
@@ -280,7 +280,7 @@
             class="answerslide"
           />
           <div class="answer4box">
-            <p v-if="currentQuestion && currentQuestion.data" class="answer-text">
+            <p v-if="currentQuestion && currentQuestion.data" :class="getClassA(4)">
               {{ currentQuestion.data.answers.answer4 }}
             </p>
           </div>
@@ -292,7 +292,7 @@
             class="answerslide"
           />
           <div class="answer4box">
-            <p v-if="currentQuestion && currentQuestion.data" class="answer-text">
+            <p v-if="currentQuestion && currentQuestion.data" :class="getClassA(4)">
               {{ currentQuestion.data.answers.answer4 }}
             </p>
           </div>
@@ -835,6 +835,15 @@ watch(
     }
   };
 
+  const getClassA = (playerNumber: number) => {
+    switch (playerNumber) {
+      case 2:
+        return { 'answer-textALT': currentQuestion?.data?.type!=='normal', 'answer-text': currentQuestion?.data?.type==='normal' };
+      case 4:
+        return { 'answer-textALT': currentQuestion?.data?.type!=='normal', 'answer-text': currentQuestion?.data?.type==='normal' };
+    }
+  };
+  
 </script>
 
 <style>
@@ -1050,7 +1059,7 @@ watch(
   .answer-text{
     z-index: 6;
     font-family: "Bebas Neue";
-    font-size: 37px;
+    font-size: 33px;
     color: white;
     text-align: right;
     overflow-wrap: break-word;
@@ -1058,12 +1067,14 @@ watch(
     white-space: normal;
     width: 100%;
     line-height: 1;
+    box-sizing: border-box;
+    overflow: hidden;
   }
 
   .answer-textALT{
     z-index: 6;
     font-family: "Bebas Neue";
-    font-size: 37px;
+    font-size: 33px;
     color: black;
     text-align: right;
     overflow-wrap: break-word;
@@ -1071,27 +1082,30 @@ watch(
     white-space: normal;
     width: 100%;
     line-height: 1;
+    box-sizing: border-box;
+    overflow: hidden;
+    position: relative;
   }
 
   .answer1box{
     position:absolute;
     z-index: 5;
-    width: 780px;
+    width: 1030px;
     height: 143px;
-    top: 466px;
-    left: 1085px;
+    top: 471px;
+    left: 835px;
     box-sizing: border-box;
     padding: 10px;
-    overflow:visible;
+    overflow:hid;
   }
 
   .answer2box{
     position:absolute;
     z-index: 5;
-    width: 780px;
+    width: 1030px;
     height: 143px;
-    top: 562px;
-    left: 1085px;
+    top: 567px;
+    left: 835px;
     box-sizing: border-box;
     padding: 10px;
     overflow:visible;
@@ -1099,10 +1113,10 @@ watch(
 
   .answer3box{
     z-index: 5;
-    width: 780px;
+    width: 1030px;
     height: 143px;
-    top: 657px;
-    left: 1085px;
+    top: 662px;
+    left: 835px;
     position:absolute;
     box-sizing: border-box;
     padding: 10px;
@@ -1111,10 +1125,10 @@ watch(
 
   .answer4box{
     z-index: 5;
-    width: 780px;
+    width: 1030px;
     height: 143px;
-    top: 751px;
-    left: 1085px;
+    top: 756px;
+    left: 835px;
     position:absolute;
     box-sizing: border-box;
     padding: 10px;
