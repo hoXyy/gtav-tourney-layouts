@@ -332,16 +332,16 @@
     <!-- Bobar -->
     <img src="./img/bobar.png" class="bottom-overlay" />
     <div id="scores" class="scores">
-      <p class="score1" v-if="score && score.data">
-          {{ score.data.player1 }} POINTS <br>
+      <p class="score1 animate__animated animate__fadeInUp" v-if="score && score.data" ref="score1">
+          {{ score.data.player1 }} POINTS
       </p>
-      <p class="score2" v-if="score && score.data">
+      <p class="score2 animate__animated animate__fadeInUp" v-if="score && score.data" ref="score2">
           {{ score.data.player2 }} POINTS
       </p>
-      <p class="score3" v-if="score && score.data">
+      <p class="score3 animate__animated animate__fadeInUp" v-if="score && score.data" ref="score3">
           {{ score.data.player3 }} POINTS
       </p>
-      <p class="score4" v-if="score && score.data">
+      <p class="score4 animate__animated animate__fadeInUp" v-if="score && score.data" ref="score4">
           {{ score.data.player4 }} POINTS
       </p>
     </div>
@@ -478,6 +478,11 @@
   const answer3Slide = ref<HTMLElement | null>(null);
   const answer4Slide = ref<HTMLElement | null>(null);
 
+  const score1 = ref<HTMLElement | null>(null);
+  const score2 = ref<HTMLElement | null>(null);
+  const score3 = ref<HTMLElement | null>(null);
+  const score4 = ref<HTMLElement | null>(null);
+
   
   watch(() => currentQuestion?.data?.question, (newQuestion, oldQuestion) => {
   if (newQuestion !== oldQuestion && questionSlide.value) {
@@ -544,7 +549,7 @@ watch([showingAnswerB, setCorrectAnswerB], async () => {
     await nextTick();
     answer2Slide.value.classList.add('animate__animated', 'animate__flash');
     answer2Slide.value.addEventListener('animationend', () => {
-      answer1Slide.value?.classList.remove('animate__animated', 'animate__flash');
+      answer2Slide.value?.classList.remove('animate__animated', 'animate__flash');
     }, { once: true });
   }
 });
@@ -564,7 +569,7 @@ watch([showingAnswerC, setCorrectAnswerC], async () => {
     await nextTick();
     answer3Slide.value.classList.add('animate__animated', 'animate__flash');
     answer3Slide.value.addEventListener('animationend', () => {
-      answer1Slide.value?.classList.remove('animate__animated', 'animate__flash');
+      answer3Slide.value?.classList.remove('animate__animated', 'animate__flash');
     }, { once: true });
   }
 });
@@ -584,7 +589,7 @@ watch([showingAnswerD, setCorrectAnswerD], async () => {
     await nextTick();
     answer4Slide.value.classList.add('animate__animated', 'animate__flash');
     answer4Slide.value.addEventListener('animationend', () => {
-      answer1Slide.value?.classList.remove('animate__animated', 'animate__flash');
+      answer4Slide.value?.classList.remove('animate__animated', 'animate__flash');
     }, { once: true });
   }
 });
@@ -624,6 +629,122 @@ watch(
     }
   }
 );
+
+watch(
+    () => score?.data?.player1,
+    async (newVal, oldVal) => {
+      if (newVal != undefined) {
+        if (oldVal != undefined) {
+          if (newVal > oldVal) {
+            if (score1.value) {
+              score1.value.classList.remove('animate__fadeInUp');
+            await nextTick();
+            score1.value.classList.add('animate__animated', 'animate__fadeInUp');
+            score1.value.addEventListener('animationend', () => {
+              score1.value?.classList.remove('animate__animated', 'animate__fadeInUp');
+            }, { once: true });
+          }
+        } else {
+          if (score1.value) {
+            score1.value.classList.remove('animate__fadeOutDown');
+          await nextTick();
+          score1.value.classList.add('animate__animated', 'animate__fadeOutDown');
+          score1.value.addEventListener('animationend', () => {
+            score1.value?.classList.remove('animate__animated', 'animate__fadeOutDown');
+          }, { once: true });
+              }
+      }
+    }
+  }
+}
+  );
+
+  watch(
+    () => score?.data?.player2,
+    async (newVal, oldVal) => {
+      if (newVal != undefined) {
+        if (oldVal != undefined) {
+          if (newVal > oldVal) {
+            if (score2.value) {
+              score2.value.classList.remove('animate__fadeInUp');
+            await nextTick();
+            score2.value.classList.add('animate__animated', 'animate__fadeInUp');
+            score2.value.addEventListener('animationend', () => {
+              score2.value?.classList.remove('animate__animated', 'animate__fadeInUp');
+            }, { once: true });
+          }
+        } else {
+          if (score2.value) {
+            score2.value.classList.remove('animate__fadeOutDown');
+          await nextTick();
+          score2.value.classList.add('animate__animated', 'animate__fadeOutDown');
+          score2.value.addEventListener('animationend', () => {
+            score2.value?.classList.remove('animate__animated', 'animate__fadeOutDown');
+          }, { once: true });
+              }
+      }
+    }
+  }
+}
+  );
+
+  watch(
+    () => score?.data?.player3,
+    async (newVal, oldVal) => {
+      if (newVal != undefined) {
+        if (oldVal != undefined) {
+          if (newVal > oldVal) {
+            if (score3.value) {
+              score3.value.classList.remove('animate__fadeInUp');
+            await nextTick();
+            score3.value.classList.add('animate__animated', 'animate__fadeInUp');
+            score3.value.addEventListener('animationend', () => {
+              score3.value?.classList.remove('animate__animated', 'animate__fadeInUp');
+            }, { once: true });
+          }
+        } else {
+          if (score3.value) {
+            score3.value.classList.remove('animate__fadeOutDown');
+          await nextTick();
+          score3.value.classList.add('animate__animated', 'animate__fadeOutDown');
+          score3.value.addEventListener('animationend', () => {
+            score3.value?.classList.remove('animate__animated', 'animate__fadeOutDown');
+          }, { once: true });
+              }
+      }
+    }
+  }
+}
+  );
+
+  watch(
+    () => score?.data?.player4,
+    async (newVal, oldVal) => {
+      if (newVal != undefined) {
+        if (oldVal != undefined) {
+          if (newVal > oldVal) {
+            if (score4.value) {
+              score4.value.classList.remove('animate__fadeInUp');
+            await nextTick();
+            score4.value.classList.add('animate__animated', 'animate__fadeInUp');
+            score4.value.addEventListener('animationend', () => {
+              score4.value?.classList.remove('animate__animated', 'animate__fadeInUp');
+            }, { once: true });
+          }
+        } else {
+          if (score4.value) {
+            score4.value.classList.remove('animate__fadeOutDown');
+          await nextTick();
+          score4.value.classList.add('animate__animated', 'animate__fadeOutDown');
+          score4.value.addEventListener('animationend', () => {
+            score4.value?.classList.remove('animate__animated', 'animate__fadeOutDown');
+          }, { once: true });
+              }
+      }
+    }
+  }
+}
+  );
 
 </script>
 
