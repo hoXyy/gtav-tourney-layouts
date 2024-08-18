@@ -87,7 +87,7 @@
 
     <!-- Answer 1 -->
     <div v-if="showingAnswerA?.data">
-      <div class="animate__animated animate__fadeInRightBig" ref="answer1Slide">
+      <div class="animate__animated animate__fadeInRightBig animate__animated animate__animate__flash" ref="answer1Slide">
         <div
           v-if="!setCorrectAnswerA?.data">
           <div
@@ -148,7 +148,7 @@
 
     <!-- Answer 2 -->
     <div v-if="showingAnswerB?.data">
-      <div class="animate__animated animate__fadeInRightBig" ref="answer2Slide">
+      <div class="animate__animated animate__fadeInRightBig animate__animated animate__animate__flash" ref="answer2Slide">
         <div
           v-if="!setCorrectAnswerB?.data">
           <div
@@ -209,7 +209,7 @@
 
     <!-- Answer 3 -->
     <div v-if="showingAnswerC?.data">
-      <div class="animate__animated animate__fadeInRightBig" ref="answer3Slide">
+      <div class="animate__animated animate__fadeInRightBig animate__animated animate__animate__flash" ref="answer3Slide">
         <div
           v-if="!setCorrectAnswerC?.data">
           <div
@@ -270,7 +270,7 @@
 
     <!-- Answer 4 -->
     <div v-if="showingAnswerD?.data">
-      <div class="animate__animated animate__fadeInRightBig" ref="answer4Slide">
+      <div class="animate__animated animate__fadeInRightBig animate__animated animate__animate__flash" ref="answer4Slide">
         <div
           v-if="!setCorrectAnswerD?.data">
           <div
@@ -511,11 +511,20 @@
 
 watch([showingAnswerA, setCorrectAnswerA], async () => {
   if (answer1Slide.value) {
-    answer1Slide.value.classList.remove('animate__fadeInRightBig');
+    answer1Slide.value.classList.remove('animate__fadeInRightBig', 'animate__flash');
     await nextTick();
     answer1Slide.value.classList.add('animate__animated', 'animate__fadeInRightBig');
     answer1Slide.value.addEventListener('animationend', () => {
       answer1Slide.value?.classList.remove('animate__animated', 'animate__fadeInRightBig');
+    }, { once: true });
+  }
+
+  if (setCorrectAnswerA?.data && answer1Slide.value) {
+    answer1Slide.value.classList.remove('animate__fadeInRightBig', 'animate__flash');
+    await nextTick();
+    answer1Slide.value.classList.add('animate__animated', 'animate__flash');
+    answer1Slide.value.addEventListener('animationend', () => {
+      answer1Slide.value?.classList.remove('animate__animated', 'animate__flash');
     }, { once: true });
   }
 });
@@ -529,6 +538,15 @@ watch([showingAnswerB, setCorrectAnswerB], async () => {
       answer2Slide.value?.classList.remove('animate__animated', 'animate__fadeInRightBig');
     }, { once: true });
   }
+
+  if (setCorrectAnswerB?.data && answer2Slide.value) {
+    answer2Slide.value.classList.remove('animate__fadeInRightBig', 'animate__flash');
+    await nextTick();
+    answer2Slide.value.classList.add('animate__animated', 'animate__flash');
+    answer2Slide.value.addEventListener('animationend', () => {
+      answer1Slide.value?.classList.remove('animate__animated', 'animate__flash');
+    }, { once: true });
+  }
 });
 
 watch([showingAnswerC, setCorrectAnswerC], async () => {
@@ -540,6 +558,15 @@ watch([showingAnswerC, setCorrectAnswerC], async () => {
       answer3Slide.value?.classList.remove('animate__animated', 'animate__fadeInRightBig');
     }, { once: true });
   }
+
+  if (setCorrectAnswerC?.data && answer3Slide.value) {
+    answer3Slide.value.classList.remove('animate__fadeInRightBig', 'animate__flash');
+    await nextTick();
+    answer3Slide.value.classList.add('animate__animated', 'animate__flash');
+    answer3Slide.value.addEventListener('animationend', () => {
+      answer1Slide.value?.classList.remove('animate__animated', 'animate__flash');
+    }, { once: true });
+  }
 });
 
 watch([showingAnswerD, setCorrectAnswerD], async () => {
@@ -549,6 +576,15 @@ watch([showingAnswerD, setCorrectAnswerD], async () => {
     answer4Slide.value.classList.add('animate__animated', 'animate__fadeInRightBig');
     answer4Slide.value.addEventListener('animationend', () => {
       answer4Slide.value?.classList.remove('animate__animated', 'animate__fadeInRightBig');
+    }, { once: true });
+  }
+
+  if (setCorrectAnswerD?.data && answer4Slide.value) {
+    answer4Slide.value.classList.remove('animate__fadeInRightBig', 'animate__flash');
+    await nextTick();
+    answer4Slide.value.classList.add('animate__animated', 'animate__flash');
+    answer4Slide.value.addEventListener('animationend', () => {
+      answer1Slide.value?.classList.remove('animate__animated', 'animate__flash');
     }, { once: true });
   }
 });
