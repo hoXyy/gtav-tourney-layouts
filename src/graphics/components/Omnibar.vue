@@ -1,5 +1,5 @@
 <template>
-  <div style="position: absolute; bottom: -6px; z-index: 3">
+  <div style="position: absolute; bottom: -6px; z-index: 6">
     <marquee
       v-if="matches && matches.data && commentators && commentators.data && omnibarfield && omnibarfield.data != undefined"
       style="

@@ -42,6 +42,9 @@ export const finishTimes = nodecg().Replicant<FinishTimes>('finishTimes', {
 export const score = nodecg().Replicant<Score>('score', {
   defaultValue: { player1: 0, player2: 0, player3: 0, player4: 0 },
 });
+export const enumScore = nodecg().Replicant<Score>('enumScore', {
+  defaultValue: { player1: 0, player2: 0, player3: 0, player4: 0 },
+});
 export const prizePool = nodecg().Replicant<number>('prizePool');
 export const segmentPicks = nodecg().Replicant<CurrentSegment[]>('segmentPicks', {
   defaultValue: [],

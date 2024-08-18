@@ -129,6 +129,12 @@
         "name": "timer",
         "title": "Timer",
         "file": "timer.html",
+        "width": 4
+      },
+      {
+        "name": "enumeration_score",
+        "title": "Enumertaion Helper",
+        "file": "enumeration_score.html",
         "width": 3
       },
       {

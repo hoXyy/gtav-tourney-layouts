@@ -360,6 +360,23 @@
       </p>
     </div>
 
+    <!-- enumScores -->
+     <div
+     v-if="currentQuestion?.data?.type==='enumeration' && enumScore && enumScore?.data" class="enumScores animate__animated animate__fadeInRightBig" ref="enumScores">
+     <p :class="getClass(1)">
+        {{ enumScore.data.player1 }}
+      </p>
+      <p :class="getClass(2)">
+        {{ enumScore.data.player2 }}
+      </p>
+      <p :class="getClass(3)">
+        {{ enumScore.data.player3 }}
+      </p>
+      <p :class="getClass(4)">
+        {{ enumScore.data.player4 }}
+      </p>
+     </div>
+
     <Omnibar />
   </div>
 </template>
@@ -382,6 +399,7 @@
   const timer = useReplicant<Timer>('timer', 'gtav-tourney-layouts');
   const question = useReplicant<questions>('questions', 'gtav-tourney-layouts');
   const avatars = useReplicant<Avatars>('playerAvatars', 'gtav-tourney-layouts');
+  const enumScore = useReplicant<Score>('enumScore', 'gtav-tourney-layouts');
 
   const showingAnswerA = useReplicant<boolean>('showsAnswerA', 'gtav-tourney-layouts', {
     defaultValue: false
@@ -482,37 +500,95 @@
   const score2 = ref<HTMLElement | null>(null);
   const score3 = ref<HTMLElement | null>(null);
   const score4 = ref<HTMLElement | null>(null);
+  const enumScores = ref<HTMLElement | null>(null);
 
   
-  watch(() => currentQuestion?.data?.question, (newQuestion, oldQuestion) => {
-  if (newQuestion !== oldQuestion && questionSlide.value) {
-    questionSlide.value.classList.remove('animate__fadeInRightBig');
-    
-    void questionSlide.value.offsetWidth; 
-
-    questionSlide.value.classList.add('animate__animated', 'animate__fadeInRightBig');
-    
-    questionSlide.value.addEventListener('animationend', () => {
+  watch(
+  () => currentQuestion?.data?.question,
+  async (newQuestion, oldQuestion) => {
+    if (newQuestion !== oldQuestion) {
+      // Handle the question slide animation
       if (questionSlide.value) {
-        questionSlide.value.classList.remove('animate__animated', 'animate__fadeInRightBig');
+        questionSlide.value.classList.remove('animate__fadeInRightBig');
+        void questionSlide.value.offsetWidth; // Trigger reflow
+        questionSlide.value.classList.add('animate__animated', 'animate__fadeInRightBig');
+        questionSlide.value.addEventListener(
+          'animationend',
+          () => {
+            questionSlide.value?.classList.remove('animate__animated', 'animate__fadeInRightBig');
+          },
+          { once: true }
+        );
       }
-    }, { once: true });
 
-    showingAnswerA!.data = false;
-    showingAnswerB!.data = false;
-    showingAnswerC!.data = false;
-    showingAnswerD!.data = false;
-    setCorrectAnswerA!.data = false;
-    setCorrectAnswerB!.data = false;
-    setCorrectAnswerC!.data = false;
-    setCorrectAnswerD!.data = false;
-    setPinkPick!.data = '';
-    setYellowPick!.data = '';
-    setPurplePick!.data = '';
-    setTealPick!.data = '';
+      // Reset slide visibility and states for answers
+      showingAnswerA!.data = false;
+      showingAnswerB!.data = false;
+      showingAnswerC!.data = false;
+      showingAnswerD!.data = false;
+      setCorrectAnswerA!.data = false;
+      setCorrectAnswerB!.data = false;
+      setCorrectAnswerC!.data = false;
+      setCorrectAnswerD!.data = false;
+      setPinkPick!.data = '';
+      setYellowPick!.data = '';
+      setPurplePick!.data = '';
+      setTealPick!.data = '';
 
+      await nextTick(); // Ensure that the DOM has updated before applying animations
+
+      // Check if the question type is enumeration
+      if (currentQuestion?.data?.type !== "normal") {
+        // Ensure slides are initially hidden
+        const answerSlides = [answer1Slide, answer2Slide, answer3Slide, answer4Slide];
+        for (const slideRef of answerSlides) {
+          if (slideRef.value) {
+            slideRef.value.classList.remove('animate__fadeInRightBig', 'animate__flash');
+            slideRef.value.style.opacity = '0';
+          }
+        }
+
+        // Set visibility to true to trigger animation
+        showingAnswerA!.data = true;
+        showingAnswerB!.data = true;
+        showingAnswerC!.data = true;
+        showingAnswerD!.data = true;
+
+        await nextTick(); // Ensure the DOM update is complete before starting animations
+
+        // Apply animation to each slide
+        for (const slideRef of answerSlides) {
+          if (slideRef.value) {
+            slideRef.value.style.opacity = '1'; // Make the slide visible
+            slideRef.value.classList.add('animate__animated', 'animate__fadeInRightBig');
+            
+            slideRef.value.addEventListener(
+              'animationend',
+              () => {
+                slideRef.value?.classList.remove('animate__animated', 'animate__fadeInRightBig');
+              },
+              { once: true }
+            );
+          }
+        }
+        // Apply animation to enumeration scores
+        if (enumScores.value) {
+          enumScores.value.style.opacity = '1'; // Make the slide visible
+          enumScores.value.classList.add('animate__animated', 'animate__fadeInRightBig');
+            
+          enumScores.value.addEventListener(
+              'animationend',
+              () => {
+                enumScores.value?.classList.remove('animate__animated', 'animate__fadeInRightBig');
+              },
+              { once: true }
+            );
+          }
+      }
+    }
   }
-});
+);
+
 
 watch([showingAnswerA, setCorrectAnswerA], async () => {
   if (answer1Slide.value) {
@@ -746,6 +822,19 @@ watch(
 }
   );
 
+  const getClass = (playerNumber: number) => {
+    switch (playerNumber) {
+      case 1:
+        return { 'enumScore1': !setCorrectAnswerA?.data, 'enumScore1ALT': setCorrectAnswerA?.data };
+      case 2:
+        return { 'enumScore2': !setCorrectAnswerB?.data, 'enumScore2ALT': setCorrectAnswerB?.data };
+      case 3:
+        return { 'enumScore3': !setCorrectAnswerC?.data, 'enumScore3ALT': setCorrectAnswerC?.data };
+      case 4:
+        return { 'enumScore4': !setCorrectAnswerD?.data, 'enumScore4ALT': setCorrectAnswerD?.data };
+    }
+  };
+
 </script>
 
 <style>
@@ -846,7 +935,7 @@ watch(
 
   .timer {
     position: absolute;
-    bottom: 780px;
+    bottom: 783px;
     left: 386px;
     width: 100%;
     color: white;
@@ -921,7 +1010,7 @@ watch(
     z-index: 5;
     width: 768px;
     height: 143px;
-    top: 314px;
+    top: 262px;
     left: 1135px;
     position:absolute;
     box-sizing: border-box;
@@ -987,10 +1076,10 @@ watch(
   .answer1box{
     position:absolute;
     z-index: 5;
-    width: 730px;
+    width: 780px;
     height: 143px;
-    top: 454px;
-    left: 1135px;
+    top: 466px;
+    left: 1085px;
     box-sizing: border-box;
     padding: 10px;
     overflow:visible;
@@ -999,10 +1088,10 @@ watch(
   .answer2box{
     position:absolute;
     z-index: 5;
-    width: 730px;
+    width: 780px;
     height: 143px;
-    top: 614px;
-    left: 1135px;
+    top: 562px;
+    left: 1085px;
     box-sizing: border-box;
     padding: 10px;
     overflow:visible;
@@ -1010,10 +1099,10 @@ watch(
 
   .answer3box{
     z-index: 5;
-    width: 730px;
+    width: 780px;
     height: 143px;
-    top: 654px;
-    left: 1135px;
+    top: 657px;
+    left: 1085px;
     position:absolute;
     box-sizing: border-box;
     padding: 10px;
@@ -1022,14 +1111,36 @@ watch(
 
   .answer4box{
     z-index: 5;
-    width: 730px;
+    width: 780px;
     height: 143px;
-    top: 754px;
-    left: 1135px;
+    top: 751px;
+    left: 1085px;
     position:absolute;
     box-sizing: border-box;
     padding: 10px;
     overflow:visible;
   }
+
+  .enumScores {
+    position: absolute;
+    bottom: 150px;
+    width: 100%;
+    font-family: "Bebas Neue";
+    text-align: center;
+    font-size: 65px;
+    z-index: 5; /* Ensure scores are above all player and color overlays */
+  }
+
+  /* Adjust score styling */
+  .enumScore1 { position: relative; top: 175px; left: 926px; color: white} 
+  .enumScore2 { position: relative; top: 127px; left: 926px; } 
+  .enumScore3 { position: relative; top: 69px; left: 926px; color: white} 
+  .enumScore4 { position: relative; top: 12px; left: 926px; } 
+
+  /* Adjust score styling for correct answers*/
+  .enumScore1ALT { position: relative; top: 175px; left: 926px; color: black} 
+  .enumScore2ALT { position: relative; top: 127px; left: 926px; color: black} 
+  .enumScore3ALT { position: relative; top: 69px; left: 926px; color: black} 
+  .enumScore4ALT { position: relative; top: 12px; left: 926px; color: black} 
 
 </style>
