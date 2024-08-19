@@ -847,19 +847,8 @@ watch(
 </script>
 
 <style>
-  @font-face {
-    font-family: 'Europa Grotesk SH DemBol';
-    src: url('../css/fonts/europa/EuropaGroteskSH-DemBol.woff2') format('woff2');
-    font-weight: normal;
-    font-style: normal;
-  }
 
-  @font-face {
-    font-family: 'Bebas Neue';
-    src: url('../css/fonts/bebas/BebasNeue-Regular.ttf') format('ttf');
-    font-weight: normal;
-    font-style: normal;
-  }
+  @import url('../css/base.css');
 
   /* Reset and layout for the container */
   #background {
@@ -968,6 +957,7 @@ watch(
     text-align: center;
     font-size: 65px;
     z-index: 5; /* Ensure scores are above all player and color overlays */
+    color: black;
   }
 
   /* Adjust score styling */
@@ -1147,9 +1137,9 @@ watch(
 
   /* Adjust score styling */
   .enumScore1 { position: relative; top: 175px; left: 926px; color: white} 
-  .enumScore2 { position: relative; top: 127px; left: 926px; } 
+  .enumScore2 { position: relative; top: 127px; left: 926px; color: black} 
   .enumScore3 { position: relative; top: 69px; left: 926px; color: white} 
-  .enumScore4 { position: relative; top: 12px; left: 926px; } 
+  .enumScore4 { position: relative; top: 12px; left: 926px; color: black} 
 
   /* Adjust score styling for correct answers*/
   .enumScore1ALT { position: relative; top: 175px; left: 926px; color: black} 
