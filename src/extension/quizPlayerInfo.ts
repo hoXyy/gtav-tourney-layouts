@@ -129,6 +129,16 @@ currentMatch.on('change', async (newVal) => {
       const avatar = await getPlayerAvatar(newVal.players.player2.srcUsername);
       playerAvatars.value.player2 = avatar;
     }
+
+    if (newVal.players.player3!.srcUsername) {
+      const avatar = await getPlayerAvatar(newVal.players.player3!.srcUsername);
+      playerAvatars.value.player3! = avatar;
+    }
+
+    if (newVal.players.player4!.srcUsername) {
+      const avatar = await getPlayerAvatar(newVal.players.player4!.srcUsername);
+      playerAvatars.value.player4! = avatar;
+    }
   }
 
 });

@@ -103,9 +103,16 @@
     "dashboardPanels": [
       {
         "name": "commentators",
-        "title": "Hosts",
+        "title": "Commentators",
         "file": "commentators.html",
         "width": 3
+      },
+      {
+        "name": "hosts",
+        "title": "Hosts",
+        "file": "commentators.html",
+        "width": 3,
+        "workspace": "Quiz"
       },
       {
         "name": "omnibarfield",
@@ -132,10 +139,19 @@
         "width": 4
       },
       {
+        "name": "quiz-timer",
+        "title": "Quiz Timer",
+        "file": "quiz-timer.html",
+        "width": 4,
+        "workspace": "Quiz"
+      },
+      {
         "name": "enumeration_score",
-        "title": "Enumertaion Helper",
+        "title": "Enumeration Helper",
         "file": "enumeration_score.html",
-        "width": 3
+        "width": 3,
+        "workspace": "Quiz"
+
       },
       {
         "name": "streamAssign",
@@ -153,7 +169,8 @@
         "name": "questions",
         "title": "List of questions",
         "file": "questions-list.html",
-        "width": 3
+        "width": 3,
+        "workspace": "Quiz"
       },
       {
         "name": "add-edit-questions",
@@ -250,11 +267,6 @@
       },
       {
         "file": "quiz-intro.html",
-        "width": 1920,
-        "height": 1080
-      },
-      {
-        "file": "quiz-answer-reveal.html",
         "width": 1920,
         "height": 1080
       }

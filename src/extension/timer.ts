@@ -2,9 +2,9 @@
 
 import clone from 'clone';
 import livesplitCore from 'livesplit-core';
-import { msToTimeStr, processAck, timeStrToMS } from './util/helpers';
+import { msToTimeStr, processAck } from './util/helpers';
 import { get } from './util/nodecg';
-import { timer as timerRep, finishTimes } from './util/replicants';
+import { timer as timerRep, finishTimes, currentMatch } from './util/replicants';
 
 const nodecg = get();
 let timer: livesplitCore.Timer;
@@ -18,20 +18,43 @@ const LS_TIMER_PHASE = {
   Paused: 3,
 };
 
+/*
+if (currentMatch.value?.type === 'quiz') {
+  resetTimerRepToQuizDefault();
+} else {
+  resetTimerRepToDefault();
+}
+  */
+
+
 const COUNTDOWN_START_MS = 30 * 1000; // 30s in ms
 
 /**
- * Resets timer replicant to default settings.
+ * Resets timer replicant to default settings for the Quiz.
  */
-function resetTimerRepToDefault(): void {
+function resetTimerRepToQuizDefault(): void {
   timerRep.value = {
     time: msToTimeStr(COUNTDOWN_START_MS),
     milliseconds: COUNTDOWN_START_MS,
     timestamp: Date.now(),
     phase: 'stopped',
   };
+  nodecg.log.debug('[Timer] Replicant restored to quiz default');
+}
+
+/**
+ * Resets timer replicant to default settings.
+ */
+function resetTimerRepToDefault(): void {
+  timerRep.value = {
+    time: '00:00:00',
+    milliseconds: 0,
+    timestamp: 0,
+    phase: 'stopped',
+  };
   nodecg.log.debug('[Timer] Replicant restored to default');
 }
+
 
 /**
  * Use jokers
@@ -73,7 +96,7 @@ function setTime(ms: number): void {
  * @param ms Milliseconds you want to set the game time at.
  */
 function setGameTime(ms: number): void {
-  if (timerRep.value.phase === 'stopped') {
+  if (timerRep.value.state === 'stopped') {
     livesplitCore.TimeSpan.fromSeconds(0).with((t) => timer.setLoadingTimes(t));
     timer.initializeGameTime();
   }
@@ -87,31 +110,38 @@ function setGameTime(ms: number): void {
  */
 async function startTimer(force?: boolean): Promise<void> {
   try {
+    // Error if the timer is disabled.
     if (!force) {
       throw new Error('Timer changes are disabled');
     }
+    // Error if the timer is finished.
     if (timerRep.value.phase === 'finished') {
       throw new Error('Timer is in the finished state');
     }
+    // Error if the timer isn't stopped or paused (and we're not forcing it).
     if (!force && !['stopped', 'paused'].includes(timerRep.value.phase)) {
       throw new Error('Timer is not stopped/paused');
     }
 
-    if (timer.currentPhase() === LS_TIMER_PHASE.NotRunning) {
-      timer.start();
-      nodecg.log.debug('[Timer] Countdown started');
+    if (currentMatch.value?.type === "quiz"){
+      timerRep.value.phase = "running"
+      timerRep.value.timestamp = Date.now();
     } else {
-      timer.resume();
-      nodecg.log.debug('[Timer] Countdown resumed');
+      if (timer.currentPhase() === LS_TIMER_PHASE.NotRunning) {
+        timer.start();
+        nodecg.log.debug('[Timer] Started');
+      } else {
+        timer.resume();
+        nodecg.log.debug('[Timer] Resumed');
+      }
+      timerRep.value.phase = 'running';
+      timerRep.value.timestamp = Date.now();
     }
-    timerRep.value.phase = 'running';
-    timerRep.value.timestamp = Date.now();
   } catch (err) {
     nodecg.log.debug('[Timer] Cannot start/resume timer:', err);
     throw err;
   }
 }
-
 
 /**
  * Pause the timer.
@@ -138,25 +168,30 @@ async function pauseTimer(): Promise<void> {
  */
 export async function resetTimer(force?: boolean): Promise<void> {
   try {
+    // Error if the timer is disabled.
     if (!force) {
       throw new Error('Timer changes are disabled');
     }
+    // Error if the timer is stopped.
     if (timerRep.value.phase === 'stopped') {
       throw new Error('Timer is stopped');
     }
 
     timer.reset(false);
+    if (currentMatch.value?.type == "quiz"){
+      resetTimerRepToQuizDefault();
+    }
     resetTimerRepToDefault();
+
     finishTimes.value.player1 = '';
     finishTimes.value.player2 = '';
     runnersFinished = false;
-    nodecg.log.debug('[Timer] Reset with countdown start');
+    nodecg.log.debug('[Timer] Reset');
   } catch (err) {
     nodecg.log.debug('[Timer] Cannot reset timer:', err);
     throw err;
   }
 }
-
 
 /**
  * Stop/finish the timer.
@@ -170,25 +205,26 @@ async function stopTimer(): Promise<void> {
       throw new Error('Timer is not running/paused');
     }
 
-    // Stop the timer if all the teams have finished (or no teams exist).
+    if (currentMatch.value?.type === "quiz"){
+      timerRep.value.phase = 'finished';
+    } else {
+      // Stop the timer if all the teams have finished (or no teams exist).
     if (timerRep.value.state === 'paused') {
       timer.resume();
     }
     timer.split();
     timerRep.value.phase = 'finished';
-    nodecg.log.debug('[Timer] Finished');
+    nodecg.log.debug('[Timer] Finished'); 
+    }
   } catch (err) {
     nodecg.log.debug('[Timer] Cannot stop timer:', err);
     throw err;
   }
 }
 
-/**
- * This stuff runs every 1/10th a second to keep the time updated.
- */
 let lastTickTime = Date.now(); // Track the last time the tick function was executed
 
-function tick(): void {
+function countdownTick(): void {
   if (timerRep.value.phase === 'running') {
     const now = Date.now();
     const elapsedSinceLastTick = now - lastTickTime;
@@ -213,6 +249,19 @@ function tick(): void {
       timerRep.value.timestamp = now;
       timerRep.value.milliseconds = remainingTime;
     }
+  }
+}
+
+/**
+ * This stuff runs every 1/10th a second to keep the time updated.
+ */
+function tick(): void {
+  if (timerRep.value.phase === 'running') {
+     // Calculates the milliseconds the timer has been running for and updates the replicant.
+     const time = timer.currentTime().gameTime() as livesplitCore.TimeSpanRef;
+     const ms = Math.floor(time.totalSeconds() * 1000);
+     setTime(ms);
+     timerRep.value.timestamp = Date.now();
   }
 }
 
@@ -280,4 +329,7 @@ timerRep.on('change', () => {
   }
 });
 
+if(currentMatch.value?.type == 'quiz'){
+  setInterval(countdownTick, 100);
+}
 setInterval(tick, 100);

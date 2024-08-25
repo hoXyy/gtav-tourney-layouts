@@ -19,7 +19,7 @@
         >Pause</QBtn
       >
 
-      <QBtn width="12%" color="black" @click="fourtyfiveS"
+      <QBtn width="12%" color="black" @click="fortyfiveS"
         >45s</QBtn
       >
     </div>
@@ -27,46 +27,46 @@
     <div
       style="display: flex; text-align: center; width: 100%; flex-direction: column"
       v-if="
-        currentMatch && currentMatch.data && score && score.data
+        currentMatch && currentMatch.data && quizScore && quizScore.data
       ">
       <h2>
-        <span style="font-size: 16px">{{ player1Name }} - {{ score.data.player1 }}</span><br>
+        <span style="font-size: 16px">{{ player1Name }} - {{ quizScore.data.player1 }}</span><br>
         <QBtn style="width: 100%" color="black" @click="increasePlayer110Score()">+10</QBtn>
         <QBtn style="width: 100%" color="black" @click="increasePlayer115Score()">+15</QBtn>
         <QBtn
           style="width: 100%"
           color="black"
-          :disable="score.data.player1 === 0"
+          :disable="quizScore.data.player1 === 0"
           @click="decreasePlayer1Score()"
           >-5</QBtn
         >
-        <span style="font-size: 16px">{{ player2Name }} - {{ score.data.player2 }}</span><br>
+        <span style="font-size: 16px">{{ player2Name }} - {{ quizScore.data.player2 }}</span><br>
         <QBtn style="width: 100%" color="black" @click="increasePlayer210Score()">+10</QBtn>
         <QBtn style="width: 100%" color="black" @click="increasePlayer215Score()">+15</QBtn>
         <QBtn
           style="width: 100%"
           color="black"
-          :disable="score.data.player2 === 0"
+          :disable="quizScore.data.player2 === 0"
           @click="decreasePlayer2Score()"
           >-5</QBtn
         >
-        <span style="font-size: 16px">{{ player3Name }} - {{ score.data.player3 }}</span><br>
+        <span style="font-size: 16px">{{ player3Name }} - {{ quizScore.data.player3 }}</span><br>
         <QBtn style="width: 100%" color="black" @click="increasePlayer310Score()">+10</QBtn>
         <QBtn style="width: 100%" color="black" @click="increasePlayer315Score()">+15</QBtn>
         <QBtn
           style="width: 100%"
           color="black"
-          :disable="score.data.player3 === 0"
+          :disable="quizScore.data.player3 === 0"
           @click="decreasePlayer3Score()"
           >-5</QBtn
         >
-        <span style="font-size: 16px">{{ player4Name }} - {{ score.data.player4 }}</span><br>
+        <span style="font-size: 16px">{{ player4Name }} - {{ quizScore.data.player4 }}</span><br>
         <QBtn style="width: 100%" color="black" @click="increasePlayer410Score()">+10</QBtn>
         <QBtn style="width: 100%" color="black" @click="increasePlayer415Score()">+15</QBtn>
         <QBtn
           style="width: 100%"
           color="black"
-          :disable="score.data.player4 === 0"
+          :disable="quizScore.data.player4 === 0"
           @click="decreasePlayer4Score()"
           >-5</QBtn
         >
@@ -79,12 +79,12 @@
 
 <script setup lang="ts">
   import { Timer } from '@layouts/types/schemas';
-  import { CurrentMatch, Score, FinishTimes } from '@layouts/types';
+  import { CurrentMatch, Score } from '@layouts/types';
   import { useReplicant } from 'nodecg-vue-composable';
   import { $ref } from 'vue/macros';
   import { watch } from 'vue';
 
-  const score = useReplicant<Score>('score', 'gtav-tourney-layouts');
+  const quizScore = useReplicant<Score>('quizScore', 'gtav-tourney-layouts');
   const currentMatch = useReplicant<CurrentMatch>('currentMatch', 'gtav-tourney-layouts');
   const timer = useReplicant<Timer>('timer', 'gtav-tourney-layouts');
 
@@ -108,8 +108,8 @@
       if (val) {
         player1Name = val.players.player1.name;
         player2Name = val.players.player2.name;
-        player3Name = val.players.player3.name;
-        player4Name = val.players.player4.name;
+        player3Name = val.players.player3!.name;
+        player4Name = val.players.player4!.name;
       }
     },
     { immediate: true }
@@ -136,104 +136,104 @@
   }
 
   function increasePlayer110Score() {
-    if (score && score.data) {
-      score.data.player1 += 10;
-      score.save();
+    if (quizScore && quizScore.data) {
+      quizScore.data.player1 += 10;
+      quizScore.save();
     }
   }
 
   function increasePlayer115Score() {
-    if (score && score.data) {
-      score.data.player1 += 15;
-      score.save();
+    if (quizScore && quizScore.data) {
+      quizScore.data.player1 += 15;
+      quizScore.save();
     }
   }
 
   function increasePlayer210Score() {
-    if (score && score.data) {
-      score.data.player2 += 10;
-      score.save();
+    if (quizScore && quizScore.data) {
+      quizScore.data.player2 += 10;
+      quizScore.save();
     }
   }
 
   function increasePlayer215Score() {
-    if (score && score.data) {
-      score.data.player2 += 15;
-      score.save();
+    if (quizScore && quizScore.data) {
+      quizScore.data.player2 += 15;
+      quizScore.save();
     }
   }
 
   function decreasePlayer1Score() {
-    if (score && score.data) {
-      if (score.data.player1 > 0) {
-        score.data.player1 -= 5;
-        score.save();
+    if (quizScore && quizScore.data) {
+      if (quizScore.data.player1 > 0) {
+        quizScore.data.player1 -= 5;
+        quizScore.save();
       }
     }
   }
 
   function decreasePlayer2Score() {
-    if (score && score.data) {
-      if (score.data.player2 > 0) {
-        score.data.player2 -= 5;
-        score.save();
+    if (quizScore && quizScore.data) {
+      if (quizScore.data.player2 > 0) {
+        quizScore.data.player2 -= 5;
+        quizScore.save();
       }
     }
   }
 
   function increasePlayer310Score() {
-    if (score && score.data) {
-      score.data.player3 += 10;
-      score.save();
+    if (quizScore && quizScore.data) {
+      quizScore.data.player3! += 10;
+      quizScore.save();
     }
   }
 
   function increasePlayer315Score() {
-    if (score && score.data) {
-      score.data.player3 += 15;
-      score.save();
+    if (quizScore && quizScore.data) {
+      quizScore.data.player3! += 15;
+      quizScore.save();
     }
   }
 
   function increasePlayer410Score() {
-    if (score && score.data) {
-      score.data.player4 += 10;
-      score.save();
+    if (quizScore && quizScore.data) {
+      quizScore.data.player4! += 10;
+      quizScore.save();
     }
   }
 
   function increasePlayer415Score() {
-    if (score && score.data) {
-      score.data.player4 += 15;
-      score.save();
+    if (quizScore && quizScore.data) {
+      quizScore.data.player4! += 15;
+      quizScore.save();
     }
   }
 
   function decreasePlayer3Score() {
-    if (score && score.data) {
-      if (score.data.player3 > 0) {
-        score.data.player3 -= 5;
-        score.save();
+    if (quizScore && quizScore.data) {
+      if (quizScore.data.player3! > 0) {
+        quizScore.data.player3! -= 5;
+        quizScore.save();
       }
     }
   }
 
   function decreasePlayer4Score() {
-    if (score && score.data) {
-      if (score.data.player4 > 0) {
-        score.data.player4 -= 5;
-        score.save();
+    if (quizScore && quizScore.data) {
+      if (quizScore.data.player4! > 0) {
+        quizScore.data.player4! -= 5;
+        quizScore.save();
       }
     }
   }
 
   function resetScore() {
-    if (score && score.data) {
-      score.data.player1 = 0;
-      score.data.player2 = 0;
-      score.data.player3 = 0;
-      score.data.player4 = 0;
-      score.save();
+    if (quizScore && quizScore.data) {
+      quizScore.data.player1 = 0;
+      quizScore.data.player2 = 0;
+      quizScore.data.player3 = 0;
+      quizScore.data.player4 = 0;
+      quizScore.save();
     }
   }
 
@@ -245,7 +245,7 @@
     }
   }
 
-  async function fourtyfiveS(): Promise<void> {
+  async function fortyfiveS(): Promise<void> {
     try {
       await nodecg.sendMessage('enum', true);
     } catch (err) {

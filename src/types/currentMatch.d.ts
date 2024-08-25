@@ -5,11 +5,13 @@
  * and run json-schema-to-typescript to regenerate this file.
  */
 
+//TODO check if this is fine or if you need another replicant
+
 export interface CurrentMatch {
   id: string;
   stage: string;
   startTime: number;
-  type: 'bo1' | 'bo3' | 'bo5' | 'showmatch';
+  type: 'bo1' | 'bo3' | 'bo5' | 'showmatch' | 'quiz';
   players: {
     player1: {
       name: string;
@@ -25,14 +27,14 @@ export interface CurrentMatch {
       avatar: string;
       showAvatar: boolean;
     };
-    player3: {
+    player3?: {
       name: string;
       srcUsername?: string;
       manualPb?: boolean;
       avatar: string;
       showAvatar: boolean;
     };
-    player4: {
+    player4?: {
       name: string;
       srcUsername?: string;
       manualPb?: boolean;

@@ -73,6 +73,10 @@
   const commentators = useReplicant<Commentators>('commentators', 'gtav-tourney-layouts');
   const omnibarfield = useReplicant<Omnibarfield>('omnibarfield', 'gtav-tourney-layouts');
 
+  //TODO line 46 insert if condition for displaying commentary/host
+
+  //TODO omnibar as a picture or as a component? If latter, maybe actually outsource the logic from main to here
+
   const isIntermission = $computed(() => {
     return currentOBSScene?.data === (nodecg.bundleConfig as Configschema).obs.intermission;
   });

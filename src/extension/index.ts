@@ -17,5 +17,6 @@ export = (nodecg: NodeCG): void => {
   require('./matchInfo');
   require('./obs');
   require('./playerinfo');
+  require('./quizPlayerInfo');
   require('./timer');
 };

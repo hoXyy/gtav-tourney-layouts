@@ -41,11 +41,11 @@
       <div id="player3" class="player-section">
         <div class="player-info">
           <p v-if="currentMatch && currentMatch.data" class="player-name player-name3">
-            {{ currentMatch.data.players.player3.name }}
+            {{ currentMatch.data.players.player3!.name }}
           </p>
           <img
             v-if="currentMatch && currentMatch.data" class="player-avatar player-avatar3"
-            v-bind:src="currentMatch.data.players.player3.showAvatar && avatars?.data?.player3 ? avatars.data.player3 : require('../img/nopic.png')"
+            v-bind:src="currentMatch.data.players.player3!.showAvatar && avatars?.data?.player3 ? avatars.data.player3 : require('../img/nopic.png')"
           />
         </div>
         <img src="./img/purple.png" class="color-overlay color-purple" />
@@ -55,11 +55,11 @@
       <div id="player4" class="player-section">
         <div class="player-info">
           <p v-if="currentMatch && currentMatch.data" class="player-name player-name4">
-            {{ currentMatch.data.players.player4.name }}
+            {{ currentMatch.data.players.player4!.name }}
           </p>
           <img
             v-if="currentMatch && currentMatch.data" class="player-avatar player-avatar4"
-            v-bind:src="currentMatch.data.players.player4.showAvatar && avatars?.data?.player4 ? avatars.data.player4 : '../img/nopic.png'"
+            v-bind:src="currentMatch.data.players.player4!.showAvatar && avatars?.data?.player4 ? avatars.data.player4 : '../img/nopic.png'"
           />
         </div>
           <img src="./img/teal.png" class="color-overlay color-teal" />
@@ -332,17 +332,17 @@
     <!-- Bobar -->
     <img src="./img/bobar.png" class="bottom-overlay" />
     <div id="scores" class="scores">
-      <p class="score1 animate__animated animate__fadeInUp" v-if="score && score.data" ref="score1">
-          {{ score.data.player1 }} POINTS
+      <p class="score1 animate__animated animate__fadeInUp" v-if="quizScore && quizScore.data" ref="score1">
+          {{ quizScore.data.player1 }} POINTS
       </p>
-      <p class="score2 animate__animated animate__fadeInUp" v-if="score && score.data" ref="score2">
-          {{ score.data.player2 }} POINTS
+      <p class="score2 animate__animated animate__fadeInUp" v-if="quizScore && quizScore.data" ref="score2">
+          {{ quizScore.data.player2 }} POINTS
       </p>
-      <p class="score3 animate__animated animate__fadeInUp" v-if="score && score.data" ref="score3">
-          {{ score.data.player3 }} POINTS
+      <p class="score3 animate__animated animate__fadeInUp" v-if="quizScore && quizScore.data" ref="score3">
+          {{ quizScore.data.player3 }} POINTS
       </p>
-      <p class="score4 animate__animated animate__fadeInUp" v-if="score && score.data" ref="score4">
-          {{ score.data.player4 }} POINTS
+      <p class="score4 animate__animated animate__fadeInUp" v-if="quizScore && quizScore.data" ref="score4">
+          {{ quizScore.data.player4 }} POINTS
       </p>
     </div>
     <div id="names" class="score-names">
@@ -353,10 +353,10 @@
         {{ currentMatch?.data?.players.player2.name }}'s SCORE
       </p>
       <p class="score-name3" v-if="currentMatch?.data">
-        {{ currentMatch?.data?.players.player3.name }}'s SCORE
+        {{ currentMatch?.data?.players.player3!.name }}'s SCORE
       </p>
       <p class="score-name4" v-if="currentMatch?.data">
-        {{ currentMatch?.data?.players.player4.name }}'s SCORE
+        {{ currentMatch?.data?.players.player4!.name }}'s SCORE
       </p>
     </div>
 
@@ -385,7 +385,6 @@
   import { CurrentMatch, CurrentSegment, PlayerPbs, Score, Avatars, currentQuestion, questions } from '@layouts/types';
   import { useReplicant } from 'nodecg-vue-composable';
   import TopBar from '../components/TopBar.vue';
-  import MatchInfo from '../components/MatchInfo.vue';
   import Omnibar from '../components/Omnibar.vue';
   import { Timer } from '@layouts/types/schemas';
   import { nextTick, watch, ref } from 'vue';
@@ -395,7 +394,7 @@
   const currentQuestion = useReplicant<currentQuestion>('currentQuestion', 'gtav-tourney-layouts');
   const currentSegment = useReplicant<CurrentSegment>('currentSegment', 'gtav-tourney-layouts');
   const playerPbs = useReplicant<PlayerPbs>('playerPbs', 'gtav-tourney-layouts');
-  const score = useReplicant<Score>('score', 'gtav-tourney-layouts');
+  const quizScore = useReplicant<Score>('quizScore', 'gtav-tourney-layouts');
   const timer = useReplicant<Timer>('timer', 'gtav-tourney-layouts');
   const question = useReplicant<questions>('questions', 'gtav-tourney-layouts');
   const avatars = useReplicant<Avatars>('playerAvatars', 'gtav-tourney-layouts');
@@ -707,7 +706,7 @@ watch(
 );
 
 watch(
-    () => score?.data?.player1,
+    () => quizScore?.data?.player1,
     async (newVal, oldVal) => {
       if (newVal != undefined) {
         if (oldVal != undefined) {
@@ -736,7 +735,7 @@ watch(
   );
 
   watch(
-    () => score?.data?.player2,
+    () => quizScore?.data?.player2,
     async (newVal, oldVal) => {
       if (newVal != undefined) {
         if (oldVal != undefined) {
@@ -765,7 +764,7 @@ watch(
   );
 
   watch(
-    () => score?.data?.player3,
+    () => quizScore?.data?.player3,
     async (newVal, oldVal) => {
       if (newVal != undefined) {
         if (oldVal != undefined) {
@@ -794,7 +793,7 @@ watch(
   );
 
   watch(
-    () => score?.data?.player4,
+    () => quizScore?.data?.player4,
     async (newVal, oldVal) => {
       if (newVal != undefined) {
         if (oldVal != undefined) {

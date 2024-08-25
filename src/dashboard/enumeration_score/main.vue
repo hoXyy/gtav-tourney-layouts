@@ -2,7 +2,7 @@
   <div
     style="display: flex; text-align: center; width: 100%; flex-direction: column"
     v-if="
-      currentMatch && currentMatch.data && currentMatch.data.type != 'bo1' && enumScore && enumScore.data
+      currentMatch && currentMatch.data && currentMatch.data.type == 'quiz' && enumScore && enumScore.data
     "
   >
     <h2>
@@ -82,8 +82,8 @@
       if (val) {
         player1Name = val.players.player1.name;
         player2Name = val.players.player2.name;
-        player3Name = val.players.player3.name;
-        player4Name = val.players.player4.name;
+        player3Name = val.players.player3!.name;
+        player4Name = val.players.player4!.name;
       }
     },
     { immediate: true }
@@ -105,14 +105,14 @@
 
   function increasePlayer3Score() {
     if (enumScore && enumScore.data) {
-      enumScore.data.player3++;
+      enumScore.data.player3!++;
       enumScore.save();
     }
   }
 
   function increasePlayer4Score() {
     if (enumScore && enumScore.data) {
-      enumScore.data.player4++;
+      enumScore.data.player4!++;
       enumScore.save();
     }
   }
@@ -137,8 +137,8 @@
 
   function decreasePlayer3Score() {
     if (enumScore && enumScore.data) {
-      if (enumScore.data.player3 > 0) {
-        enumScore.data.player3--;
+      if (enumScore.data.player3! > 0) {
+        enumScore.data.player3!--;
         enumScore.save();
       }
     }
@@ -146,8 +146,8 @@
 
   function decreasePlayer4Score() {
     if (enumScore && enumScore.data) {
-      if (enumScore.data.player4 > 0) {
-        enumScore.data.player4--;
+      if (enumScore.data.player4! > 0) {
+        enumScore.data.player4!--;
         enumScore.save();
       }
     }

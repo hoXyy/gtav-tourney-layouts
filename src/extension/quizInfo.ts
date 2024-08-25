@@ -1,6 +1,6 @@
-import { CurrentMatch } from '@layouts/types';
+import { CurrentMatch, currentQuestion } from '@layouts/types';
 import { get } from './util/nodecg';
-import { currentMatch, currentSegment, matches, playerPBs, score } from './util/replicants';
+import { currentMatch, CurrentQuestion, currentSegment, matches, playerPBs, Questions, quizScore } from './util/replicants';
 import { klona as clone } from 'klona/json';
 
 const nodecg = get();
@@ -23,7 +23,7 @@ currentMatch.on('change', (newVal, oldVal) => {
     if (oldVal) {
       if (newVal.id != oldVal.id) {
         currentSegment.value = undefined;
-        score.value = { player1: 0, player2: 0 };
+        quizScore.value = { player1: 0, player2: 0, player3: 0, player4: 0 };
       }
     } else {
       currentSegment.value = undefined;
@@ -49,6 +49,24 @@ function setMatchAsActive(matchId: string) {
   }
 }
 
+function removeQuestion(questionId: string) {
+  if (Questions.value) {
+    const index = Questions.value.findIndex((question) => question.id === questionId);
+    if (index > -1) {
+      Questions.value.splice(index, 1);
+    }
+  }
+}
+
+function setQuestionAsActive(questionId: string) {
+  if (Questions.value) {
+    const question = Questions.value.find((question) => question.id === questionId);
+    if (question) {
+      CurrentQuestion.value = clone(question);
+    }
+  }
+}
+
 function updateMatchData(matchData: CurrentMatch) {
   if (matches.value) {
     if (matches.value.length > 0) {
@@ -64,6 +82,21 @@ function updateMatchData(matchData: CurrentMatch) {
   }
 }
 
+function updateQuestionData(questionData: currentQuestion) {
+  if (Questions.value) {
+    if (Questions.value.length > 0) {
+      const index = Questions.value.findIndex((question) => question.id === questionData.id);
+      if (index > -1) {
+        Questions.value[index] = questionData;
+      } else {
+        Questions.value.push(questionData);
+      }
+    } else {
+      Questions.value.push(questionData);
+    }
+  }
+}
+
 function markPlayer1AsSegmentWinner() {
   if (currentSegment.value && matches.value && currentMatch.value) {
     if (matches.value.length > 0) {
@@ -73,7 +106,7 @@ function markPlayer1AsSegmentWinner() {
           if (segment.name === currentSegment.value!.name) {
             if (segment.wonBy === null) {
               segment.wonBy = matches.value[index].players.player1.name;
-              score.value.player1++;
+              quizScore.value.player1++;
             }
           }
         });
@@ -91,7 +124,7 @@ function markPlayer2AsSegmentWinner() {
           if (segment.name === currentSegment.value!.name) {
             if (segment.wonBy === null) {
               segment.wonBy = matches.value[index].players.player2.name;
-              score.value.player2++;
+              quizScore.value.player2++;
             }
           }
         });
@@ -101,7 +134,10 @@ function markPlayer2AsSegmentWinner() {
 }
 
 nodecg.listenFor('removeMatch', (matchId) => removeMatch(matchId));
+nodecg.listenFor('removeQuestion', (questionId) => removeQuestion(questionId));
 nodecg.listenFor('setMatchAsActive', (matchId) => setMatchAsActive(matchId));
+nodecg.listenFor('setQuestionAsActive', (questionId) => setQuestionAsActive(questionId));
 nodecg.listenFor('updateMatchData', (matchData) => updateMatchData(matchData));
+nodecg.listenFor('updatedQuestionData', (questionData) => updateQuestionData(questionData));
 nodecg.listenFor('finishPlayer1', markPlayer1AsSegmentWinner);
 nodecg.listenFor('finishPlayer2', markPlayer2AsSegmentWinner);

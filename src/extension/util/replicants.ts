@@ -40,6 +40,9 @@ export const finishTimes = nodecg().Replicant<FinishTimes>('finishTimes', {
   defaultValue: { player1: '', player2: '' },
 });
 export const score = nodecg().Replicant<Score>('score', {
+  defaultValue: { player1: 0, player2: 0 },
+});
+export const quizScore = nodecg().Replicant<Score>('quizScore', {
   defaultValue: { player1: 0, player2: 0, player3: 0, player4: 0 },
 });
 export const enumScore = nodecg().Replicant<Score>('enumScore', {
@@ -57,8 +60,13 @@ export const manualPb = nodecg().Replicant<ManualPb>('manualPb', {
   defaultValue: { player1: false, player2: false },
 });
 export const currentObsScene = nodecg().Replicant<string>('currentObsScene');
-export const playerAvatars = nodecg().Replicant<Avatars>('playerAvatars', {
+
+export const quizAvatars = nodecg().Replicant<Avatars>('quizAvatars', {
   defaultValue: { player1: '', player2: '', player3: '', player4: '' },
+});
+
+export const playerAvatars = nodecg().Replicant<Avatars>('playerAvatars', {
+  defaultValue: { player1: '', player2: '' },
 });
 export const showsAnswerA = nodecg().Replicant<boolean>('showsAnswerA');
 export const showsAnswerB = nodecg().Replicant<boolean>('showsAnswerB');

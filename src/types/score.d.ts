@@ -8,6 +8,6 @@
 export interface Score {
   player1: number;
   player2: number;
-  player3: number;
-  player4: number;
+  player3?: number;
+  player4?: number;
 }

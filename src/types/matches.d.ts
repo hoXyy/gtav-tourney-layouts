@@ -9,7 +9,7 @@ export type Matches = {
   id: string;
   stage: string;
   startTime: number;
-  type: 'bo1' | 'bo3' | 'bo5' | 'showmatch';
+  type: 'bo1' | 'bo3' | 'bo5' | 'showmatch' | 'quiz';
   players: {
     player1: {
       name: string;
@@ -25,14 +25,14 @@ export type Matches = {
       avatar: string;
       showAvatar: boolean;
     };
-    player3: {
+    player3?: {
       name: string;
       srcUsername?: string;
       manualPb?: boolean;
       avatar: string;
       showAvatar: boolean;
     };
-    player4: {
+    player4?: {
       name: string;
       srcUsername?: string;
       manualPb?: boolean;
