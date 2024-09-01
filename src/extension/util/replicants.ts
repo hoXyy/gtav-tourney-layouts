@@ -36,6 +36,7 @@ export const commentators = nodecg().Replicant<Commentators>('commentators');
 export const omnibarfield = nodecg().Replicant<Omnibarfield>('omnibarfield');
 export const playerPBs = nodecg().Replicant<PlayerPbs>('playerPbs');
 export const timer = nodecg().Replicant<Timer>('timer');
+export const quizTimer = nodecg().Replicant<Timer>('quizTimer');
 export const finishTimes = nodecg().Replicant<FinishTimes>('finishTimes', {
   defaultValue: { player1: '', player2: '' },
 });
