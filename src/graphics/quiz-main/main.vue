@@ -17,7 +17,7 @@
           </p>
           <img
             v-if="currentMatch && currentMatch.data" class="player-avatar player-avatar1"
-            v-bind:src="currentMatch.data.players.player1.showAvatar && avatars?.data?.player1 ? avatars.data.player1 : '../img/nopic.png'"
+            v-bind:src="currentMatch.data.players.player1.showAvatar && avatars?.data?.player1 ? avatars.data.player1 : defaultAvatar"
           />
         </div>
         <img src="./img/pink.png" class="color-overlay color-pink" />
@@ -31,7 +31,7 @@
           </p>
           <img
             v-if="currentMatch && currentMatch.data" class="player-avatar player-avatar2"
-            v-bind:src="currentMatch.data.players.player2.showAvatar && avatars?.data?.player2 ? avatars.data.player2 : '/img/nopic.png'"
+            v-bind:src="currentMatch.data.players.player2.showAvatar && avatars?.data?.player2 ? avatars.data.player2 : defaultAvatar"
           />
         </div>
         <img src="./img/yellow.png" class="color-overlay color-yellow" />
@@ -45,7 +45,7 @@
           </p>
           <img
             v-if="currentMatch && currentMatch.data" class="player-avatar player-avatar3"
-            v-bind:src="currentMatch.data.players.player3!.showAvatar && avatars?.data?.player3 ? avatars.data.player3 : require('../img/nopic.png')"
+            v-bind:src="currentMatch.data.players.player3!.showAvatar && avatars?.data?.player3 ? avatars.data.player3 : defaultAvatar"
           />
         </div>
         <img src="./img/purple.png" class="color-overlay color-purple" />
@@ -59,7 +59,7 @@
           </p>
           <img
             v-if="currentMatch && currentMatch.data" class="player-avatar player-avatar4"
-            v-bind:src="currentMatch.data.players.player4!.showAvatar && avatars?.data?.player4 ? avatars.data.player4 : '../img/nopic.png'"
+            v-bind:src="currentMatch.data.players.player4!.showAvatar && avatars?.data?.player4 ? avatars.data.player4 : defaultAvatar"
           />
         </div>
           <img src="./img/teal.png" class="color-overlay color-teal" />
@@ -388,6 +388,7 @@
   import Omnibar from '../components/Omnibar.vue';
   import { Timer } from '@layouts/types/schemas';
   import { nextTick, watch, ref } from 'vue';
+  import defaultAvatar from './img/nopic.png';
   import 'animate.css';
 
   const currentMatch = useReplicant<CurrentMatch>('currentMatch', 'gtav-tourney-layouts');
