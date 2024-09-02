@@ -74,7 +74,6 @@
   const editedQuestionId = useReplicant<string>('editedQuestionId', 'gtav-tourney-layouts', {
     defaultValue: '',
   });
-  const showsAnswers = useReplicant<boolean>('showsAnswers', 'gtav-tourney-layouts');
 
   function setQuestionId(questionId: string) {
     editedQuestionId!.data = questionId;

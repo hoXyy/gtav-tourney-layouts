@@ -5,8 +5,6 @@
  * and run json-schema-to-typescript to regenerate this file.
  */
 
-//TODO check if this is fine or if you need another replicant
-
 export interface CurrentMatch {
   id: string;
   stage: string;

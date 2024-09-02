@@ -1,9 +1,7 @@
-import clone from 'clone';
 import livesplitCore from 'livesplit-core';
 import { msToTimeStr, processAck, timeStrToMS } from './util/helpers';
 import { get } from './util/nodecg';
 import { timer as timerRep, quizTimer as quizTimerRep, finishTimes, currentMatch } from './util/replicants';
-import { Timer } from '@layouts/types/schemas';
 
 const nodecg = get();
 let timer: livesplitCore.Timer | null = null;

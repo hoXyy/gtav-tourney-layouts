@@ -393,8 +393,6 @@
 
   const currentMatch = useReplicant<CurrentMatch>('currentMatch', 'gtav-tourney-layouts');
   const currentQuestion = useReplicant<currentQuestion>('currentQuestion', 'gtav-tourney-layouts');
-  const currentSegment = useReplicant<CurrentSegment>('currentSegment', 'gtav-tourney-layouts');
-  const playerPbs = useReplicant<PlayerPbs>('playerPbs', 'gtav-tourney-layouts');
   const quizScore = useReplicant<Score>('quizScore', 'gtav-tourney-layouts');
   const timer = useReplicant<Timer>('quizTimer', 'gtav-tourney-layouts');
   const question = useReplicant<questions>('questions', 'gtav-tourney-layouts');

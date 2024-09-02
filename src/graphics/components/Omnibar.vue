@@ -72,7 +72,7 @@ import { computed } from 'vue';
   const hosts = useReplicant<Commentators>('hosts', 'gtav-tourney-layouts');
   const omnibarfield = useReplicant<Omnibarfield>('omnibarfield', 'gtav-tourney-layouts');
 
-  //TODO omnibar as a picture or as a component? If latter, maybe actually outsource the logic from main to here
+  //TODO make bobar title a field, sth like quiz title? or just dashboard?
 
   const isIntermission = $computed(() => {
     return currentOBSScene?.data === (nodecg.bundleConfig as Configschema).obs.intermission;

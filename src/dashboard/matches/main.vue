@@ -49,7 +49,6 @@
   import { CurrentMatch, Matches } from '@layouts/types';
 
   const matches = useReplicant<Matches>('matches', 'gtav-tourney-layouts');
-  const currentMatch = useReplicant<CurrentMatch>('currentMatch', 'gtav-tourney-layouts');
   const editedMatchId = useReplicant<string>('editedMatchId', 'gtav-tourney-layouts', {
     defaultValue: '',
   });

@@ -1,9 +1,5 @@
 import _ from 'lodash';
-import { get } from './nodecg';
 import type { ListenForCb } from 'nodecg-types/types/lib/nodecg-instance';
-import { currentMatch } from './replicants';
-
-const nodecg = get();
 
 /**
  * Checks if number needs a 0 adding to the start and does so if needed.

@@ -61,7 +61,6 @@
   import { useReplicant } from 'nodecg-vue-composable';
   import { currentQuestion, questions } from '@layouts/types';
   import { $ref } from 'vue/macros';
-  import { v4 as uuid } from 'uuid';
   import { watch } from 'vue';
 
   const editedQuestionId = useReplicant<string>('editedQuestionId', 'gtav-tourney-layouts', {
