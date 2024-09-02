@@ -86,6 +86,8 @@
   let phase = $ref('');
   let player1Name = $ref('');
   let player2Name = $ref('');
+  let player3Name = $ref('');
+  let player4Name = $ref('');
 
   watch(
     () => timer?.data,
@@ -101,6 +103,8 @@
       if (val) {
         player1Name = val.players.player1.name;
         player2Name = val.players.player2.name;
+        player3Name = val.players.player3?.name ?? player3Name;
+        player4Name = val.players.player4?.name ?? player4Name;
       }
     },
     { immediate: true }

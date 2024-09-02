@@ -1,8 +1,5 @@
 import _ from 'lodash';
-import { get } from './nodecg';
 import type { ListenForCb } from 'nodecg-types/types/lib/nodecg-instance';
-
-const nodecg = get();
 
 /**
  * Checks if number needs a 0 adding to the start and does so if needed.
@@ -25,17 +22,19 @@ export function timeStrToMS(time: string): number {
 }
 
 /**
- * Converts milliseconds into a time string (HH:MM:SS).
+ * Converts milliseconds into a time string (HH:MM:SS or MM:SS based on match type).
  * @param ms Milliseconds you wish to convert.
  */
-export function msToTimeStr(ms: number): string {
-  let string = '';
+export function msToTimeStr(ms: number, isQuiz: boolean): string {
   const seconds = Math.floor((ms / 1000) % 60);
   const minutes = Math.floor((ms / (1000 * 60)) % 60);
   const hours = Math.floor(ms / (1000 * 60 * 60));
-  string += `${padTimeNumber(hours)}:`;
-  string += `${padTimeNumber(minutes)}:${padTimeNumber(seconds)}`;
-  return string;
+
+  if (isQuiz) {
+    return `${padTimeNumber(minutes)}:${padTimeNumber(seconds)}`;
+  } else {
+    return `${padTimeNumber(hours)}:${padTimeNumber(minutes)}:${padTimeNumber(seconds)}`;
+  }
 }
 
 /**

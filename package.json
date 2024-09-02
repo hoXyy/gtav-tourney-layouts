@@ -31,6 +31,7 @@
     "watch:extension": "tsc -b tsconfig.extension.json -w"
   },
   "dependencies": {
+    "animate.css": "^4.1.1",
     "axios": "^1.7.2",
     "fitty": "^2.3.6",
     "gsap": "^3.12.5",
@@ -92,6 +93,11 @@
         "name": "segment-ban",
         "defaultFile": "sound/segment-ban.mp3",
         "defaultVolume": 100
+      },
+      {
+        "name": "correct-answer",
+        "defaultFile": "sound/correct-answer.mp3",
+        "defaultVolume": 100
       }
     ],
     "dashboardPanels": [
@@ -100,6 +106,13 @@
         "title": "Commentators",
         "file": "commentators.html",
         "width": 3
+      },
+      {
+        "name": "hosts",
+        "title": "Hosts",
+        "file": "hosts.html",
+        "width": 3,
+        "workspace": "Quiz"
       },
       {
         "name": "omnibarfield",
@@ -123,7 +136,22 @@
         "name": "timer",
         "title": "Timer",
         "file": "timer.html",
-        "width": 3
+        "width": 4
+      },
+      {
+        "name": "quiz-timer",
+        "title": "Quiz Timer",
+        "file": "quiz-timer.html",
+        "width": 4,
+        "workspace": "Quiz"
+      },
+      {
+        "name": "enumeration_score",
+        "title": "Enumeration Helper",
+        "file": "enumeration_score.html",
+        "width": 3,
+        "workspace": "Quiz"
+
       },
       {
         "name": "streamAssign",
@@ -136,6 +164,30 @@
         "title": "List of matches",
         "file": "matches.html",
         "width": 3
+      },
+      {
+        "name": "questions",
+        "title": "List of questions",
+        "file": "questions-list.html",
+        "width": 3,
+        "workspace": "Quiz"
+      },
+      {
+        "name": "add-edit-questions",
+        "title": "Add/Edit Question",
+        "file": "add-edit-questions.html",
+        "width": 6,
+        "dialog": true,
+        "dialogButtons": [
+          {
+            "name": "save",
+            "type": "confirm"
+          },
+          {
+            "name": "cancel",
+            "type": "dismiss"
+          }
+        ]
       },
       {
         "name": "pick-ban",
@@ -205,6 +257,16 @@
       },
       {
         "file": "intermission-base.html",
+        "width": 1920,
+        "height": 1080
+      },
+      {
+        "file": "quiz-main.html",
+        "width": 1920,
+        "height": 1080
+      },
+      {
+        "file": "quiz-intro.html",
         "width": 1920,
         "height": 1080
       }

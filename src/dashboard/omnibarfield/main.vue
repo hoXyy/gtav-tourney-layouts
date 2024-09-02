@@ -8,7 +8,6 @@
   </template>
   
 <script setup lang="ts">
-import Omnibar from '@layouts/graphics/components/Omnibar.vue';
 import type { Omnibarfield } from '@layouts/types/schemas';
 import { useReplicant } from 'nodecg-vue-composable';
 
