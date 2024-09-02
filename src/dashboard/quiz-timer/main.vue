@@ -15,10 +15,6 @@
         >15s</QBtn
       >
 
-      <QBtn width="12%" color="black" @click="pauseTimer"
-        >Pause</QBtn
-      >
-
       <QBtn width="12%" color="black" @click="fortyfiveS"
         >45s</QBtn
       >
@@ -248,14 +244,6 @@
   async function fortyfiveS(): Promise<void> {
     try {
       await nodecg.sendMessage('enum', true);
-    } catch (err) {
-      // error
-    }
-  }
-
-  async function pauseTimer(): Promise<void> {
-    try {
-      await nodecg.sendMessage('timerPause', true);
     } catch (err) {
       // error
     }

@@ -52,12 +52,20 @@ function resetTimerRepToDefault(): void {
  * @param ms Milliseconds you want to set the timer replicant at.
  */
 function setTime(ms: number): void {
-  const isQuiz = currentMatch.value?.type === 'quiz';
-  const targetTimer = isQuiz ? quizTimerRep : timerRep;
-
-  targetTimer.value.time = msToTimeStr(ms, isQuiz);
-  targetTimer.value.milliseconds = ms;
+  if (timer) {
+      const isQuiz = currentMatch.value?.type === 'quiz';
+      if (isQuiz) {
+          quizTimerRep.value.time = msToTimeStr(ms, isQuiz);
+          quizTimerRep.value.milliseconds = ms;
+      } else {
+          timerRep.value.time = msToTimeStr(ms, isQuiz);
+          timerRep.value.milliseconds = ms;
+      }
+  } else {
+      nodecg.log.error('[Timer] Cannot set time - timer is null.');
+  }
 }
+
 
 /**
  * Start/resume the timer, depending on the current state.
@@ -102,18 +110,25 @@ async function startTimer(force?: boolean): Promise<void> {
  */
 async function pauseTimer(): Promise<void> {
   try {
-    if (timerRep.value.phase !== 'running') {
-      throw new Error('Timer is not running');
-    }
-    if (timer) {
-      timer.pause();
-      timerRep.value.phase = 'paused';
-    } else {
-      throw new Error('Timer is not initialized');
-    }
+      // Check if the timer is running before attempting to pause it
+      if (quizTimerRep.value.phase !== 'running' && timerRep.value.phase !== 'running') {
+          nodecg.log.warn('[Timer] Attempted to pause timer, but it is not running.');
+          return;
+      }
+
+      if (timer) {
+          timer.pause();
+          if (currentMatch.value?.type === 'quiz') {
+            quizTimerRep.value.phase = 'paused';
+          } else {
+              timerRep.value.phase = 'paused';
+          }
+      } else {
+          throw new Error('Timer is not initialized');
+      }
   } catch (err) {
-    nodecg.log.error('[Timer] Cannot pause timer:', err);
-    throw err;
+      nodecg.log.error('[Timer] Cannot pause timer:', err);
+      throw err;
   }
 }
 
@@ -123,25 +138,28 @@ async function pauseTimer(): Promise<void> {
  */
 export async function resetTimer(force?: boolean): Promise<void> {
   try {
-    if (!force) {
-      throw new Error('Timer changes are disabled');
-    }
-    if (timerRep.value.phase === 'stopped') {
-      throw new Error('Timer is stopped');
-    }
-    if (timer) {
-      timer.reset(false);
-      resetTimerRepToDefault();
-      finishTimes.value.player1 = '';
-      finishTimes.value.player2 = '';
-      runnersFinished = false;
-      lastTickTime = null; // Reset lastTickTime when resetting
-    } else {
-      throw new Error('Timer is not initialized');
-    }
+      if (!force) {
+          throw new Error('Timer changes are disabled');
+      }
+      if (quizTimerRep.value.phase === 'stopped' && currentMatch.value?.type === 'quiz') {
+          throw new Error('Quiz Timer is stopped');
+      } else if (timerRep.value.phase === 'stopped' && currentMatch.value?.type !== 'quiz') {
+          throw new Error('Timer is stopped');
+      }
+
+      if (timer) {
+          timer.reset(false);
+          resetTimerRepToDefault();
+          finishTimes.value.player1 = '';
+          finishTimes.value.player2 = '';
+          runnersFinished = false;
+          lastTickTime = null; // Reset lastTickTime when resetting
+      } else {
+          throw new Error('Timer is not initialized');
+      }
   } catch (err) {
-    nodecg.log.error('[Timer] Cannot reset timer:', err);
-    throw err;
+      nodecg.log.error('[Timer] Cannot reset timer:', err);
+      throw err;
   }
 }
 
@@ -176,23 +194,21 @@ async function stopTimer(): Promise<void> {
 let lastTickTime: number | null = null; // Track the last time the tick function was executed
 
 function countdownTick(): void {
-  const isQuiz = currentMatch.value?.type === 'quiz';
-  const targetTimer = isQuiz ? quizTimerRep : timerRep;
-
-  if (targetTimer.value.phase === 'running') {
+  if (quizTimerRep.value.phase === 'running') {
       const now = Date.now();
       if (lastTickTime === null) lastTickTime = now; // Initialize lastTickTime on first run
       const elapsed = now - lastTickTime;
-      const remainingTime = targetTimer.value.milliseconds - elapsed;
+      const remainingTime = quizTimerRep.value.milliseconds - elapsed;
 
       if (remainingTime <= 0) {
-          setTime(0);
+          setTime(0); // Set time to 0 for quiz
+          quizTimerRep.value.phase = 'finished';
           stopTimer().catch((err) => nodecg.log.error('Failed to stop timer:', err));
           lastTickTime = null;
           return;
       }
 
-      setTime(remainingTime);
+      setTime(remainingTime); // Update remaining time for quiz
       lastTickTime = now;
   }
 }
