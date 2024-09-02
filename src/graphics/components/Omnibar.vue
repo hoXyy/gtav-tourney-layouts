@@ -21,9 +21,7 @@
         <span style="margin-right: 80px;"
           >Feeling the gambling itch? We have Twitch Channel Point predictions running for each game, so bet on your favorites!</span
         >
-        <span 
-          >{{ omnibarfield.data }}</span
-        >
+        <span>{{ omnibarfield.data }}</span>
       </p>
       <p v-else-if="isIntermissionInterview">
         <span style="margin-right: 80px"
@@ -38,22 +36,21 @@
         <span style="margin-right: 80px;"
           >{{ omnibarfield.data }}</span
         >
-        <span  v-if="getNextMatchString()">{{ getNextMatchString() }}</span>
+        <span v-if="getNextMatchString()">{{ getNextMatchString() }}</span>
       </p>
       <p v-else>
         <span style="margin-right: 80px"
           >Feel like supporting the tournament in style? Pick some of our exclusive merch up with !merch in chat!</span
         >
-        <span style="margin-right: 80px"
-          >Hosts on deck: {{ commentators.data }}. Enjoying their banter? Check out our cast
-          with !commentary in the chat!</span
-        >
+        <span style="margin-right: 80px">
+          {{ hostsLabel }} on deck: {{ hostsData }}. Enjoying their banter? Check out our cast
+          with !commentary in the chat!
+        </span>
         <span style="margin-right: 80px;"
           >Feeling the gambling itch? We have Twitch Channel Point predictions running for each game, so bet on your favorites!</span
         >
         <span style="margin-right: 80px;"
-          >{{ omnibarfield.data }}</span
-        >
+          >{{ omnibarfield.data }}</span>
         <span v-if="getNextMatchString()">{{ getNextMatchString() }}</span>
       </p>
     </marquee>
@@ -67,13 +64,13 @@
   import { $computed, $ref } from 'vue/macros';
   import { useReplicant } from 'nodecg-vue-composable';
   import { timeToMatch } from '../time-to-run';
+import { computed } from 'vue';
   const currentOBSScene = useReplicant<string>('currentObsScene', 'gtav-tourney-layouts');
   const matches = useReplicant<Matches>('matches', 'gtav-tourney-layouts');
   const currentMatch = useReplicant<CurrentMatch>('currentMatch', 'gtav-tourney-layouts');
   const commentators = useReplicant<Commentators>('commentators', 'gtav-tourney-layouts');
+  const hosts = useReplicant<Commentators>('hosts', 'gtav-tourney-layouts');
   const omnibarfield = useReplicant<Omnibarfield>('omnibarfield', 'gtav-tourney-layouts');
-
-  //TODO line 46 insert if condition for displaying commentary/host
 
   //TODO omnibar as a picture or as a component? If latter, maybe actually outsource the logic from main to here
 
@@ -83,6 +80,16 @@
 
   const isIntermissionInterview = $computed(() => {
     return currentOBSScene?.data === (nodecg.bundleConfig as Configschema).obs.intermission_interview;
+  });
+
+  const hostsLabel = computed(() => {
+    if (currentMatch === null) return 'Commentators'; 
+    return currentMatch?.data?.type === 'quiz' ? 'Hosts' : 'Commentators';
+  });
+
+  const hostsData = computed(() => {
+    if (currentMatch === null) return commentators?.data; 
+    return currentMatch?.data?.type === 'quiz' ? hosts?.data : commentators?.data;
   });
 
   function getNextMatchString() {
