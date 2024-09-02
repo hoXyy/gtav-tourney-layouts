@@ -1,6 +1,6 @@
 <template>
-  <div v-if="timer && timer.data" style="display: flex; flex-direction: column; gap: 5px">
-    <div style="width: 100%; text-align: center">
+  <div style="display: flex; flex-direction: column; gap: 5px">
+    <div v-if="timer && timer.data" style="width: 100%; text-align: center">
       <h1 style="font-size: 48px">
         <b>{{ timer.data.time }}</b>
       </h1>
@@ -86,7 +86,7 @@
 
   const quizScore = useReplicant<Score>('quizScore', 'gtav-tourney-layouts');
   const currentMatch = useReplicant<CurrentMatch>('currentMatch', 'gtav-tourney-layouts');
-  const timer = useReplicant<Timer>('timer', 'gtav-tourney-layouts');
+  const timer = useReplicant<Timer>('quizTimer', 'gtav-tourney-layouts');
 
   let phase = $ref('');
   let player1Name = $ref('');

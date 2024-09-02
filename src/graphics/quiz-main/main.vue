@@ -396,7 +396,7 @@
   const currentSegment = useReplicant<CurrentSegment>('currentSegment', 'gtav-tourney-layouts');
   const playerPbs = useReplicant<PlayerPbs>('playerPbs', 'gtav-tourney-layouts');
   const quizScore = useReplicant<Score>('quizScore', 'gtav-tourney-layouts');
-  const timer = useReplicant<Timer>('timer', 'gtav-tourney-layouts');
+  const timer = useReplicant<Timer>('quizTimer', 'gtav-tourney-layouts');
   const question = useReplicant<questions>('questions', 'gtav-tourney-layouts');
   const avatars = useReplicant<Avatars>('playerAvatars', 'gtav-tourney-layouts');
   const enumScore = useReplicant<Score>('enumScore', 'gtav-tourney-layouts');

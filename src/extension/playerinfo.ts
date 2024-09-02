@@ -56,7 +56,7 @@ async function getPlayerPB(srcUsername: string, category: string) {
             userData.data[i].run.values['0nw02xkl'] === 'klrg0emq'
           ) {
             nopb = false;
-            pb = msToTimeStr(userData.data[i].run.times.realtime_t * 1000);
+            pb = msToTimeStr(userData.data[i].run.times.realtime_t * 1000, false);
             break;
           } else if (nopb) {
             pb = '--:--';
@@ -66,12 +66,12 @@ async function getPlayerPB(srcUsername: string, category: string) {
             if (userData.data[i].run.category == categoryIDs['Epsilon Program']) {
               if (userData.data[i].run.values.kn091v7n == 'q65y0r3l') {
                 nopb = false;
-                pb = msToTimeStr(userData.data[i].run.times.realtime_t * 1000);
+                pb = msToTimeStr(userData.data[i].run.times.realtime_t * 1000, false);
                 break;
               }
             } else {
               nopb = false;
-              pb = msToTimeStr(userData.data[i].run.times.realtime_t * 1000);
+              pb = msToTimeStr(userData.data[i].run.times.realtime_t * 1000, false);
               break;
             }
           } else if (nopb) {

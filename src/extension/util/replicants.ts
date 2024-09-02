@@ -35,8 +35,22 @@ export const currentSegment = nodecg().Replicant<CurrentSegment | undefined>('cu
 export const commentators = nodecg().Replicant<Commentators>('commentators');
 export const omnibarfield = nodecg().Replicant<Omnibarfield>('omnibarfield');
 export const playerPBs = nodecg().Replicant<PlayerPbs>('playerPbs');
-export const timer = nodecg().Replicant<Timer>('timer');
-export const quizTimer = nodecg().Replicant<Timer>('quizTimer');
+export const timer = nodecg().Replicant<Timer>('timer' , {
+  defaultValue: {
+    time: '00:00:00',
+    milliseconds: 0,
+    timestamp: Date.now(),
+    phase: 'stopped',
+  },
+});
+export const quizTimer = nodecg().Replicant<Timer>('quizTimer', {
+  defaultValue: {
+    time: '00:30',
+    milliseconds: 30000,
+    timestamp: Date.now(),
+    phase: 'stopped',
+  },
+});
 export const finishTimes = nodecg().Replicant<FinishTimes>('finishTimes', {
   defaultValue: { player1: '', player2: '' },
 });

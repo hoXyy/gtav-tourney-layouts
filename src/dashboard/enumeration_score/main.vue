@@ -60,7 +60,7 @@
   const enumScore = useReplicant<Score>('enumScore', 'gtav-tourney-layouts');
   const currentMatch = useReplicant<CurrentMatch>('currentMatch', 'gtav-tourney-layouts');
   const finishTimes = useReplicant<FinishTimes>('finishTimes', 'gtav-tourney-layouts');
-  const timer = useReplicant<Timer>('timer', 'gtav-tourney-layouts');
+  const timer = useReplicant<Timer>('quizTimer', 'gtav-tourney-layouts');
 
   let phase = $ref('');
   let player1Name = $ref('');
